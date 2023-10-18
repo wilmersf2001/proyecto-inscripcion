@@ -1,3 +1,3 @@
 <div>
-    
+  {{ $responseApiReniec}}
 </div>

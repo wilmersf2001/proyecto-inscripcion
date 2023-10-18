@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Postulante;
 use GuzzleHttp\Client;
 
 class ApiReniecService {
@@ -27,8 +28,11 @@ class ApiReniecService {
       'query' => ['numero' => $dni]
     ];
 
-    $res = $this->applicant->request('GET', '/v2/reniec/dni', $parameters);
-    $response = json_decode($res->getBody()->getContents(), true);
-    return $response['nombres'];
+    $res = $this->applicant->request('GET', '/v2/reniec/dni', $parameters)->getBody()->getContents();
+    $response = json_decode($res, true);
+    
+    if (key_exists('message', $response)) return $response['message'];
+
+    return Postulante::fromArrayReniec($response);
   }
 }

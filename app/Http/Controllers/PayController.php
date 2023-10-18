@@ -13,6 +13,8 @@ class PayController extends Controller
         $this->apiReniec = $apiReniec;
     }
     public function validatePayment(ValidatePaymentRequest $request){
-        /* dd($request->all(), $this->apiReniec->getApplicantDataByDni($request->dni)); */
+        $applicant = $this->apiReniec->getApplicantDataByDni($request->dni);
+        /* dd($applicant); */
+        return view('applicant-registration', compact('applicant'));
     }
 }
