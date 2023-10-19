@@ -1,5 +1,4 @@
 <div class="p-10">
-    {{ $currentStep }}
     <ol class="flex items-center w-full mb-4 sm:mb-5 justify-center">
         <li
             class="flex w-full items-center text-blue-600 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block">
@@ -24,7 +23,7 @@
         @csrf
         <div class="{{ $currentStep == 1 ? '' : 'hidden' }}">
             <div class="my-8 flex items-center gap-x-4">
-                <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Datos Personales</h4>
+                <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Datos Personales Postulante</h4>
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
 
@@ -36,7 +35,7 @@
                     </span>
                     <input type="text" name="nombres" wire:model="applicant.postulante_nombres"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="" />
+                    <x-input-error for="applicant.postulante_nombres" />
                 </label>
                 <label class="block mb-6">
                     <span
@@ -45,7 +44,7 @@
                     </span>
                     <input type="text" name="apPaterno" wire:model="applicant.postulante_apPaterno"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="" />
+                    <x-input-error for="applicant.postulante_apPaterno" />
                 </label>
                 <label class="block mb-6">
                     <span
@@ -54,7 +53,7 @@
                     </span>
                     <input type="text" name="apMaterno" wire:model="applicant.postulante_apMaterno"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="" />
+                    <x-input-error for="applicant.postulante_apMaterno" />
                 </label>
             </div>
             <div class="grid md:grid-cols-3 md:gap-6">
@@ -318,8 +317,8 @@
                     Siguiente
                 </a>
             @else
-                <button
-                    class="mt-4 mr-4 text-gray-900 bg-white hover:bg-gray-100 shadow-md focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                <button type="submit"
+                    class="cursor-pointer mt-4 mr-4 text-gray-900 bg-white hover:bg-gray-100 shadow-md focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                     Cancelar
                 </button>
             @endif

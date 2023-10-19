@@ -3,7 +3,6 @@
 use App\Http\Controllers\ApplicantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PayController;
-use App\Http\Controllers\RedirectController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,9 +15,6 @@ use App\Http\Controllers\RedirectController;
 |
 */
 
-Route::get('/', function () {
-    return view('validate-payment');
-});
-Route::post('/pay', [PayController::class, "validatePayment"])->name('pay.validatePayment');
-Route::get('/registro-postulante', [ApplicantController::class, 'redirectRegisterApplicant'])->name('applicant.redirectRegisterApplicant');
+Route::get('/', PayController::class)->name('start');
+Route::post('/registro-postulante', [PayController::class, "validatePayment"])->name('pay.validatePayment');
 Route::post('/store-applicant', [ApplicantController::class, "store"])->name('applicant.store');
