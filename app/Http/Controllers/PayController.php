@@ -9,7 +9,7 @@ use App\Services\ApiReniecService;
 class PayController extends Controller
 {
   protected ApiReniecService $apiReniec;
-  
+
   public function __construct(ApiReniecService $apiReniec)
   {
     $this->apiReniec = $apiReniec;
@@ -22,6 +22,7 @@ class PayController extends Controller
 
   public function validatePayment(ValidatePaymentRequest $request)
   {
+    /* validacion */
     $dni = $request->dni;
     $applicant = $this->apiReniec->getApplicantDataByDni($dni);
     return view('register-applicant', compact('applicant'));
