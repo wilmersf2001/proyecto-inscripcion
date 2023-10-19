@@ -76,6 +76,39 @@
       <div class="h-px flex-auto bg-gray-100"></div>
     </div>
 
+    <div class="grid md:grid-cols-3 md:gap-6">
+      <label class="block mb-6">
+        <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          Departamento
+        </span>
+        <input type="date" name="fechaNacimiento" required
+          class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
+        <x-input-error for="applicant.postulante_apPaterno" />
+      </label>
+      <label class="block mb-6">
+        <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          Seleccione Sexo
+        </span>
+        <select class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+            <option value='1'>Masculino</option>
+            <option value='2'>Femenino</option>
+        </select>
+        <x-input-error for="applicant.postulante_apPaterno" />
+      </label>
+      <label class="block mb-6">
+        <span class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          Seleccione Sexo
+        </span>
+        <select class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+            <option value='1'>Masculino</option>
+            <option value='2'>Femenino</option>
+        </select>
+        <x-input-error for="applicant.postulante_apPaterno" />
+      </label>
+    </div>
+
+
+
     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         Next Step: Payment Info
     </button>
