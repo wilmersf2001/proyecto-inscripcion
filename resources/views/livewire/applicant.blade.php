@@ -62,21 +62,20 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Fecha de Nacimiento
                     </span>
-                    <input type="date" name="fechaNacimiento"
+                    <input type="date" name="fechaNacimiento" wire:model="applicant.postulante_fechNac"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="" />
+                    <x-input-error for="applicant.postulante_fechNac" />
                 </label>
                 <label class="block mb-6">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Seleccione Sexo
                     </span>
-                    <select name="sexo" {{-- wire:model="applicant.postulante_sexo" --}}
+                    <select name="sexo" wire:model="applicant.sexo_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option value='1'>Masculino</option>
-                        <option value='2'>Femenino</option>
                     </select>
-                    <x-input-error for="" />
+                    <x-input-error for="applicant.sexo_id" />
                 </label>
             </div>
 
@@ -90,31 +89,41 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Departamento
                     </span>
-                    <select name="departamentoNac"
+                    <select wire:change="changePlaceBirth('DEPARTMENT',$event.target.value)"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option value='1'>Ejemplo</option>
+                        @foreach ($departaments as $departament)
+                            <option value={{ $departament->departamento_id }}>
+                                {{ $departament->departamento_descripcion }}
+                            </option>
+                        @endforeach
                     </select>
-                    <x-input-error for="" />
                 </label>
                 <label class="block mb-6">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Provincia
                     </span>
-                    <select name="provinciaNac"
+                    <select wire:change="changePlaceBirth('PROVINCE',$event.target.value)" wire:model="selectedProvinceBirthId"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option value='1'>Ejemplo</option>
+                        @foreach ($provincesBirth as $provinceBirth)
+                            <option value={{ $provinceBirth->provincia_id }}>
+                                {{ ucfirst(strtolower($provinceBirth->provincia_descripcion)) }}
+                            </option>
+                        @endforeach
                     </select>
-                    <x-input-error for="" />
                 </label>
                 <label class="block mb-6">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Distrito
                     </span>
-                    <select name="distritoNac"
+                    <select name="distritoNac" wire:model="applicant.distrito_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option value='1'>Ejemplo</option>
+                        @foreach ($districtsBirth as $districtBirth)
+                            <option value={{ $districtBirth->distrito_id }}>
+                                {{ $districtBirth->distrito_descripcion }}
+                            </option>
+                        @endforeach
                     </select>
-                    <x-input-error for="" />
+                    <x-input-error for="applicant.distrito_id" />
                 </label>
             </div>
 
@@ -128,53 +137,67 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Departamento
                     </span>
-                    <select name="departamentoRes"
+                    <select wire:change="changePlaceReside('DEPARTMENT',$event.target.value)"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option value='1'>Ejemplo</option>
+                        @foreach ($departaments as $departament)
+                            <option value={{ $departament->departamento_id }}>
+                                {{ $departament->departamento_descripcion }}
+                            </option>
+                        @endforeach
                     </select>
-                    <x-input-error for="" />
                 </label>
                 <label class="block mb-6">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Provincia
                     </span>
-                    <select name="provinciaRes"
+                    <select wire:change="changePlaceReside('PROVINCE',$event.target.value)" wire:model="selectedProvinceResideId"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option value='1'>Ejemplo</option>
+                        @foreach ($provincesReside as $provinceReside)
+                            <option value={{ $provinceReside->provincia_id }}>
+                                {{ ucfirst(strtolower($provinceReside->provincia_descripcion)) }}
+                            </option>
+                        @endforeach
                     </select>
-                    <x-input-error for="" />
                 </label>
                 <label class="block mb-6">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Distrito
                     </span>
-                    <select name="distritoRes"
+                    <select wire:model="applicant.distrito_id_direccion"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option value='1'>Ejemplo</option>
+                        @foreach ($districtsReside as $districtReside)
+                            <option value={{ $districtReside->distrito_id }}>
+                                {{ $districtReside->distrito_descripcion }}
+                            </option>
+                        @endforeach
                     </select>
-                    <x-input-error for="" />
+                    <x-input-error for="applicant.distrito_id_direccion" />
                 </label>
             </div>
-
+            
             <div class="grid md:grid-cols-3 md:gap-6">
                 <label class="block mb-6">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Tipo de Dirección
                     </span>
-                    <select name="tipoDireccion"
+                    <select name="tipoDireccion" wire:model="applicant.tipodireccion_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option value='1'>Ejemplo</option>
+                        @foreach ($adressType as $adress)
+                            <option value={{ $adress->tipodireccion_id }}>
+                                {{ $adress->tipodireccion_descripcion }}
+                            </option>
+                        @endforeach
                     </select>
-                    <x-input-error for="" />
+                    <x-input-error for="applicant.tipodireccion_id" />
                 </label>
                 <label class="block mb-6">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Dirección
                     </span>
-                    <input type="text" name="direccion"
+                    <input type="text" name="direccion" wire:model="applicant.postulante_direccion"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: Calle Ficticia 123" />
-                    <x-input-error for="applicant.postulante_apPaterno" />
+                    <x-input-error for="applicant.postulante_direccion" />
                 </label>
             </div>
 
@@ -187,28 +210,28 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Teléfono del Postulante
                     </span>
-                    <input type="tel" name="telefonoPos"
+                    <input type="tel" name="telefono" wire:model="applicant.postulante_telefono"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 955123456" />
-                    <x-input-error for="applicant.postulante_apPaterno" />
+                    <x-input-error for="applicant.postulante_telefono" />
                 </label>
                 <label class="block mb-6">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Teléfono del Apoderado
                     </span>
-                    <input type="tel" name="telefonoAp"
+                    <input type="tel" name="telefonoAp" wire:model="applicant.postulante_telefonoAp"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 955123456" />
-                    <x-input-error for="applicant.postulante_apPaterno" />
+                    <x-input-error for="applicant.postulante_telefonoAp" />
                 </label>
                 <label class="block mb-6">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Correo Electrónico
                     </span>
-                    <input type="email" name="correo"
+                    <input type="email" name="correo" wire:model="applicant.postulante_correo"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: postulante@gmail.com" />
-                    <x-input-error for="applicant.postulante_apMaterno" />
+                    <x-input-error for="applicant.postulante_correo" />
                 </label>
             </div>
         </div>

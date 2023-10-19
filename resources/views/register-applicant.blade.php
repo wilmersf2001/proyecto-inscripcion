@@ -3,5 +3,5 @@
 @section('title', 'validar pago')
 
 @section('content')
-  @livewire('applicant', ['applicant' => $applicant])
+  @livewire('applicant', ['responseApiReniec' => $applicant])
 @endsection
