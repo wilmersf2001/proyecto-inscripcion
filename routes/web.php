@@ -15,7 +15,7 @@ use App\Http\Controllers\PayController;
 */
 
 Route::get('/', function () {
-    return view('validate-payment');
+    return view('applicant-registration');
 });
 
 Route::post('/pay', [PayController::class,"validatePayment"])->name('pay.validatePayment');

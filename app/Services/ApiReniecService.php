@@ -30,9 +30,7 @@ class ApiReniecService {
 
     $res = $this->applicant->request('GET', '/v2/reniec/dni', $parameters)->getBody()->getContents();
     $response = json_decode($res, true);
-    
     if (key_exists('message', $response)) return $response['message'];
-
     return Postulante::fromArrayReniec($response);
   }
 }

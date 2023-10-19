@@ -6,7 +6,8 @@ use Livewire\Component;
 
 class Applicant extends Component
 {
-    public $responseApiReniec;
+    /* public $responseApiReniec; */
+    
     public function render()
     {
         return view('livewire.applicant');
