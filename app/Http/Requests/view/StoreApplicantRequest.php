@@ -36,9 +36,10 @@ class StoreApplicantRequest extends FormRequest
             'applicant.postulante_correo' => 'required|email',
             'applicant.sede_id' => 'required|numeric',
             'applicant.escuela_id' => 'required|numeric',
-            'applicant.postulante_numvecesu' => 'required|numeric|integer|gt:0',
-            'applicant.postulante_numveceso' => 'required|numeric|integer|gt:0',
+            'applicant.postulante_numvecesu' => 'required|numeric|integer|gte:0',
+            'applicant.postulante_numveceso' => 'required|numeric|integer|gte:0',
             'applicant.colegio_id' => 'required|numeric',
+            'applicant.postulante_anoEgreso' => 'required|numeric|digits:4',
         ];
     }
 }

@@ -12,6 +12,8 @@ use App\Models\Distrito;
 use App\Models\TipoDireccion;
 use App\Http\Requests\View\StoreApplicantRequest;
 use App\Http\Requests\View\FirstStepApplicantRequest;
+use App\Http\Requests\View\StepTwoApplicantRequest;
+use App\Http\Requests\View\Message\ValidateApplicant;
 use App\Models\Colegio;
 use App\Models\Escuela;
 
@@ -31,9 +33,10 @@ class Applicant extends Component
   public $sedes;
   public $academicPrograms;
   public $searchSchoolName;
-  public $selectedDepartmentCollegeId = 1;
+  public $selectedDepartmentCollegeId;
   public $currentStep = 2;
-
+  public $showSchools = false;
+  protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
   protected function rules()
   {
@@ -58,16 +61,8 @@ class Applicant extends Component
     $this->academicPrograms = Escuela::all();
     $this->generos = Genero::all();
     $this->sedes = Sede::all();
-    $this->applicant->sexo_id = 1;
-    $this->applicant->sede_id = 1;
-    $this->applicant->colegio_id = 1;
-    $this->applicant->escuela_id = 1;
     $this->applicant->postulante_numvecesu = 0;
     $this->applicant->postulante_numveceso = 0;
-    $this->applicant->distrito_id = $this->districtsBirth->first()->distrito_id;
-    $this->applicant->distrito_id_direccion = $this->districtsReside->first()->distrito_id;
-    $this->applicant->tipodireccion_id = $this->adressType->first()->tipodireccion_id;
-    $this->searchSchoolName = Colegio::where('departamento_id', $this->selectedDepartmentCollegeId)->first()->colegio_descripcion;
   }
 
   public function render()
@@ -76,6 +71,9 @@ class Applicant extends Component
       ->where('colegio_descripcion', 'like', '%' . $this->searchSchoolName . '%')
       ->get();
 
+    if ($this->schools->isEmpty() && $this->selectedDepartmentCollegeId) {
+      session()->flash('null', 'colegio no encontrado.');
+    }
     return view('livewire.applicant');
   }
 
@@ -106,9 +104,11 @@ class Applicant extends Component
   public function getCollegeByDepartment(int $idDepartment)
   {
     $school = Colegio::where('departamento_id', $idDepartment)->first();
-    $this->searchSchoolName = $school->colegio_descripcion;
     $this->applicant->colegio_id = $school->colegio_id;
     $this->selectedDepartmentCollegeId = $idDepartment;
+    $this->showSchools = false;
+    $this->applicant->colegio_id = null;
+    $this->searchSchoolName = "";
   }
 
   public function updateSchool(int $idSchool)
@@ -116,6 +116,7 @@ class Applicant extends Component
     $school = Colegio::where('colegio_id', $idSchool)->first();
     $this->searchSchoolName = $school->colegio_descripcion;
     $this->applicant->colegio_id = $school->colegio_id;
+    $this->showSchools = false;
   }
 
   public function nextStep()
@@ -123,12 +124,7 @@ class Applicant extends Component
     if ($this->currentStep == 1) {
       $this->validate(FirstStepApplicantRequest::FIRST_STEP_VALIDATE);
     } elseif ($this->currentStep == 2) {
-      $this->validate([
-        'applicant.sede_id' => 'required|numeric',
-        'applicant.escuela_id' => 'required|numeric',
-        'applicant.postulante_numvecesu' => 'required|numeric',
-        'applicant.postulante_numveceso' => 'required|numeric',
-      ]);
+      $this->validate(StepTwoApplicantRequest::SETEP_TWO_VALIDATE);
     }
     $this->currentStep++;
   }

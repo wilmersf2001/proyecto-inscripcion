@@ -73,6 +73,7 @@
                     </span>
                     <select name="sexo" wire:model="applicant.sexo_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar</option>
                         @foreach ($generos as $genero)
                             <option value={{ $genero->sexo_id }}>
                                 {{ ucfirst(strtolower($genero->sexo_descripcion)) }}
@@ -122,6 +123,7 @@
                     </span>
                     <select name="distritoNac" wire:model="applicant.distrito_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar</option>
                         @foreach ($districtsBirth as $districtBirth)
                             <option value={{ $districtBirth->distrito_id }}>
                                 {{ $districtBirth->distrito_descripcion }}
@@ -171,6 +173,7 @@
                     </span>
                     <select wire:model="applicant.distrito_id_direccion"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar</option>
                         @foreach ($districtsReside as $districtReside)
                             <option value={{ $districtReside->distrito_id }}>
                                 {{ $districtReside->distrito_descripcion }}
@@ -188,6 +191,7 @@
                     </span>
                     <select name="tipoDireccion" wire:model="applicant.tipodireccion_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar</option>
                         @foreach ($adressType as $adress)
                             <option value={{ $adress->tipodireccion_id }}>
                                 {{ $adress->tipodireccion_descripcion }}
@@ -249,7 +253,6 @@
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
 
-            {{ $applicant->colegio_id }}
             <div class="grid md:grid-cols-3 md:gap-6">
                 <label class="block mb-6">
                     <span
@@ -260,6 +263,7 @@
                         wire:change="getCollegeByDepartment($event.target.value)"
                         wire:model="selectedDepartmentCollegeId"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar Departamento</option>
                         @foreach ($departaments as $departament)
                             <option value={{ $departament->departamento_id }}>
                                 {{ $departament->departamento_descripcion }}
@@ -269,29 +273,40 @@
                     <x-input-error for="" />
                 </label>
 
-
                 <label class="block mb-6 relative">
                     <input type="hidden" name="colegioId" wire:model="applicant.colegio_id">
-                    <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                        Nombre del Colegio
+                    <span
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                        Nombre del Colegio <x-input-error for="searchSchoolName" />
                     </span>
-                    <input type="text" wire:model.debounce.500ms="searchSchoolName" required
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                
-                    <ul class="w-full absolute shadow bg-white max-w-md max-h-48 p-2 overflow-y-auto text-sm text-gray-700"
-                        style="top: 100%; left: 0">
-                        @foreach ($schools as $school)
-                            <li wire:click="updateSchool({{ $school->colegio_id }})">
-                                <div class="flex items-center pl-2 rounded hover:bg-gray-100 dark:hover-bg-gray-200 cursor-pointer">
-                                    <p class="w-full py-2 text-xs font-medium text-gray-900 rounded dark:text-gray-900">
-                                        {{ $school->colegio_descripcion }}
-                                    </p>
-                                    <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">{{ $school->colegio_distrito }}</span>
-                                </div>
-                            </li>
-                        @endforeach
-                    </ul>  
-                    <x-input-error for="" />
+                    <input type="text" wire:model.debounce.500ms="searchSchoolName" required wire:input="$set('showSchools', true)"
+                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" 
+                        placeholder="Ejem: San Martín de los Andes"/>
+
+                    @if (session()->has('null'))
+                        <p class="absolute peer-invalid:visible text-red-600 text-xs animate-slide-in-left">
+                            {{ session('null') }}</p>
+                    @else
+                        @if ($showSchools)
+                            <ul
+                                class="w-full absolute shadow bg-white max-w-md max-h-48 p-2 overflow-y-auto text-sm text-gray-700">
+                                @foreach ($schools as $school)
+                                    <li wire:click="updateSchool({{ $school->colegio_id }})">
+                                        <div
+                                            class="flex items-center pl-2 rounded hover:bg-gray-100 dark:hover-bg-gray-200 cursor-pointer">
+                                            <p
+                                                class="w-full py-2 text-xs font-medium text-gray-900 rounded dark:text-gray-900">
+                                                {{ $school->colegio_descripcion }}
+                                            </p>
+                                            <span
+                                                class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs text-blue-700 ring-1 ring-inset ring-blue-700/10">{{ $school->colegio_distrito }}</span>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    @endif
+                    <x-input-error for="applicant.colegio_id" />
                 </label>
 
                 <label class="block mb-6">
@@ -299,11 +314,16 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Año de Egreso del Colegio
                     </span>
-                    <select name="annoEgresoColegio"
+                    <select name="annoEgresoColegio" wire:model="applicant.postulante_anoEgreso"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option value='1'>Ejemplo</option>
+                        <option class="hidden">Seleccionar</option>
+                        @for ($i = 1925; $i <= date('Y'); $i++)
+                            <option value={{ $i }}>
+                                {{ $i }}
+                            </option>
+                        @endfor
                     </select>
-                    <x-input-error for="" />
+                    <x-input-error for="applicant.postulante_anoEgreso" />
                 </label>
             </div>
 
@@ -344,6 +364,7 @@
                     </span>
                     <select name="sede" wire:model="applicant.sede_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar</option>
                         @foreach ($sedes as $sede)
                             <option value={{ $sede->sede_id }}>
                                 {{ $sede->sede_descripcion }}
@@ -359,6 +380,7 @@
                     </span>
                     <select name="programaAcademico" wire:model="applicant.escuela_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar</option>
                         @foreach ($academicPrograms as $academicProgram)
                             <option value={{ $academicProgram->escuela_id }}>
                                 {{ $academicProgram->escuela_descripcion }}
