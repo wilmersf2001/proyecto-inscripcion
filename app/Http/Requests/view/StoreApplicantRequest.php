@@ -27,13 +27,18 @@ class StoreApplicantRequest extends FormRequest
             'applicant.postulante_apMaterno' => 'required',
             'applicant.postulante_fechNac' => 'required|date',
             'applicant.sexo_id' => 'required',
-            'applicant.distrito_id' => 'required',
-            'applicant.distrito_id_direccion' => 'required',
+            'applicant.distrito_id' => 'required|numeric',
+            'applicant.distrito_id_direccion' => 'required|numeric',
             'applicant.tipodireccion_id' => 'required',
             'applicant.postulante_direccion' => 'required',
             'applicant.postulante_telefono' => 'required|numeric|digits:9',
             'applicant.postulante_telefonoAp' => 'required|numeric|digits:9',
             'applicant.postulante_correo' => 'required|email',
+            'applicant.sede_id' => 'required|numeric',
+            'applicant.escuela_id' => 'required|numeric',
+            'applicant.postulante_numvecesu' => 'required|numeric|integer|gt:0',
+            'applicant.postulante_numveceso' => 'required|numeric|integer|gt:0',
+            'applicant.colegio_id' => 'required|numeric',
         ];
     }
 }

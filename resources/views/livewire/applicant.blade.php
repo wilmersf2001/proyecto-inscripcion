@@ -21,7 +21,7 @@
 
     <form action="{{ route('applicant.store') }}" method="POST">
         @csrf
-        <div class="{{ $currentStep == 1 ? '' : 'hidden' }}">
+        <div class="{{ $currentStep == 1 ? 'animate-slide-in-left' : 'hidden' }}">
             <div class="my-8 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Datos Personales Postulante</h4>
                 <div class="h-px flex-auto bg-gray-100"></div>
@@ -73,7 +73,11 @@
                     </span>
                     <select name="sexo" wire:model="applicant.sexo_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option value='1'>Masculino</option>
+                        @foreach ($generos as $genero)
+                            <option value={{ $genero->sexo_id }}>
+                                {{ ucfirst(strtolower($genero->sexo_descripcion)) }}
+                            </option>
+                        @endforeach
                     </select>
                     <x-input-error for="applicant.sexo_id" />
                 </label>
@@ -102,7 +106,8 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Provincia
                     </span>
-                    <select wire:change="changePlaceBirth('PROVINCE',$event.target.value)" wire:model="selectedProvinceBirthId"
+                    <select wire:change="changePlaceBirth('PROVINCE',$event.target.value)"
+                        wire:model="selectedProvinceBirthId"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         @foreach ($provincesBirth as $provinceBirth)
                             <option value={{ $provinceBirth->provincia_id }}>
@@ -150,7 +155,8 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Provincia
                     </span>
-                    <select wire:change="changePlaceReside('PROVINCE',$event.target.value)" wire:model="selectedProvinceResideId"
+                    <select wire:change="changePlaceReside('PROVINCE',$event.target.value)"
+                        wire:model="selectedProvinceResideId"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         @foreach ($provincesReside as $provinceReside)
                             <option value={{ $provinceReside->provincia_id }}>
@@ -174,7 +180,7 @@
                     <x-input-error for="applicant.distrito_id_direccion" />
                 </label>
             </div>
-            
+
             <div class="grid md:grid-cols-3 md:gap-6">
                 <label class="block mb-6">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
@@ -210,7 +216,7 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Teléfono del Postulante
                     </span>
-                    <input type="tel" name="telefono" wire:model="applicant.postulante_telefono"
+                    <input type="tel" name="telefono" wire:model="applicant.postulante_telefono" maxlength="9"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 955123456" />
                     <x-input-error for="applicant.postulante_telefono" />
@@ -220,6 +226,7 @@
                         Teléfono del Apoderado
                     </span>
                     <input type="tel" name="telefonoAp" wire:model="applicant.postulante_telefonoAp"
+                        maxlength="9"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 955123456" />
                     <x-input-error for="applicant.postulante_telefonoAp" />
@@ -236,12 +243,13 @@
             </div>
         </div>
 
-        <div class="{{ $currentStep == 2 ? '' : 'hidden' }}">
+        <div class="{{ $currentStep == 2 ? 'animate-slide-in-right' : 'hidden' }}">
             <div class="my-8 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Información Académica</h4>
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
 
+            {{ $applicant->colegio_id }}
             <div class="grid md:grid-cols-3 md:gap-6">
                 <label class="block mb-6">
                     <span
@@ -249,22 +257,43 @@
                         Departamento de Procedencia Colegio
                     </span>
                     <select name="departamentoProcedenciaColegio"
+                        wire:change="getCollegeByDepartment($event.target.value)"
+                        wire:model="selectedDepartmentCollegeId"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option value='1'>Ejemplo</option>
+                        @foreach ($departaments as $departament)
+                            <option value={{ $departament->departamento_id }}>
+                                {{ $departament->departamento_descripcion }}
+                            </option>
+                        @endforeach
                     </select>
                     <x-input-error for="" />
                 </label>
-                <label class="block mb-6">
-                    <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+
+
+                <label class="block mb-6 relative">
+                    <input type="hidden" name="colegioId" wire:model="applicant.colegio_id">
+                    <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Nombre del Colegio
                     </span>
-                    <select name="colegio"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option value='1'>Ejemplo</option>
-                    </select>
+                    <input type="text" wire:model.debounce.500ms="searchSchoolName" required
+                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
+                
+                    <ul class="w-full absolute shadow bg-white max-w-md max-h-48 p-2 overflow-y-auto text-sm text-gray-700"
+                        style="top: 100%; left: 0">
+                        @foreach ($schools as $school)
+                            <li wire:click="updateSchool({{ $school->colegio_id }})">
+                                <div class="flex items-center pl-2 rounded hover:bg-gray-100 dark:hover-bg-gray-200 cursor-pointer">
+                                    <p class="w-full py-2 text-xs font-medium text-gray-900 rounded dark:text-gray-900">
+                                        {{ $school->colegio_descripcion }}
+                                    </p>
+                                    <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">{{ $school->colegio_distrito }}</span>
+                                </div>
+                            </li>
+                        @endforeach
+                    </ul>  
                     <x-input-error for="" />
                 </label>
+
                 <label class="block mb-6">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
@@ -284,18 +313,20 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Número de veces que postula a la UNPRG
                     </span>
-                    <input type="number" name="numUnprg"
+                    <input type="number" name="numUnprg" min="1" max="100"
+                        wire:model="applicant.postulante_numvecesu"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="" />
+                    <x-input-error for="applicant.postulante_numvecesu" />
                 </label>
                 <label class="block mb-6">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Número de veces que postula a otras universidades
                     </span>
-                    <input type="number" name="numOtras"
+                    <input type="number" name="numOtras" min="1" max="100"
+                        wire:model="applicant.postulante_numveceso"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="" />
+                    <x-input-error for="applicant.postulante_numveceso" />
                 </label>
             </div>
 
@@ -311,39 +342,45 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Sede de Postulación
                     </span>
-                    <select name="sede"
+                    <select name="sede" wire:model="applicant.sede_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option value='1'>Ejemplo</option>
+                        @foreach ($sedes as $sede)
+                            <option value={{ $sede->sede_id }}>
+                                {{ $sede->sede_descripcion }}
+                            </option>
+                        @endforeach
                     </select>
-                    <x-input-error for="" />
+                    <x-input-error for="applicant.sede_id" />
                 </label>
                 <label class="block mb-6">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Programa Académico al que Postula
                     </span>
-                    <select name="programaAcademico"
+                    <select name="programaAcademico" wire:model="applicant.escuela_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option value='1'>Ejemplo</option>
+                        @foreach ($academicPrograms as $academicProgram)
+                            <option value={{ $academicProgram->escuela_id }}>
+                                {{ $academicProgram->escuela_descripcion }}
+                            </option>
+                        @endforeach
                     </select>
-                    <x-input-error for="" />
+                    <x-input-error for="applicant.escuela_id" />
                 </label>
             </div>
-
         </div>
-
 
         <div class="flex w-full justify-end">
             @if ($currentStep != 1)
-                <a wire:click="previousStep"
+                <button type="button" wire:click="previousStep"
                     class="cursor-pointer mt-4 mr-4 text-gray-900 bg-white hover:bg-gray-100 shadow-md focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                    Siguiente
-                </a>
+                    Atrás
+                </button>
             @else
-                <button type="submit"
+                <a href="{{ route('start') }}"
                     class="cursor-pointer mt-4 mr-4 text-gray-900 bg-white hover:bg-gray-100 shadow-md focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                     Cancelar
-                </button>
+                </a>
             @endif
             <a wire:click="nextStep"
                 class="cursor-pointer mt-4 text-white bg-blue-600 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">

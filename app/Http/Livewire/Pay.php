@@ -19,7 +19,7 @@ class Pay extends Component
   protected $rules = [
     'dni' => 'required|numeric|digits:8|exists:admision_banco,dni_dep',
     'voucherNumber' => 'required|numeric|digits:7|exists:admision_banco,NumDoc',
-    'agencia' => 'required|numeric|digits:4|exists:admision_banco,Oficina',
+    /* 'agencia' => 'required|numeric|digits:4|exists:admision_banco,Oficina', */
   ];
 
   public function updated($propertyName)
