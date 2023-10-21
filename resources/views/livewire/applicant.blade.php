@@ -96,6 +96,7 @@
                     </span>
                     <select wire:change="changePlaceBirth('DEPARTMENT',$event.target.value)"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar</option>
                         @foreach ($departaments as $departament)
                             <option value={{ $departament->departamento_id }}>
                                 {{ $departament->departamento_descripcion }}
@@ -110,6 +111,7 @@
                     <select wire:change="changePlaceBirth('PROVINCE',$event.target.value)"
                         wire:model="selectedProvinceBirthId"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar</option>
                         @foreach ($provincesBirth as $provinceBirth)
                             <option value={{ $provinceBirth->provincia_id }}>
                                 {{ ucfirst(strtolower($provinceBirth->provincia_descripcion)) }}
@@ -146,6 +148,7 @@
                     </span>
                     <select wire:change="changePlaceReside('DEPARTMENT',$event.target.value)"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar</option>
                         @foreach ($departaments as $departament)
                             <option value={{ $departament->departamento_id }}>
                                 {{ $departament->departamento_descripcion }}
@@ -160,6 +163,7 @@
                     <select wire:change="changePlaceReside('PROVINCE',$event.target.value)"
                         wire:model="selectedProvinceResideId"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar</option>
                         @foreach ($provincesReside as $provinceReside)
                             <option value={{ $provinceReside->provincia_id }}>
                                 {{ ucfirst(strtolower($provinceReside->provincia_descripcion)) }}
@@ -279,15 +283,20 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Nombre del Colegio <x-input-error for="searchSchoolName" />
                     </span>
-                    <input type="text" wire:model.debounce.500ms="searchSchoolName" required wire:input="$set('showSchools', true)"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" 
-                        placeholder="Ejem: San Martín de los Andes"/>
+                    <input type="text" wire:model.debounce.500ms="searchSchoolName" required
+                        wire:input="$set('showSchools', true)"
+                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+                        placeholder="Ejem: San Martín de los Andes" />
 
+                    @if (!$selectedDepartmentCollegeId && $searchSchoolName != null && !$errors->any())
+                        <p class="absolute peer-invalid:visible text-red-600 text-xs animate-slide-in-left">
+                            seleccione el departamento de procedencia</p>
+                    @endif
                     @if (session()->has('null'))
                         <p class="absolute peer-invalid:visible text-red-600 text-xs animate-slide-in-left">
                             {{ session('null') }}</p>
                     @else
-                        @if ($showSchools)
+                        @if ($showSchools && $selectedDepartmentCollegeId)
                             <ul
                                 class="w-full absolute shadow bg-white max-w-md max-h-48 p-2 overflow-y-auto text-sm text-gray-700">
                                 @foreach ($schools as $school)
@@ -317,7 +326,7 @@
                     <select name="annoEgresoColegio" wire:model="applicant.postulante_anoEgreso"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
-                        @for ($i = 1925; $i <= date('Y'); $i++)
+                        @for ($i = 1970; $i <= date('Y'); $i++)
                             <option value={{ $i }}>
                                 {{ $i }}
                             </option>

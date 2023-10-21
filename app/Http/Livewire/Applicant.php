@@ -61,8 +61,6 @@ class Applicant extends Component
     $this->academicPrograms = Escuela::all();
     $this->generos = Genero::all();
     $this->sedes = Sede::all();
-    $this->applicant->postulante_numvecesu = 0;
-    $this->applicant->postulante_numveceso = 0;
   }
 
   public function render()
@@ -105,10 +103,8 @@ class Applicant extends Component
   {
     $school = Colegio::where('departamento_id', $idDepartment)->first();
     $this->applicant->colegio_id = $school->colegio_id;
-    $this->selectedDepartmentCollegeId = $idDepartment;
+    $this->searchSchoolName = $school->colegio_descripcion;
     $this->showSchools = false;
-    $this->applicant->colegio_id = null;
-    $this->searchSchoolName = "";
   }
 
   public function updateSchool(int $idSchool)
