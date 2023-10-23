@@ -35,163 +35,123 @@
         </nav>
 
         <main>
-            <div class="mx-auto max-w-7xl py-6 sm:px-6 lg:px-8">
 
-                <div class="bg-white">
-                    <div class="mx-auto max-w-7xl px-6 lg:px-8">
-                        <div class="mx-auto max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none">
-                            <div class="p-8 sm:p-10 lg:flex-auto">
-                                <h3 class="text-2xl font-bold tracking-tight text-gray-900">BIENVENIDO POSTULANTE</h3>
-                                <p class="mt-6 text-base leading-7 text-gray-600 text-justify">Para continuar, asegúrate de haber
-                                    completado el
-                                    pago correspondiente en el Banco de la Nación. Luego, ingresa tus datos a
-                                    continuación para
-                                    verificar el pago realizado y avanzar en tu proceso de admisión.</p>
-                                <div class="mt-8 flex items-center gap-x-4 mb-5">
-                                    <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">1. Información
-                                        del pago
-                                    </h4>
-                                    <div class="h-px flex-auto bg-gray-100"></div>
-                                </div>
+            <form class="p-10">
+                <div class="my-8 flex items-center gap-x-4">
+                    <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Archivos Requeridos
+                    </h4>
+                    <div class="h-px flex-auto bg-gray-100"></div>
+                </div>
 
-                                <div class="grid md:grid-cols-4 md:gap-6">
-                                    <label class="block mb-6">
-                                        <span
-                                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
-                                            DNI
-                                        </span>
-                                        <input type="text" name="dni" required
-                                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-                                            placeholder="Ejem: 75635..." />
-                                        <x-input-error for="dni" />
-                                    </label>
-                                    <label class="block mb-6">
-                                        <span
-                                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
-                                            Voucher
-                                        </span>
-                                        <input type="text" name="numVoucher" required
-                                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-                                            placeholder="Ejem: 1742..." />
-                                        <x-input-error for="numVoucher" />
-                                    </label>
-                                    <label class="block mb-6">
-                                        <span
-                                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
-                                            Agencia
-                                        </span>
-                                        <input type="text" name="numAgencia" required
-                                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-                                            placeholder="Ejem: 0230" />
-                                        <x-input-error for="numAgencia" />
-                                    </label>
-                                    <label class="block mb-6">
-                                        <span
-                                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
-                                            Fecha del pago
-                                        </span>
-                                        <input type="date" name="fechaPago" required
-                                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                                        <x-input-error for="fechaPago" />
-                                    </label>
-                                </div>
+                <div class="grid md:grid-cols-1 md:gap-6 mb-10">
+                    <div class="flex items-center justify-center space-x-6">
+                        <x-icons.user />
+                        <label class="block">
+                            <span
+                                class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                                Foto Carnet Postulante
+                            </span>
+                            <input type="file"
+                                class="block w-full text-sm text-slate-500
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-full file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-50 file:text-blue-700
+                        hover:file:bg-blue-100
+                      " />
+                        </label>
+                    </div>
 
-                                <div class="mt-4 flex items-center gap-x-4 mb-5">
-                                    <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">2. Información
-                                        adicional
-                                        de validación</h4>
-                                    <div class="h-px flex-auto bg-gray-100"></div>
-                                </div>
+                </div>
 
-                                <div class="grid md:grid-cols-2 md:gap-6">
-                                    <label class="block mb-6">
-                                        <span
-                                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
-                                            Modalidad
-                                        </span>
-                                        <select
-                                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                                            <option value="disabled select hidden">Seleccionar</option>
-                                            {{-- @foreach ($modalities as $modalitie)
-                                    <option value={{ $modalitie->modalidad_id }}>
-                                      {{ $modalitie->modalidad_descripcion }}
-                                    </option>
-                                  @endforeach --}}
-                                        </select>
-                                    </label>
-                                    <label class="block mb-6">
-                                        <span
-                                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
-                                            Tipo de colegio de procedencia
-                                        </span>
-                                        <select
-                                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                                            <option value="disabled select hidden">Seleccionar</option>
-                                            {{-- @foreach ($modalities as $modalitie)
-                                    <option value={{ $modalitie->modalidad_id }}>
-                                      {{ $modalitie->modalidad_descripcion }}
-                                    </option>
-                                  @endforeach --}}
-                                        </select>
-                                        <x-input-error for="numVoucher" />
-                                    </label>
-                                </div>
-
-                                {{--               <ul role="list" class="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6">
-                            <li class="flex gap-x-3">
-                              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                              </svg>
-                              Private forum access
-                            </li>
-                            <li class="flex gap-x-3">
-                              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                              </svg>
-                              Member resources
-                            </li>
-                            <li class="flex gap-x-3">
-                              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                              </svg>
-                              Entry to annual conference
-                            </li>
-                            <li class="flex gap-x-3">
-                              <svg class="h-6 w-5 flex-none text-indigo-600" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                              </svg>
-                              Official member t-shirt
-                            </li>
-                          </ul> --}}
-
-                            </div>
-                            <div class="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
-                                <div
-                                    class="h-full rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
-                                    <div class="mx-auto max-w-xs px-8">
-                                        <p class="text-base font-semibold text-gray-600">Pago realizado al</p>
-                                        <div class="flex justify-center items-center">
-                                            <img src="{{ asset('images/logo_bn.png') }}" alt="Banco de la nacion"
-                                                width="45" height="45" />
-                                            <p class="ml-4 text-2xl tracking-tight text-gray-600">Banco de la Nación</p>
-                                        </div>
-                                        <p class="my-16 flex items-baseline justify-center gap-x-2">
-                                            <span class="text-5xl font-bold tracking-tight text-gray-900">S/. 349</span>
-                                            <span
-                                                class="text-sm font-semibold leading-6 tracking-wide text-gray-600">PEN</span>
-                                        </p>
-                                        <a href="#"
-                                            class="mt-10 block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">INGRESAR</a>
-                                        <p class="mt-6 text-xs leading-5 text-gray-600">Continue al ingreso de los datos
-                                            personales y académicos del postulante</p>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="grid md:grid-cols-2 md:gap-6">
+                    <div class="flex items-center justify-center space-x-6 mb-10">
+                        <div class="shrink-0">
+                            <img src="{{ asset('images/dni-anverso.png') }}" alt="DNI ANVERSO" width="60" height="60" />
                         </div>
+                        <label class="block">
+                            <span
+                                class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                                DNI Parte Anverso
+                            </span>
+                            <input type="file"
+                                class="block w-full text-sm text-slate-500
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-full file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-50 file:text-blue-700
+                        hover:file:bg-blue-100
+                      " />
+                        </label>
+                    </div>
+
+                    <div class="flex items-center justify-center space-x-6 mb-10">
+                        <div class="shrink-0">
+                            <img src="{{ asset('images/dni-reverso.png') }}" alt="DNI REVERSO" width="60" height="60" />
+                        </div>
+                        <label class="block">
+                            <span
+                                class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                                DNI Parte Reverso
+                            </span>
+                            <input type="file"
+                                class="block w-full text-sm text-slate-500
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-full file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-blue-50 file:text-blue-700
+                        hover:file:bg-blue-100
+                      " />
+                        </label>
                     </div>
                 </div>
 
-            </div>
+                <div class="my-8 flex items-center gap-x-4">
+                    <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Declaración Jurada
+                    </h4>
+                    <span
+                        class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">IMPORTANTE</span>
+                    <div class="h-px flex-auto bg-gray-100"></div>
+                </div>
+
+                <div class="relative flex gap-x-3">
+                    <div class="flex h-6 items-center">
+                        <input id="comments" name="comments" type="checkbox"
+                            class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                    </div>
+                    <div class="text-sm leading-6">
+                        <label for="comments" class="font-medium text-gray-900">Declaro bajo juramento que:</label>
+                    </div>
+                </div>
+
+                <ul role="list" class="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:gap-6">
+                    <li class="flex gap-x-3">
+                        <x-icons.check />
+                        Conozco, acepto y me someto a las bases, condiciones y procedimientos establecidos en eI
+                        Reglamento del Concurso de Admisión 2016-II de la Universidad Nacional
+                        Pedro Ruiz Gallo.
+                    </li>
+                    <li class="flex gap-x-3">
+                        <x-icons.check />
+                        La información y fotografia registrada es AUTÉNTICA y que las imágenes de mi DNI enviados para
+                        mi inscripción como postulante al presente Concurso de Admisión,
+                        son copia fiel al original, en caso de faltar a la verdad me someto a las sanciones
+                        correspondientes (Art. 38 del Reglamento del presente Concurso de Admisión).
+                    </li>
+                    <li class="flex gap-x-3">
+                        <x-icons.check />
+                        No tengo impedimento para participar en eI Concurso de Admisión 2016-11.
+                    </li>
+                    <li class="flex gap-x-3">
+                        <x-icons.check />
+                        De alcanzar una vacante, me comprometo a regularizar mi expediente en la fecha establecida en el
+                        cronograma del presente Concurso de Admisión; en caso contrario
+                        me someto a las sanciones correspondientes (Art.87 del Reglamento del presente Concurso de
+                        Admisión).
+                    </li>
+                </ul>
+            </form>
+
         </main>
     </div>
 

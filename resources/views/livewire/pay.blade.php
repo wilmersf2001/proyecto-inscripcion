@@ -10,13 +10,13 @@
             verificar el pago realizado y avanzar en tu proceso de admisión.</p>
 
         <div class="mt-8 flex items-center gap-x-4 mb-5">
-            <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">1. Información
-                del pago
+            <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">Información
+                del pago de postulante
             </h4>
             <div class="h-px flex-auto bg-gray-100"></div>
         </div>
 
-        <div class="grid md:grid-cols-4 md:gap-6">
+        <div class="grid md:grid-cols-2 md:gap-6">
             <label class="block mb-6">
                 <span
                     class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
@@ -37,6 +37,9 @@
                     placeholder="Ejem: 1742..." />
                 <x-input-error for="voucherNumber" />
             </label>
+        </div>
+
+        <div class="grid md:grid-cols-2 md:gap-6">
             <label class="block mb-6">
                 <span
                     class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
@@ -55,45 +58,6 @@
                 <input type="date" name="payDay" wire:model.lazy="payDay"
                     class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                 <x-input-error for="payDay" />
-            </label>
-        </div>
-
-        <div class="mt-4 flex items-center gap-x-4 mb-5">
-            <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">2. Información
-                adicional
-                de validación</h4>
-            <div class="h-px flex-auto bg-gray-100"></div>
-        </div>
-
-        <div class="grid md:grid-cols-2 md:gap-6">
-            <label class="block mb-6">
-                <span
-                    class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
-                    Modalidad
-                </span>
-                <select wire:model="idModality"
-                    class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                    <option class="hidden">Seleccionar</option>
-                    @foreach ($modalities as $modalitie)
-                        <option value={{ $modalitie->modalidad_id }}>
-                            {{ $modalitie->modalidad_descripcion }}
-                        </option>
-                    @endforeach
-                </select>
-                <x-input-error for="idModality" />
-            </label>
-            <label class="block mb-6">
-                <span
-                    class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
-                    Tipo de colegio de procedencia
-                </span>
-                <select wire:model="typeSchool"
-                    class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                    <option class="hidden">Seleccionar</option>
-                    <option value="1">Nacional</option>
-                    <option value="2">Particular</option>
-                </select>
-                <x-input-error for="typeSchool" />
             </label>
         </div>
 

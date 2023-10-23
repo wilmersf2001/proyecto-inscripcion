@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidatePaymentRequest;
+use App\Models\Banco;
 use Illuminate\Http\Request;
 use App\Services\ApiReniecService;
 
@@ -25,6 +26,7 @@ class PayController extends Controller
     /* validacion */
     $dni = $request->dni;
     $applicant = $this->apiReniec->getApplicantDataByDni($dni);
-    return view('register-applicant', compact('applicant'));
+    $bank = Banco::where('NumSecuencia', 2)->first();
+    return view('register-applicant', compact('applicant', 'bank'));
   }
 }

@@ -14,9 +14,6 @@ class Pay extends Component
   public string $agencyNumber;
   public $payDay;
   public float $amount;
-  public int $idModality;
-  public int $typeSchool;
-  public $modalities;
   protected $messages = ValidatePayment::MESSAGES_ERROR;
 
   protected $rules = [
@@ -28,10 +25,6 @@ class Pay extends Component
   public function updated($propertyName)
   {
     $this->validateOnly($propertyName);
-  }
-
-  public function mount(){
-    $this->modalities = Modalidad::all();
   }
 
   public function render()

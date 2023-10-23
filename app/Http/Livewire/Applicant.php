@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Genero;
+use App\Models\Modalidad;
 use App\Models\Postulante;
 use App\Models\Sede;
 use Livewire\Component;
@@ -14,12 +15,14 @@ use App\Http\Requests\View\StoreApplicantRequest;
 use App\Http\Requests\View\FirstStepApplicantRequest;
 use App\Http\Requests\View\StepTwoApplicantRequest;
 use App\Http\Requests\View\Message\ValidateApplicant;
+use App\Models\Banco;
 use App\Models\Colegio;
 use App\Models\Escuela;
 
 class Applicant extends Component
 {
-  public $applicant;
+  public Postulante $applicant;
+  public Banco $bank;
   public $departaments;
   public $provincesBirth;
   public $districtsBirth;
@@ -31,11 +34,14 @@ class Applicant extends Component
   public $generos;
   public $schools;
   public $sedes;
+  public $modalities;
   public $academicPrograms;
   public $searchSchoolName;
   public $selectedDepartmentCollegeId;
-  public $currentStep = 2;
+  public $typeSchool;
+  public $currentStep = 1;
   public $showSchools = false;
+  public $showAlertImport = false;
   protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
   protected function rules()
@@ -49,9 +55,10 @@ class Applicant extends Component
     $this->validateOnly($propertyName);
   }
 
-  public function mount(Postulante $responseApiReniec)
+  public function mount(Postulante $responseApiReniec, Banco $bank)
   {
     $this->applicant = $responseApiReniec;
+    $this->bank = $bank;
     $this->departaments = Departamento::all();
     $this->provincesBirth = Provincia::all();
     $this->districtsBirth = Distrito::all();
@@ -61,15 +68,17 @@ class Applicant extends Component
     $this->academicPrograms = Escuela::all();
     $this->generos = Genero::all();
     $this->sedes = Sede::all();
+    $this->modalities = Modalidad::all();
   }
 
   public function render()
   {
     $this->schools = Colegio::where('departamento_id', $this->selectedDepartmentCollegeId)
       ->where('colegio_descripcion', 'like', '%' . $this->searchSchoolName . '%')
+      ->where('colegio_tipocolegio', $this->typeSchool)
       ->get();
 
-    if ($this->schools->isEmpty() && $this->selectedDepartmentCollegeId) {
+    if ($this->schools->isEmpty() && $this->selectedDepartmentCollegeId && $this->typeSchool) {
       session()->flash('null', 'colegio no encontrado.');
     }
     return view('livewire.applicant');
@@ -84,7 +93,6 @@ class Applicant extends Component
     } elseif ($action == 'PROVINCE') {
       $this->districtsBirth = Provincia::where('provincia_id', $idlocation)->first()->distritos;
     }
-    $this->applicant->distrito_id = $this->districtsBirth->first()->distrito_id;
   }
 
   public function changePlaceReside(string $action, int $idlocation)
@@ -96,15 +104,12 @@ class Applicant extends Component
     } elseif ($action == 'PROVINCE') {
       $this->districtsReside = Provincia::where('provincia_id', $idlocation)->first()->distritos;
     }
-    $this->applicant->distrito_id_direccion = $this->districtsReside->first()->distrito_id;
   }
 
-  public function getCollegeByDepartment(int $idDepartment)
+  public function resetSchoolId()
   {
-    $school = Colegio::where('departamento_id', $idDepartment)->first();
-    $this->applicant->colegio_id = $school->colegio_id;
-    $this->searchSchoolName = $school->colegio_descripcion;
-    $this->showSchools = false;
+    $this->reset(['searchSchoolName', 'showSchools']);
+    $this->applicant->colegio_id = null;
   }
 
   public function updateSchool(int $idSchool)
@@ -123,6 +128,39 @@ class Applicant extends Component
       $this->validate(StepTwoApplicantRequest::SETEP_TWO_VALIDATE);
     }
     $this->currentStep++;
+  }
+
+  public function validateModality(int $idModalidad = null)
+  {
+    if ($this->applicant->modalidad_id) {
+      if (!$idModalidad) {
+        $idModalidad = $this->applicant->modalidad_id;
+      }
+
+      $this->validateYearsOfGraduationAndAmount($idModalidad);
+    }
+  }
+
+  public function validateYearsOfGraduationAndAmount(int $idModalidad)
+  {
+    $modality = Modalidad::where('modalidad_id', $idModalidad)->first();
+    $amountCompare = $this->typeSchool == '1' ? $modality->modalidad_montonacional : $modality->modalidad_montoparticular;
+    $differenceYears = date('Y') - $this->applicant->postulante_anoEgreso;
+    $errorMessage = '';
+
+    if ($idModalidad == 3 && $differenceYears > 1) {
+      $errorMessage = 'No puede acceder a la modalidad Dos primeros puestos. Recuerda que tienes un plazo de 2 años después de egresar con respecto al año en curso.';
+    } elseif ($idModalidad == 10 && $differenceYears > 0) {
+      $errorMessage = 'No puede acceder a la modalidad 5to de Secundaria. Recuerda que debes de egresar el mismo año en curso.';
+    } elseif ($this->bank->Importe < $amountCompare) {
+      $errorMessage = 'La modalidad a la que deseas acceder tiene un costo mayor al importe que has realizado al Banco de la Nación.';
+    }
+
+    if (!empty($errorMessage)) {
+      session()->flash('message', $errorMessage);
+      $this->showAlertImport = true;
+      $this->applicant->modalidad_id = null;
+    }
   }
 
   public function previousStep()
