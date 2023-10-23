@@ -104,10 +104,9 @@ class Applicant extends Component
   public function getCollegeByDepartment(int $idDepartment)
   {
     $school = Colegio::where('departamento_id', $idDepartment)->first();
-    $this->applicant->colegio_id = $school->colegio_id;
+    $this->applicant->colegio_id = null;
     $this->selectedDepartmentCollegeId = $idDepartment;
     $this->showSchools = false;
-    $this->applicant->colegio_id = null;
     $this->searchSchoolName = "";
   }
 
