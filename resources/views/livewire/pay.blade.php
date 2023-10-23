@@ -60,7 +60,11 @@
                 <x-input-error for="payDay" />
             </label>
         </div>
-
+            @if (session('warning'))
+            <div class="alert alert-warning">
+                {{ session('warning') }}
+            </div>
+            @endif
     </div>
     <div class="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
         <div
@@ -73,7 +77,15 @@
                     <p class="ml-4 text-2xl tracking-tight text-gray-600">Banco de la Nación</p>
                 </div>
                 <p class="my-16 flex items-baseline justify-center gap-x-2">
-                    <span class="text-5xl font-bold tracking-tight text-gray-900">S/. _ _ _</span>
+                    <span class="text-5xl font-bold tracking-tight text-gray-900"> S/.
+                         @if($amount)
+                         {{$amount}}
+                         @else
+                            _ _ _
+
+                         @endif
+                    </span>
+
                     <span class="text-sm font-semibold leading-6 tracking-wide text-gray-600">PEN</span>
                 </p>
                 @if ($errors->any())

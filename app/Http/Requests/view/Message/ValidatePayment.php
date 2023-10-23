@@ -13,9 +13,9 @@ class ValidatePayment
     'voucherNumber.numeric' => 'campo número de voucher debe ser numérico',
     'voucherNumber.digits' => 'campo número de voucher debe tener 7 dígitos',
     'voucherNumber.exists' => 'número de voucher no encontrado',
-    'agencia.required' => 'agencia es requerido',
-    'agencia.digits' => 'campo de agencia debe tener 4 digitos',
-    'agencia.numeric' => 'campo número de agencia debe ser numérico',
-    'agencia.exists' => 'número de agencia no encontrado',
+    'agencyNumber.required' => 'agencia es requerido',
+    'agencyNumber.digits' => 'campo de agencia debe tener 4 digitos',
+    'agencyNumber.numeric' => 'campo número de agencia debe ser numérico',
+    'agencyNumber.exists' => 'número de agencia no encontrado',
   ];
 }
