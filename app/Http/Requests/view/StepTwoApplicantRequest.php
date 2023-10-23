@@ -11,5 +11,8 @@ class StepTwoApplicantRequest
     'applicant.postulante_numveceso' => 'required|numeric|integer|gte:0',
     'applicant.colegio_id' => 'required|numeric',
     'applicant.postulante_anoEgreso' => 'required|numeric|digits:4',
+    'applicant.modalidad_id' => 'required|numeric',
+    'typeSchool' => 'required|numeric',
+    'selectedDepartmentCollegeId' => 'required|numeric',
   ];
 }
