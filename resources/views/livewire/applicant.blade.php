@@ -283,7 +283,89 @@
             </div>
         </div>
 
+
         <div class="{{ $currentStep == 2 ? 'animate-slide-in-right' : 'hidden' }}">
+
+            <div class="mb-8 mt-4 flex items-center gap-x-4">
+                <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Información de la Universidad
+                </h4>
+                <div class="h-px flex-auto bg-gray-100"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 md:gap-6">
+                <label class="block mb-6">
+                    <span
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                        Sede de Postulación
+                    </span>
+                    <select name="sede" wire:model="applicant.sede_id"
+                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar</option>
+                        @foreach ($sedes as $sede)
+                            <option value={{ $sede->sede_id }}>
+                                {{ $sede->sede_descripcion }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <x-input-error for="applicant.sede_id" />
+                </label>
+                <label class="block mb-6">
+                    <span
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                        Programa Académico al que Postula
+                    </span>
+                    <select name="programaAcademico" wire:model="applicant.escuela_id"
+                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar</option>
+                        @foreach ($academicPrograms as $academicProgram)
+                            <option value={{ $academicProgram->escuela_id }}>
+                                {{ $academicProgram->escuela_descripcion }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <x-input-error for="applicant.escuela_id" />
+                </label>
+                <label class="block mb-6">
+                    <div class="flex">
+                        <span
+                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900 mr-2">
+                            Modalidad
+                        </span>
+                        <div class="relative">
+                            <button type="button" class="question-trigger font-medium text-blue-600 hover:underline">
+                                <x-icons.question />
+                            </button>
+                            <x-message-question>
+                                <x-slot name="message">
+                                    <p class="text-xs font-medium text-gray-900">Recuerda:</p>
+                                    <ul>
+                                        <li class="before:content-['*'] before:mr-0.5 before:text-red-500">La modalidad
+                                            5to de secundaria es solo para los postulantes que
+                                            han culminado el 5to de secundaria en el mismo año en curso.
+                                        </li>
+                                        <li class="before:content-['*'] before:mr-0.5 before:text-red-500">
+                                            La modalida de dos primeros puestos es solo para los postulantes que
+                                            han culminado el 5to dentro de un plazo de 2 años con respecto al año en
+                                            curso.
+                                        </li>
+                                    </ul>
+                                </x-slot>
+                            </x-message-question>
+                        </div>
+                    </div>
+                    <select wire:model="applicant.modalidad_id" wire:input="validateModality($event.target.value)"
+                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar</option>
+                        @foreach ($modalities as $modalitie)
+                            <option value={{ $modalitie->modalidad_id }}>
+                                {{ $modalitie->modalidad_descripcion }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <x-input-error for="applicant.modalidad_id" />
+                </label>
+            </div>
+
             <div class="my-8 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Información Académica</h4>
                 <div class="h-px flex-auto bg-gray-100"></div>
@@ -371,16 +453,20 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Año de Egreso del Colegio
                     </span>
-                    <select name="annoEgresoColegio" wire:model="applicant.postulante_anoEgreso"
-                        wire:input="validateModality"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option class="hidden">Seleccionar</option>
-                        @for ($i = 1970; $i <= date('Y'); $i++)
-                            <option value={{ $i }}>
-                                {{ $i }}
-                            </option>
-                        @endfor
-                    </select>
+                    @if ($applicant->modalidad_id)
+                        <select name="annoEgresoColegio" wire:model="applicant.postulante_anoEgreso"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                            <option class="hidden">Seleccionar</option>
+                            @for ($i = $minimumYear; $i <= date('Y'); $i++)
+                                <option value={{ $i }}>
+                                    {{ $i }}
+                                </option>
+                            @endfor
+                        </select>
+                    @else
+                        <input type="text" disabled placeholder="Seleccione el modalidad"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 block w-full rounded-md sm:text-sm disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" />
+                    @endif
                     <x-input-error for="applicant.postulante_anoEgreso" />
                 </label>
                 <label class="block mb-6">
@@ -404,90 +490,6 @@
                     <x-input-error for="applicant.postulante_numveceso" />
                 </label>
             </div>
-
-            <div class="mb-8 mt-4 flex items-center gap-x-4">
-                <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Información de la Universidad
-                </h4>
-                <div class="h-px flex-auto bg-gray-100"></div>
-            </div>
-
-            <div class="grid md:grid-cols-3 md:gap-6">
-                <label class="block mb-6">
-                    <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                        Sede de Postulación
-                    </span>
-                    <select name="sede" wire:model="applicant.sede_id"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option class="hidden">Seleccionar</option>
-                        @foreach ($sedes as $sede)
-                            <option value={{ $sede->sede_id }}>
-                                {{ $sede->sede_descripcion }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <x-input-error for="applicant.sede_id" />
-                </label>
-                <label class="block mb-6">
-                    <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                        Programa Académico al que Postula
-                    </span>
-                    <select name="programaAcademico" wire:model="applicant.escuela_id"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option class="hidden">Seleccionar</option>
-                        @foreach ($academicPrograms as $academicProgram)
-                            <option value={{ $academicProgram->escuela_id }}>
-                                {{ $academicProgram->escuela_descripcion }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <x-input-error for="applicant.escuela_id" />
-                </label>
-                <label class="block mb-6">
-                    <div class="flex">
-                        <span
-                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900 mr-2">
-                            Modalidad
-                        </span>
-                        <div class="relative">
-                            <button type="button" class="question-trigger font-medium text-blue-600 hover:underline">
-                                <x-icons.question />
-                            </button>
-                            <x-message-question>
-                                <x-slot name="message">
-                                    <p class="text-xs font-medium text-gray-900">Recuerda:</p>
-                                    <ul>
-                                        <li class="before:content-['*'] before:mr-0.5 before:text-red-500">La modalidad 5to de secundaria es solo para los postulantes que
-                                            han culminado el 5to de secundaria en el mismo año en curso.
-                                        </li>
-                                        <li class="before:content-['*'] before:mr-0.5 before:text-red-500">
-                                            La modalida de dos primeros puestos es solo para los postulantes que
-                                            han culminado el 5to dentro de un plazo de 2 años con respecto al año en
-                                            curso.
-                                        </li>
-                                    </ul>
-                                </x-slot>
-                            </x-message-question>
-                        </div>
-                    </div>
-                    @if ($typeSchool)
-                        <select wire:model="applicant.modalidad_id" wire:input="validateModality($event.target.value)"
-                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                            <option class="hidden">Seleccionar</option>
-                            @foreach ($modalities as $modalitie)
-                                <option value={{ $modalitie->modalidad_id }}>
-                                    {{ $modalitie->modalidad_descripcion }}
-                                </option>
-                            @endforeach
-                        </select>
-                    @else
-                        <input type="text" disabled placeholder="Seleccione el tipo de colegio"
-                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 block w-full rounded-md sm:text-sm disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" />
-                    @endif
-                    <x-input-error for="applicant.modalidad_id" />
-                </label>
-            </div>
         </div>
 
         <div class="flex w-full justify-end">
@@ -509,36 +511,7 @@
         </div>
     </form>
 
-    @if ($showAlertImport)
-        <x-alert>
-            <x-slot name="title">Importante</x-slot>
-            <x-slot name="message">{{ session('message') }}</x-slot>
-            <x-slot name="buttons">
-                <button type="button" wire:click="$set('showAlertImport', false)"
-                    class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto">Aceptar</button>
-            </x-slot>
-        </x-alert>
-    @endif
-
     <div wire:offline>
         You are now offline.
     </div>
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const questionTriggers = document.querySelectorAll(".question-trigger");
-                questionTriggers.forEach(function(trigger) {
-                    trigger.addEventListener("mouseenter", function() {
-                        const popover = this.nextElementSibling;
-                        popover.style.opacity = "1";
-                        popover.style.visibility = "visible";
-                    });
-                    trigger.addEventListener("mouseleave", function() {
-                        const popover = this.nextElementSibling;
-                        popover.style.opacity = "0";
-                        popover.style.visibility = "hidden";
-                    });
-                });
-            });
-        </script>
 </div>

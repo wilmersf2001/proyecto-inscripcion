@@ -39,9 +39,9 @@ class Applicant extends Component
   public $searchSchoolName;
   public $selectedDepartmentCollegeId;
   public $typeSchool;
-  public $currentStep = 1;
-  public $showSchools = false;
-  public $showAlertImport = false;
+  public int $currentStep = 2;
+  public bool $showSchools = false;
+  public int $minimumYear = 1940;
   protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
   protected function rules()
@@ -130,37 +130,11 @@ class Applicant extends Component
     $this->currentStep++;
   }
 
-  public function validateModality(int $idModalidad = null)
+  public function validateModality(int $idModalidad)
   {
-    if ($this->applicant->modalidad_id) {
-      if (!$idModalidad) {
-        $idModalidad = $this->applicant->modalidad_id;
-      }
-
-      $this->validateYearsOfGraduationAndAmount($idModalidad);
-    }
-  }
-
-  public function validateYearsOfGraduationAndAmount(int $idModalidad)
-  {
-    $modality = Modalidad::where('modalidad_id', $idModalidad)->first();
-    $amountCompare = $this->typeSchool == '1' ? $modality->modalidad_montonacional : $modality->modalidad_montoparticular;
-    $differenceYears = date('Y') - $this->applicant->postulante_anoEgreso;
-    $errorMessage = '';
-
-    if ($idModalidad == 3 && $differenceYears > 2) {
-      $errorMessage = 'No puede acceder a la modalidad Dos primeros puestos. Recuerda que tienes un plazo de 2 años después de egresar con respecto al año en curso.';
-    } elseif ($idModalidad == 10 && $differenceYears > 0) {
-      $errorMessage = 'No puede acceder a la modalidad 5to de Secundaria. Recuerda que debes de egresar el mismo año en curso.';
-    } elseif ($this->bank->Importe < $amountCompare) {
-      $errorMessage = 'La modalidad a la que deseas acceder tiene un costo mayor al importe que has realizado al Banco de la Nación.';
-    }
-
-    if (!empty($errorMessage)) {
-      session()->flash('message', $errorMessage);
-      $this->showAlertImport = true;
-      $this->applicant->modalidad_id = null;
-    }
+    $modalityYear = ($idModalidad == 3) ? date('Y') - 2 : (($idModalidad == 10) ? date('Y') : 1940);
+    $this->minimumYear = $modalityYear;
+    $this->applicant->postulante_anoEgreso = null;
   }
 
   public function previousStep()

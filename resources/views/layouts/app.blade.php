@@ -36,6 +36,24 @@
           @yield('content')
         </main>
     </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const questionTriggers = document.querySelectorAll(".question-trigger");
+            questionTriggers.forEach(function(trigger) {
+                trigger.addEventListener("mouseenter", function() {
+                    const popover = this.nextElementSibling;
+                    popover.style.opacity = "1";
+                    popover.style.visibility = "visible";
+                });
+                trigger.addEventListener("mouseleave", function() {
+                    const popover = this.nextElementSibling;
+                    popover.style.opacity = "0";
+                    popover.style.visibility = "hidden";
+                });
+            });
+        });
+    </script>
     @livewireScripts
 </body>
 

@@ -12,12 +12,6 @@
 <body>
 
 
-    <div class="absolute bg-white border border-gray-200 rounded-lg shadow p-4">
-        <img src="{{ asset('images/voucher_ejemplo.png') }}" alt="UNPRG" width="250" height="250" />
-    </div>
-
-
-
 </body>
 
 </html>

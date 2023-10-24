@@ -18,6 +18,12 @@ Route::get('/welcome', function () {
 	return view('welcome');
 });
 
+Route::get('/subir', function () {
+	return view('upload-file');
+});
+
 Route::get('/', PayController::class)->name('start');
 Route::post('/registro-postulante', [PayController::class, "validatePayment"])->name('pay.validatePayment');
 Route::post('/store-applicant', [ApplicantController::class, "store"])->name('applicant.store');
+Route::post('/upload-file', [ApplicantController::class, "uploadFile"])->name('applicant.uploadFile');
+Route::get('/mensaje', [ApplicantController::class, "ending"])->name('applicant.ending');
