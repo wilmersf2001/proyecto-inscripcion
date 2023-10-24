@@ -24,6 +24,8 @@ class ValidatePaymentRequest extends FormRequest
     return [
       'dni' => 'required|numeric|digits:8|exists:admision_banco,dni_dep',
       'voucherNumber' => 'required|numeric|digits:7|exists:admision_banco,NumDoc',
+      'agencyNumber' => 'required|numeric|digits:4|exists:admision_banco,Oficina',
+      'payDay' => 'required|date',
     ];
   }
 }
