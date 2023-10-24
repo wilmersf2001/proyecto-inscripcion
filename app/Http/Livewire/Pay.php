@@ -6,7 +6,6 @@ use Livewire\Component;
 use App\Http\Requests\View\Message\ValidatePayment;
 use App\Models\Banco;
 use App\Models\Modalidad;
-Use App\Models\Banco;
 
 
 class Pay extends Component
