@@ -98,6 +98,16 @@
 
             <div class="mb-8 mt-4 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Lugar de Nacimiento</h4>
+                <div class="relative">
+                    <button type="button" class="question-trigger">
+                        <x-icons.question />
+                    </button>
+                    <x-message-question>
+                        <x-slot name="message">
+                            Correspondiente a los datos de la partida de nacimiento.
+                        </x-slot>
+                    </x-message-question>
+                </div>
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
 
@@ -150,6 +160,16 @@
 
             <div class="mb-8 mt-4 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Lugar de Residencia</h4>
+                <div class="relative">
+                    <button type="button" class="question-trigger font-medium text-blue-600 hover:underline">
+                        <x-icons.question />
+                    </button>
+                    <x-message-question>
+                        <x-slot name="message">
+                            Correspondiente a la ubicación actual donde vive el postulante.
+                        </x-slot>
+                    </x-message-question>
+                </div>
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
 
@@ -425,10 +445,32 @@
                     <x-input-error for="applicant.escuela_id" />
                 </label>
                 <label class="block mb-6">
-                    <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                        Modalidad
-                    </span>
+                    <div class="flex">
+                        <span
+                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900 mr-2">
+                            Modalidad
+                        </span>
+                        <div class="relative">
+                            <button type="button" class="question-trigger font-medium text-blue-600 hover:underline">
+                                <x-icons.question />
+                            </button>
+                            <x-message-question>
+                                <x-slot name="message">
+                                    <p class="text-xs font-medium text-gray-900">Recuerda:</p>
+                                    <ul>
+                                        <li class="before:content-['*'] before:mr-0.5 before:text-red-500">La modalidad 5to de secundaria es solo para los postulantes que
+                                            han culminado el 5to de secundaria en el mismo año en curso.
+                                        </li>
+                                        <li class="before:content-['*'] before:mr-0.5 before:text-red-500">
+                                            La modalida de dos primeros puestos es solo para los postulantes que
+                                            han culminado el 5to dentro de un plazo de 2 años con respecto al año en
+                                            curso.
+                                        </li>
+                                    </ul>
+                                </x-slot>
+                            </x-message-question>
+                        </div>
+                    </div>
                     @if ($typeSchool)
                         <select wire:model="applicant.modalidad_id" wire:input="validateModality($event.target.value)"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
@@ -481,4 +523,22 @@
     <div wire:offline>
         You are now offline.
     </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const questionTriggers = document.querySelectorAll(".question-trigger");
+                questionTriggers.forEach(function(trigger) {
+                    trigger.addEventListener("mouseenter", function() {
+                        const popover = this.nextElementSibling;
+                        popover.style.opacity = "1";
+                        popover.style.visibility = "visible";
+                    });
+                    trigger.addEventListener("mouseleave", function() {
+                        const popover = this.nextElementSibling;
+                        popover.style.opacity = "0";
+                        popover.style.visibility = "hidden";
+                    });
+                });
+            });
+        </script>
 </div>

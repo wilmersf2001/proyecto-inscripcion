@@ -148,7 +148,7 @@ class Applicant extends Component
     $differenceYears = date('Y') - $this->applicant->postulante_anoEgreso;
     $errorMessage = '';
 
-    if ($idModalidad == 3 && $differenceYears > 1) {
+    if ($idModalidad == 3 && $differenceYears > 2) {
       $errorMessage = 'No puede acceder a la modalidad Dos primeros puestos. Recuerda que tienes un plazo de 2 años después de egresar con respecto al año en curso.';
     } elseif ($idModalidad == 10 && $differenceYears > 0) {
       $errorMessage = 'No puede acceder a la modalidad 5to de Secundaria. Recuerda que debes de egresar el mismo año en curso.';
