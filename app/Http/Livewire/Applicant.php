@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Livewire\WithFileUploads;
 use App\Models\Genero;
 use App\Models\Modalidad;
 use App\Models\Postulante;
@@ -14,6 +15,7 @@ use App\Models\TipoDireccion;
 use App\Http\Requests\View\StoreApplicantRequest;
 use App\Http\Requests\View\FirstStepApplicantRequest;
 use App\Http\Requests\View\StepTwoApplicantRequest;
+use App\Http\Requests\View\StepThreeApplicantRequest;
 use App\Http\Requests\View\Message\ValidateApplicant;
 use App\Models\Banco;
 use App\Models\Colegio;
@@ -21,6 +23,7 @@ use App\Models\Escuela;
 
 class Applicant extends Component
 {
+  use WithFileUploads;
   public Postulante $applicant;
   public Banco $bank;
   public $departaments;
@@ -39,9 +42,13 @@ class Applicant extends Component
   public $searchSchoolName;
   public $selectedDepartmentCollegeId;
   public $typeSchool;
-  public int $currentStep = 2;
+  public int $currentStep = 1;
   public bool $showSchools = false;
   public int $minimumYear = 1940;
+  public $accordance = false;
+  public $profilePhoto;
+  public $reverseDniPhoto;
+  public $frontDniPhoto;
   protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
   protected function rules()
@@ -126,6 +133,8 @@ class Applicant extends Component
       $this->validate(FirstStepApplicantRequest::FIRST_STEP_VALIDATE);
     } elseif ($this->currentStep == 2) {
       $this->validate(StepTwoApplicantRequest::SETEP_TWO_VALIDATE);
+    }elseif ($this->currentStep == 3) {
+      $this->validate(StepThreeApplicantRequest::SETEP_TWO_VALIDATE);
     }
     $this->currentStep++;
   }

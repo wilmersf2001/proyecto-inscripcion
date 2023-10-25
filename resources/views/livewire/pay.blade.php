@@ -9,30 +9,19 @@
                 pago correspondiente en el Banco de la Nación. Luego, ingresa tus datos del voucher para verificar el
                 pago realizado y avanzar en tu proceso de admisión.</p>
 
-
-            <div class="mt-5">
-                <h3 class="text-sm font-medium text-gray-900">Highlights</h3>
-
-                <div class="mt-4">
-                    <ul role="list" class="list-disc space-y-2 pl-4 text-sm">
-                        <li class="text-gray-400"><span class="text-gray-600">Hand cut and sewn locally</span></li>
-                        <li class="text-gray-400"><span class="text-gray-600">Dyed with our proprietary colors</span>
-                        </li>
-                        <li class="text-gray-400"><span class="text-gray-600">Pre-washed &amp; pre-shrunk</span></li>
-                        <li class="text-gray-400"><span class="text-gray-600">Ultra-soft 100% cotton</span></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="relative">
+            <div class="mt-5 flex items-center text-xs">
                 <span
-                    class="question-trigger inline-flex items-center rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700 ring-1 ring-inset ring-indigo-700/10">voucher</span>
-                <x-message-question>
-                    <x-slot name="message">
-                        <img src="{{ asset('images/voucher_ejemplo.png') }}" alt="UNPRG" width="250"
-                            height="250" />
-                    </x-slot>
-                </x-message-question>
+                    class="inline-flex items-center rounded-md bg-indigo-50 font-medium px-2 py-1 text-xs text-indigo-700 ring-1 ring-inset ring-indigo-700/10">¿Necesitas
+                    ayuda con datos del voucher? &rarr;</span>
+                <div class="relative ml-2">
+                    <x-icons.question />
+                    <x-message-question>
+                        <x-slot name="message">
+                            <img src="{{ asset('images/voucher_ejemplo.png') }}" alt="UNPRG" width="250"
+                                height="250" />
+                        </x-slot>
+                    </x-message-question>
+                </div>
             </div>
 
             <div class="mt-8 flex items-center gap-x-4 mb-5">
@@ -43,12 +32,15 @@
             </div>
 
             <div class="grid md:grid-cols-2 md:gap-6">
+                @if ($bank)
+                    <input type="hidden" name="idBank" value="{{ $bank->NumSecuencia }}" />
+                @endif
                 <label class="block mb-6">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
-                        DNI
+                        Número de DNI
                     </span>
-                    <input type="text" name="dni" wire:model.lazy="dni" minlength="8" maxlength="8"
+                    <input type="text" name="dni" wire:model="dni" minlength="8" maxlength="8"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 75635..." />
                     <x-input-error for="dni" />
@@ -56,9 +48,9 @@
                 <label class="block mb-6">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-gray-900 mr-2">
-                        Voucher
+                        Número de voucher
                     </span>
-                    <input type="text" name="voucherNumber" wire:model.lazy="voucherNumber" minlength="7"
+                    <input type="text" name="voucherNumber" wire:model="voucherNumber" minlength="7"
                         maxlength="7"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 1742..." />
@@ -70,9 +62,9 @@
                 <label class="block mb-6">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
-                        Agencia
+                        Número de agencia
                     </span>
-                    <input type="text" name="agencyNumber" wire:model.lazy="agencyNumber" minlength="4"
+                    <input type="text" name="agencyNumber" wire:model="agencyNumber" minlength="4"
                         maxlength="4"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 0230" />
@@ -83,16 +75,11 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
                         Fecha del pago
                     </span>
-                    <input type="date" name="payDay" wire:model.lazy="payDay"
+                    <input type="date" name="payDay" wire:model="payDay"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                     <x-input-error for="payDay" />
                 </label>
             </div>
-            @if (session('warning'))
-                <div class="alert alert-warning">
-                    {{ session('warning') }}
-                </div>
-            @endif
         </div>
         <div class="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
             <div
@@ -115,15 +102,21 @@
 
                         <span class="text-sm font-semibold leading-6 tracking-wide text-gray-600">PEN</span>
                     </p>
-                    @if ($errors->any())
+                    @if ($errors->any() || session('warning'))
                         <button type="button" disabled
                             class="mt-10 block w-full rounded-md bg-indigo-400 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm">INGRESAR</button>
                     @else
                         <button type="submit"
                             class="mt-10 block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">INGRESAR</button>
                     @endif
-                    <p class="mt-6 text-xs leading-5 text-gray-600">Continue al ingreso de los datos
-                        personales y académicos del postulante</p>
+
+                    @if (session('warning'))
+                        <p class="mt-6 text-xs leading-5 text-red-600 font-bold">No existe coincidencia en los datos
+                            ingresados. Por favor verifique los datos</p>
+                    @else
+                        <p class="mt-6 text-xs leading-5 text-gray-600">Continue al ingreso de los datos
+                            personales y académicos del postulante</p>
+                    @endif
                 </div>
             </div>
         </div>

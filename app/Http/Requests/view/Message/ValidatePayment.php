@@ -8,7 +8,6 @@ class ValidatePayment
     'dni.required' => 'dni es requerido',
     'dni.numeric' => 'campo dni debe ser numérico',
     'dni.digits' => 'campo dni debe tener 8 dígitos',
-    'dni.exists' => 'dni no realizó ningún pago',
     'voucherNumber.required' => 'voucher es requerido',
     'voucherNumber.numeric' => 'campo número de voucher debe ser numérico',
     'voucherNumber.digits' => 'campo número de voucher debe tener 7 dígitos',
@@ -17,5 +16,7 @@ class ValidatePayment
     'agencyNumber.digits' => 'campo de agencia debe tener 4 digitos',
     'agencyNumber.numeric' => 'campo número de agencia debe ser numérico',
     'agencyNumber.exists' => 'número de agencia no encontrado',
+    'payDay.required' => 'fecha de pago es requerido',
+    'payDay.date' => 'campo fecha de pago debe ser una fecha',
   ];
 }

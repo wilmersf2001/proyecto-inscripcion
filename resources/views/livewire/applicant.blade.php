@@ -1,38 +1,25 @@
 <div class="p-10">
-    <ol class="flex items-center w-full mb-4 sm:mb-5 justify-center">
-        <li
-            class="flex w-full items-center text-blue-600 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block">
-            <div class="flex items-center justify-center w-10 h-10 bg-blue-100 rounded-full lg:h-12 lg:w-12">
-                <x-icons.identification />
-            </div>
-        </li>
-        <li
-            class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block">
-            <div class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12">
-                <x-icons.academic-cap />
-            </div>
-        </li>
-        <li class="flex items-center">
-            <div class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12">
-                <x-icons.document />
-            </div>
-        </li>
-    </ol>
 
-    <div class="flex p-2 mb-4 text-xs rounded-lg bg-gray-50" role="alert">
-        <div class="flex-1 text-center">
-            <span class="font-medium text-blue-800">DNI :</span> {{ $bank->dni_dep }}
-        </div>
-        <div class="flex-1 text-center">
-            <span class="font-medium text-blue-800">Voucher :</span> {{ $bank->NumDoc }}
-        </div>
-        <div class="flex-1 text-center">
-            <span class="font-medium text-blue-800">Importe :</span> S/. {{ $bank->Importe }}
-        </div>
-    </div>
+    <x-step-by-step :currentStep="$currentStep" />
 
-    <form action="{{ route('applicant.store') }}" method="POST">
+    @if ($currentStep < 3)
+        <div class="flex p-2 mb-4 text-xs rounded-lg bg-gray-50" role="alert">
+            <div class="flex-1 text-center">
+                <span class="font-medium text-blue-800">DNI :</span> {{ $bank->dni_dep }}
+            </div>
+            <div class="flex-1 text-center">
+                <span class="font-medium text-blue-800">Voucher :</span> {{ $bank->NumDoc }}
+            </div>
+            <div class="flex-1 text-center">
+                <span class="font-medium text-blue-800">Importe :</span> S/. {{ $bank->Importe }}
+            </div>
+        </div>
+    @endif
+
+    <form action="{{ route('applicant.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="dni" value="{{$bank->dni_dep}}">
+        <input type="hidden" name="num_voucher" value="{{$bank->NumDoc}}">
         <div class="{{ $currentStep == 1 ? 'animate-slide-in-left' : 'hidden' }}">
             <div class="my-8 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Datos Personales Postulante</h4>
@@ -83,7 +70,7 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Seleccione Sexo
                     </span>
-                    <select name="sexo" wire:model="applicant.sexo_id"
+                    <select name="sexo_id" wire:model="applicant.sexo_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($generos as $genero)
@@ -207,7 +194,7 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Distrito
                     </span>
-                    <select wire:model="applicant.distrito_id_direccion"
+                    <select name="distritoRes" wire:model="applicant.distrito_id_direccion"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($districtsReside as $districtReside)
@@ -281,8 +268,18 @@
                     <x-input-error for="applicant.postulante_correo" />
                 </label>
             </div>
-        </div>
 
+            <div class="flex w-full justify-end">
+                <a href="{{ route('start') }}"
+                    class="cursor-pointer mt-4 mr-4 text-gray-900 bg-white hover:bg-gray-100 shadow-md focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    Cancelar
+                </a>
+                <button type="button" wire:click="nextStep"
+                    class="cursor-pointer mt-4 text-white bg-blue-600 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    Siguiente
+                </button>
+            </div>
+        </div>
 
         <div class="{{ $currentStep == 2 ? 'animate-slide-in-right' : 'hidden' }}">
 
@@ -298,7 +295,7 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Sede de Postulación
                     </span>
-                    <select name="sede" wire:model="applicant.sede_id"
+                    <select name="sede_id" wire:model="applicant.sede_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($sedes as $sede)
@@ -314,7 +311,7 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Programa Académico al que Postula
                     </span>
-                    <select name="programaAcademico" wire:model="applicant.escuela_id"
+                    <select name="programaAcademico_id" wire:model="applicant.escuela_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($academicPrograms as $academicProgram)
@@ -353,7 +350,7 @@
                             </x-message-question>
                         </div>
                     </div>
-                    <select wire:model="applicant.modalidad_id" wire:input="validateModality($event.target.value)"
+                    <select name="modalidad_id" wire:model="applicant.modalidad_id" wire:input="validateModality($event.target.value)"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($modalities as $modalitie)
@@ -377,7 +374,7 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Departamento de Procedencia Colegio
                     </span>
-                    <select name="departamentoProcedenciaColegio" wire:change="resetSchoolId"
+                    <select wire:change="resetSchoolId"
                         wire:model="selectedDepartmentCollegeId"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
@@ -405,12 +402,12 @@
                 </label>
 
                 <label class="block mb-6 relative">
-                    <input type="hidden" name="colegioId" wire:model="applicant.colegio_id">
+                    <input type="hidden" name="colegio_id" wire:model="applicant.colegio_id">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Nombre del Colegio
                     </span>
-                    <input type="text" wire:model.debounce.500ms="searchSchoolName" required
+                    <input type="text" wire:model.debounce.500ms="searchSchoolName"
                         wire:input="$set('showSchools', true)"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: San Martín de los Andes" />
@@ -454,7 +451,7 @@
                         Año de Egreso del Colegio
                     </span>
                     @if ($applicant->modalidad_id)
-                        <select name="annoEgresoColegio" wire:model="applicant.postulante_anoEgreso"
+                        <select name="anno_egreso" wire:model="applicant.postulante_anoEgreso"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                             <option class="hidden">Seleccionar</option>
                             @for ($i = $minimumYear; $i <= date('Y'); $i++)
@@ -474,8 +471,7 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Número de veces que postula a la UNPRG
                     </span>
-                    <input type="number" name="numUnprg" min="1" max="100"
-                        wire:model="applicant.postulante_numvecesu"
+                    <input type="number" name="num_veces_unprg" wire:model="applicant.postulante_numvecesu"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                     <x-input-error for="applicant.postulante_numvecesu" />
                 </label>
@@ -484,31 +480,170 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Número de veces que postula a otras universidades
                     </span>
-                    <input type="number" name="numOtras" min="1" max="100"
-                        wire:model="applicant.postulante_numveceso"
+                    <input type="number" name="num_veces_otro" wire:model="applicant.postulante_numveceso"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                     <x-input-error for="applicant.postulante_numveceso" />
                 </label>
             </div>
-        </div>
 
-        <div class="flex w-full justify-end">
-            @if ($currentStep != 1)
+            <div class="flex w-full justify-end">
                 <button type="button" wire:click="previousStep"
                     class="cursor-pointer mt-4 mr-4 text-gray-900 bg-white hover:bg-gray-100 shadow-md focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                     Atrás
                 </button>
-            @else
-                <a href="{{ route('start') }}"
-                    class="cursor-pointer mt-4 mr-4 text-gray-900 bg-white hover:bg-gray-100 shadow-md focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                    Cancelar
-                </a>
-            @endif
-            <a wire:click="nextStep"
-                class="cursor-pointer mt-4 text-white bg-blue-600 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                Siguiente
-            </a>
+                <button type="button" wire:click="nextStep"
+                    class="cursor-pointer mt-4 text-white bg-blue-600 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    Siguiente
+                </button>
+            </div>
         </div>
+
+        <div class="{{ $currentStep == 3 ? 'animate-slide-in-right' : 'hidden' }}">
+
+            <div class="my-8 flex items-center gap-x-4">
+                <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Archivos Requeridos
+                </h4>
+                <div class="h-px flex-auto bg-gray-100"></div>
+            </div>
+
+            <div class="grid md:grid-cols-1 md:gap-6 mb-10">
+                <div class="flex items-center justify-center space-x-6">
+                    <x-icons.user />
+                    <label class="block">
+                        <span
+                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                            Foto Carnet Postulante
+                        </span>
+                        <input type="file" name="profilePhoto" wire:model="profilePhoto"
+                            class="block w-full text-sm text-slate-500
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded-full file:border-0
+                    file:text-xs file:font-semibold
+                    file:bg-blue-50 file:text-blue-700
+                    hover:file:bg-blue-100
+                  " />
+                        <x-input-error for="profilePhoto" />
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="grid md:grid-cols-2 md:gap-6">
+                <div class="flex items-center justify-center space-x-6 mb-10">
+                    <div class="shrink-0">
+                        <img src="{{ asset('images/dni-anverso.png') }}" alt="DNI ANVERSO" width="60"
+                            height="60" />
+                    </div>
+                    <label class="block">
+                        <span
+                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                            DNI Parte Anverso
+                        </span>
+                        <input type="file" name="reverseDniPhoto" wire:model="reverseDniPhoto"
+                            class="block w-full text-sm text-slate-500
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded-full file:border-0
+                    file:text-xs file:font-semibold
+                    file:bg-blue-50 file:text-blue-700
+                    hover:file:bg-blue-100
+                  " />
+                        <x-input-error for="reverseDniPhoto" />
+                    </label>
+                </div>
+
+                <div class="flex items-center justify-center space-x-6 mb-10">
+                    <div class="shrink-0">
+                        <img src="{{ asset('images/dni-reverso.png') }}" alt="DNI REVERSO" width="60"
+                            height="60" />
+                    </div>
+                    <label class="block">
+                        <span
+                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                            DNI Parte Reverso
+                        </span>
+                        <input type="file" name="frontDniPhoto" wire:model="frontDniPhoto"
+                            class="block w-full text-sm text-slate-500
+                    file:mr-4 file:py-2 file:px-4
+                    file:rounded-full file:border-0
+                    file:text-xs file:font-semibold
+                    file:bg-blue-50 file:text-blue-700
+                    hover:file:bg-blue-100
+                  " />
+                        <x-input-error for="frontDniPhoto" />
+                    </label>
+                </div>
+            </div>
+
+            <div class="block">
+                <div class="my-8 flex items-center gap-x-4">
+                    <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Declaración Jurada
+                    </h4>
+                    <span
+                        class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">IMPORTANTE</span>
+                    <div class="h-px flex-auto bg-gray-100"></div>
+                </div>
+            </div>
+
+            <div class="relative flex gap-x-3">
+                <div class="flex h-6 items-center">
+                    <input id="accordance" name="accordance" type="checkbox" wire:model="accordance"
+                        class="h-4 w-4 rounded text-indigo-600 focus:ring-indigo-600">
+                </div>
+                <div class="text-sm leading-6">
+                    <label for="accordance" class="font-medium text-gray-900">Declaro bajo juramento que:</label>
+                </div>
+            </div>
+            <x-input-error for="accordance" />
+
+            <div class="mt-4">
+                <ul role="list" class="list-disc space-y-2 pl-4 text-sm">
+                    <li class="text-gray-400"><span class="text-gray-600">Conozco, acepto y me someto a las bases,
+                            condiciones y procedimientos establecidos en eI
+                            Reglamento del Concurso de Admisión 2016-II de la Universidad Nacional
+                            Pedro Ruiz Gallo.</span></li>
+                    <li class="text-gray-400"><span class="text-gray-600">La información y fotografia registrada es
+                            AUTÉNTICA y que las imágenes de mi DNI enviados para
+                            mi inscripción como postulante al presente Concurso de Admisión,
+                            son copia fiel al original, en caso de faltar a la verdad me someto a las sanciones
+                            correspondientes (Art. 38 del Reglamento del presente Concurso de Admisión).</span>
+                    </li>
+                    <li class="text-gray-400"><span class="text-gray-600">No tengo impedimento para participar en eI
+                            Concurso de Admisión 2016-11.</span></li>
+                    <li class="text-gray-400"><span class="text-gray-600">De alcanzar una vacante, me comprometo a
+                            regularizar mi expediente en la fecha establecida en el
+                            cronograma del presente Concurso de Admisión; en caso contrario
+                            me someto a las sanciones correspondientes (Art.87 del Reglamento del presente Concurso de
+                            Admisión).</span></li>
+                </ul>
+            </div>
+
+            <div class="flex w-full justify-end">
+                <button type="button" wire:click="previousStep"
+                    class="cursor-pointer mt-4 mr-4 text-gray-900 bg-white hover:bg-gray-100 shadow-md focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    Atrás
+                </button>
+                <button type="button" wire:click="nextStep"
+                    class="cursor-pointer mt-4 text-white bg-blue-600 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    Siguiente
+                </button>
+            </div>
+        </div>
+
+        @if ($currentStep > 3)
+            <div class="border-t border-b border-gray-900/10 py-12">
+                <h2 class="text-base font-semibold leading-7 text-gray-900">Mensaje</h2>
+                <p class="mt-1 text-sm leading-6 text-gray-600">En las próximas horas se estará enviando a su correo
+                    electronico la constancia de inscripción al proceso de Admisión 2016-II
+                    La cual debera imprimir y canjearla por su carné de postulante en la Oficina General de Sistemas
+                    Informaticos y Administrativos.</p>
+            </div>
+            <div class="flex w-full justify-end">
+                <button type="submit"
+                    class="cursor-pointer mt-4 text-white bg-blue-600 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    Finalizar y Enviar
+                </button>
+            </div>
+        @endif
     </form>
 
     <div wire:offline>

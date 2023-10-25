@@ -23,10 +23,10 @@ class PayController extends Controller
 
   public function validatePayment(ValidatePaymentRequest $request)
   {
-    /* validacion */
     $dni = $request->dni;
+    $idBank = $request->idBank;
     $applicant = $this->apiReniec->getApplicantDataByDni($dni);
-    $bank = Banco::where('NumSecuencia', 2)->first();
+    $bank = Banco::where('NumSecuencia', $idBank)->first();
     return view('register-applicant', compact('applicant', 'bank'));
   }
 }

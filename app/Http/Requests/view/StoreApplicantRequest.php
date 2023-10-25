@@ -26,10 +26,10 @@ class StoreApplicantRequest extends FormRequest
             'applicant.postulante_apPaterno' => 'required',
             'applicant.postulante_apMaterno' => 'required',
             'applicant.postulante_fechNac' => 'required|date',
-            'applicant.sexo_id' => 'required',
+            'applicant.sexo_id' => 'required|numeric',
             'applicant.distrito_id' => 'required|numeric',
             'applicant.distrito_id_direccion' => 'required|numeric',
-            'applicant.tipodireccion_id' => 'required',
+            'applicant.tipodireccion_id' => 'required|numeric',
             'applicant.postulante_direccion' => 'required',
             'applicant.postulante_telefono' => 'required|numeric|digits:9',
             'applicant.postulante_telefonoAp' => 'required|numeric|digits:9',
@@ -43,6 +43,10 @@ class StoreApplicantRequest extends FormRequest
             'applicant.modalidad_id' => 'required|numeric',
             'typeSchool' => 'required|numeric',
             'selectedDepartmentCollegeId' => 'required|numeric',
+            'profilePhoto' => 'required|image|max:1024',
+            'reverseDniPhoto' => 'required|image|max:1024',
+            'frontDniPhoto' => 'required|image|max:1024',
+            'accordance' => 'required|accepted',
         ];
     }
 }

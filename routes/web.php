@@ -25,5 +25,4 @@ Route::get('/subir', function () {
 Route::get('/', PayController::class)->name('start');
 Route::post('/registro-postulante', [PayController::class, "validatePayment"])->name('pay.validatePayment');
 Route::post('/store-applicant', [ApplicantController::class, "store"])->name('applicant.store');
-Route::post('/upload-file', [ApplicantController::class, "uploadFile"])->name('applicant.uploadFile');
 Route::get('/mensaje', [ApplicantController::class, "ending"])->name('applicant.ending');
