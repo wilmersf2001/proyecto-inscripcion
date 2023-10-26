@@ -20,7 +20,7 @@ use App\Http\Requests\View\Message\ValidateApplicant;
 use App\Models\Banco;
 use App\Models\Colegio;
 use App\Models\Escuela;
-use PhpParser\Node\Expr\AssignOp\Mod;
+use Carbon\Carbon;
 
 class Applicant extends Component
 {
@@ -46,12 +46,13 @@ class Applicant extends Component
   public $academicPrograms;
   public $searchSchoolName;
   public $typeSchool;
-  public int $currentStep = 3;
+  public int $currentStep = 1;
   public int $minimumYear = 1940;
   public $profilePhoto;
   public $reverseDniPhoto;
   public $frontDniPhoto;
-  public $accordance = false;
+  public $formattedToday;
+  public bool $accordance = false;
   public bool $showSchools = false;
   public bool $alertAmountModality = false;
   protected $messages = ValidateApplicant::MESSAGES_ERROR;
@@ -83,6 +84,8 @@ class Applicant extends Component
     $this->generos = Genero::all();
     $this->sedes = Sede::all();
     $this->modalities = Modalidad::all();
+    $today = Carbon::now()->locale('es_PE');
+    $this->formattedToday = $today->isoFormat('D [de] MMMM [del] YYYY');
   }
 
   public function render()
@@ -104,22 +107,26 @@ class Applicant extends Component
   {
     if ($action == 'DEPARTMENT') {
       $this->provincesBirth = Departamento::where('departamento_id', $idlocation)->first()->provincias;
-      $this->selectedProvinceBirthId = $this->provincesBirth->first()->provincia_id;
-      $this->districtsBirth = Provincia::where('provincia_id', $this->selectedProvinceBirthId)->first()->distritos;
+      $provinceBirthId = $this->provincesBirth->first()->provincia_id;
+      $this->districtsBirth = Provincia::where('provincia_id', $provinceBirthId)->first()->distritos;
+      $this->reset('selectedProvinceBirthId');
     } elseif ($action == 'PROVINCE') {
       $this->districtsBirth = Provincia::where('provincia_id', $idlocation)->first()->distritos;
     }
+    $this->applicant->distrito_id = null;
   }
 
   public function changePlaceReside(string $action, int $idlocation)
   {
     if ($action == 'DEPARTMENT') {
       $this->provincesReside = Departamento::where('departamento_id', $idlocation)->first()->provincias;
-      $this->selectedProvinceResideId = $this->provincesReside->first()->provincia_id;
-      $this->districtsReside = Provincia::where('provincia_id', $this->selectedProvinceResideId)->first()->distritos;
+      $provinceResideId = $this->provincesReside->first()->provincia_id;
+      $this->districtsReside = Provincia::where('provincia_id', $provinceResideId)->first()->distritos;
+      $this->reset('selectedProvinceResideId');
     } elseif ($action == 'PROVINCE') {
       $this->districtsReside = Provincia::where('provincia_id', $idlocation)->first()->distritos;
     }
+    $this->applicant->distrito_id_direccion = null;
   }
 
   public function changePlaceOriginSchool(string $action, int $idlocation)

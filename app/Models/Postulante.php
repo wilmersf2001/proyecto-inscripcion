@@ -43,6 +43,46 @@ class Postulante extends Model
         'INGRESO',
     ];
 
+    public function sexo()
+    {
+        return $this->belongsTo(Genero::class, 'sexo_id');
+    }
+
+    public function distrito()
+    {
+        return $this->belongsTo(Distrito::class, 'distrito_id');
+    }
+
+    public function distritoDireccion()
+    {
+        return $this->belongsTo(Distrito::class, 'distrito_id_direccion');
+    }
+
+    public function tipoDireccion()
+    {
+        return $this->belongsTo(TipoDireccion::class, 'tipodireccion_id');
+    }
+
+    public function colegio()
+    {
+        return $this->belongsTo(Colegio::class, 'colegio_id');
+    }
+
+    public function sede()
+    {
+        return $this->belongsTo(Sede::class, 'sede_id');
+    }
+
+    public function modalidad()
+    {
+        return $this->belongsTo(Modalidad::class, 'modalidad_id');
+    }
+
+    public function escuela()
+    {
+        return $this->belongsTo(Escuela::class, 'escuela_id');
+    }
+
     public static function fromArrayReniec(array $data){
         $postulante = new Postulante();
         $postulante->postulante_nombres = $data['nombres'];
