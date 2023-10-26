@@ -13,6 +13,7 @@ class StepTwoApplicantRequest
     'applicant.postulante_anoEgreso' => 'required|numeric|digits:4',
     'applicant.modalidad_id' => 'required|numeric',
     'typeSchool' => 'required|numeric',
-    'selectedDepartmentCollegeId' => 'required|numeric',
+    'selectedProvinceOriginSchoolId' => 'required|numeric',
+    'selectedDistrictOriginSchoolId' => 'required|numeric',
   ];
 }

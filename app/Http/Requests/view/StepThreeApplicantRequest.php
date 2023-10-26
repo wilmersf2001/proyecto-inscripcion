@@ -8,6 +8,5 @@ class StepThreeApplicantRequest
     'profilePhoto' => 'required|image|max:1024',
     'reverseDniPhoto' => 'required|image|max:1024',
     'frontDniPhoto' => 'required|image|max:1024',
-    'accordance' => 'required|accepted',
   ];
 }

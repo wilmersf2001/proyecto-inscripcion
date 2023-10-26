@@ -20,6 +20,7 @@ use App\Http\Requests\View\Message\ValidateApplicant;
 use App\Models\Banco;
 use App\Models\Colegio;
 use App\Models\Escuela;
+use PhpParser\Node\Expr\AssignOp\Mod;
 
 class Applicant extends Component
 {
@@ -33,6 +34,10 @@ class Applicant extends Component
   public $provincesReside;
   public $districtsReside;
   public $selectedProvinceResideId;
+  public $provincesOriginSchool;
+  public $districtsOriginSchool;
+  public $selectedProvinceOriginSchoolId;
+  public $selectedDistrictOriginSchoolId;
   public $adressType;
   public $generos;
   public $schools;
@@ -40,15 +45,15 @@ class Applicant extends Component
   public $modalities;
   public $academicPrograms;
   public $searchSchoolName;
-  public $selectedDepartmentCollegeId;
   public $typeSchool;
-  public int $currentStep = 1;
-  public bool $showSchools = false;
+  public int $currentStep = 3;
   public int $minimumYear = 1940;
-  public $accordance = false;
   public $profilePhoto;
   public $reverseDniPhoto;
   public $frontDniPhoto;
+  public $accordance = false;
+  public bool $showSchools = false;
+  public bool $alertAmountModality = false;
   protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
   protected function rules()
@@ -71,6 +76,8 @@ class Applicant extends Component
     $this->districtsBirth = Distrito::all();
     $this->provincesReside = Provincia::all();
     $this->districtsReside = Distrito::all();
+    $this->provincesOriginSchool = Provincia::all();
+    $this->districtsOriginSchool = Distrito::all();
     $this->adressType = TipoDireccion::all();
     $this->academicPrograms = Escuela::all();
     $this->generos = Genero::all();
@@ -80,13 +87,15 @@ class Applicant extends Component
 
   public function render()
   {
-    $this->schools = Colegio::where('departamento_id', $this->selectedDepartmentCollegeId)
-      ->where('colegio_descripcion', 'like', '%' . $this->searchSchoolName . '%')
-      ->where('colegio_tipocolegio', $this->typeSchool)
-      ->get();
-
-    if ($this->schools->isEmpty() && $this->selectedDepartmentCollegeId && $this->typeSchool) {
-      session()->flash('null', 'colegio no encontrado.');
+    if ($this->selectedDistrictOriginSchoolId) {
+      $ubigeoDistrito = Distrito::where("distrito_id", $this->selectedDistrictOriginSchoolId)->first()->distrito_ubigeo;
+      $this->schools = Colegio::where('colegio_descripcion', 'like', '%' . $this->searchSchoolName . '%')
+        ->where('colegio_tipocolegio', $this->typeSchool)
+        ->where('colegio_ubigeo', $ubigeoDistrito)
+        ->get();
+      if ($this->schools->isEmpty() && $this->typeSchool && $this->searchSchoolName != '' ) {
+        session()->flash('null', 'colegio no encontrado.');
+      }
     }
     return view('livewire.applicant');
   }
@@ -113,10 +122,24 @@ class Applicant extends Component
     }
   }
 
+  public function changePlaceOriginSchool(string $action, int $idlocation)
+  {
+    if ($action == 'DEPARTMENT') {
+      $this->provincesOriginSchool = Departamento::where('departamento_id', $idlocation)->first()->provincias;
+      $provinceOriginSchoolId = $this->provincesOriginSchool->first()->provincia_id;
+      $this->districtsOriginSchool = Provincia::where('provincia_id', $provinceOriginSchoolId)->first()->distritos;
+      $this->reset(['selectedProvinceOriginSchoolId', 'selectedDistrictOriginSchoolId']);
+    } elseif ($action == 'PROVINCE') {
+      $this->districtsOriginSchool = Provincia::where('provincia_id', $idlocation)->first()->distritos;
+      $this->reset(['selectedDistrictOriginSchoolId']);
+    }
+  }
+
   public function resetSchoolId()
   {
     $this->reset(['searchSchoolName', 'showSchools']);
     $this->applicant->colegio_id = null;
+    $this->applicant->modalidad_id = null;
   }
 
   public function updateSchool(int $idSchool)
@@ -133,7 +156,7 @@ class Applicant extends Component
       $this->validate(FirstStepApplicantRequest::FIRST_STEP_VALIDATE);
     } elseif ($this->currentStep == 2) {
       $this->validate(StepTwoApplicantRequest::SETEP_TWO_VALIDATE);
-    }elseif ($this->currentStep == 3) {
+    } elseif ($this->currentStep == 3) {
       $this->validate(StepThreeApplicantRequest::SETEP_TWO_VALIDATE);
     }
     $this->currentStep++;
@@ -141,9 +164,17 @@ class Applicant extends Component
 
   public function validateModality(int $idModalidad)
   {
-    $modalityYear = ($idModalidad == 3) ? date('Y') - 2 : (($idModalidad == 10) ? date('Y') : 1940);
-    $this->minimumYear = $modalityYear;
-    $this->applicant->postulante_anoEgreso = null;
+    $modality = Modalidad::where('modalidad_id', $idModalidad)->first();
+    $amount = ($this->typeSchool == 1) ? $modality->modalidad_montonacional : $modality->modalidad_montoparticular;
+    if ($amount > $this->bank->Importe) {
+      $this->applicant->modalidad_id = null;
+      $this->alertAmountModality = true;
+    } else {
+      $modalityYear = ($idModalidad == 3) ? date('Y') - 2 : (($idModalidad == 10) ? date('Y') : 1940);
+      $this->minimumYear = $modalityYear;
+      $this->applicant->postulante_anoEgreso = null;
+      $this->alertAmountModality = false;
+    }
   }
 
   public function previousStep()

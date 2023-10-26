@@ -27,7 +27,7 @@ export default {
       },
       animation: {
         'fade-in': 'fade-in 0.5s ease-out',
-        'slide-in-left': 'slide-in-left 0.5s ease-out',
+        'slide-in-left': 'slide-in-left 1.5s forwards',
         'slide-in-down': 'slide-in-down 0.5s ease-out',
         'slide-in-right': 'slide-in-right 0.5s ease-out',
       },
