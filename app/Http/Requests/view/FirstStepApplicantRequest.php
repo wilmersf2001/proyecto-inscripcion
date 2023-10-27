@@ -8,7 +8,7 @@ class FirstStepApplicantRequest
     'applicant.postulante_nombres' => 'required',
     'applicant.postulante_apPaterno' => 'required',
     'applicant.postulante_apMaterno' => 'required',
-    'applicant.postulante_fechNac' => 'required|date',
+    'applicant.postulante_fechNac' => 'required|date|before:2012-01-01',
     'applicant.sexo_id' => 'required',
     'applicant.distrito_id' => 'required',
     'applicant.distrito_id_direccion' => 'required',

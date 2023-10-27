@@ -27,6 +27,9 @@ class PayController extends Controller
     $idBank = $request->idBank;
     $applicant = $this->apiReniec->getApplicantDataByDni($dni);
     $bank = Banco::where('NumSecuencia', $idBank)->first();
+    if (!$bank) {
+      return redirect()->route('start');
+    }
     return view('register-applicant', compact('applicant', 'bank'));
   }
 }

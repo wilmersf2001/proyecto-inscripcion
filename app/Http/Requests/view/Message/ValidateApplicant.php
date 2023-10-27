@@ -9,6 +9,7 @@ class ValidateApplicant{
     'applicant.postulante_apMaterno.required' => 'El campo apellido materno es obligatorio',
     'applicant.postulante_fechNac.required' => 'El campo fecha de nacimiento es obligatorio',
     'applicant.postulante_fechNac.date' => 'El campo fecha de nacimiento debe ser una fecha',
+    'applicant.postulante_fechNac.before' => 'La fecha de nacimiento es incoherente',
     'applicant.sexo_id.required' => 'El campo sexo es obligatorio',
     'applicant.distrito_id.required' => 'El campo distrito de nacimiento es obligatorio',
     'applicant.distrito_id.numeric' => 'El campo distrito de nacimiento debe ser un número',

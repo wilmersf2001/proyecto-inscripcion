@@ -1,5 +1,5 @@
- <div class="mx-auto absolute bottom-0 left-1/2 transform -translate-x-1/2">
-     <div class="flex items-center w-full max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow">
+ <div class="alert absolute bottom-0 left-1/2 transform -translate-x-1/2 w-72">
+     <div class="flex items-center p-4 mb-4 text-gray-500 bg-white rounded-lg shadow">
          <div
              class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
              <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -11,3 +11,11 @@
          <div class="ml-3 text-sm text-gray-600">Importe insuficiente para acceder a dicha modalidad</div>
      </div>
  </div>
+
+ <script>
+     const message = document.querySelector('.alert');
+     message.classList.add('animate-fade-in');
+     setTimeout(function() {
+         message.style.display = 'none';
+     }, 3000);
+ </script>

@@ -46,7 +46,7 @@ class Applicant extends Component
   public $academicPrograms;
   public $searchSchoolName;
   public $typeSchool;
-  public int $currentStep = 1;
+  public int $currentStep = 3;
   public int $minimumYear = 1940;
   public $profilePhoto;
   public $reverseDniPhoto;

@@ -1,4 +1,4 @@
-<div class="p-4 xl:p-10 relative">
+<div class="p-4 xl:p-10">
 
     <x-step-by-step :currentStep="$currentStep" />
 
@@ -27,7 +27,7 @@
             </div>
 
             <div class="grid md:grid-cols-3 md:gap-6">
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Nombres Completos
@@ -36,7 +36,7 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                     <x-input-error for="applicant.postulante_nombres" />
                 </label>
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Apellido Paterno
@@ -45,7 +45,7 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                     <x-input-error for="applicant.postulante_apPaterno" />
                 </label>
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Apellido Materno
@@ -56,7 +56,7 @@
                 </label>
             </div>
             <div class="grid md:grid-cols-3 md:gap-6">
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Fecha de Nacimiento
@@ -65,7 +65,7 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                     <x-input-error for="applicant.postulante_fechNac" />
                 </label>
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Seleccione Sexo
@@ -86,9 +86,7 @@
             <div class="mb-8 mt-4 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Lugar de Nacimiento</h4>
                 <div class="relative">
-                    <button type="button" class="question-trigger">
-                        <x-icons.question />
-                    </button>
+                    <x-icons.question />
                     <x-message-question>
                         <x-slot name="message">
                             Correspondiente a los datos de la partida de nacimiento.
@@ -99,7 +97,7 @@
             </div>
 
             <div class="grid md:grid-cols-3 md:gap-6">
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Departamento
                     </span>
@@ -113,7 +111,7 @@
                         @endforeach
                     </select>
                 </label>
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Provincia
                     </span>
@@ -123,12 +121,12 @@
                         <option class="hidden">Seleccionar</option>
                         @foreach ($provincesBirth as $provinceBirth)
                             <option value={{ $provinceBirth->provincia_id }}>
-                                {{ ucfirst(strtolower($provinceBirth->provincia_descripcion)) }}
+                                {{ $provinceBirth->provincia_descripcion }}
                             </option>
                         @endforeach
                     </select>
                 </label>
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Distrito
                     </span>
@@ -161,7 +159,7 @@
             </div>
 
             <div class="grid md:grid-cols-3 md:gap-6">
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Departamento
                     </span>
@@ -175,7 +173,7 @@
                         @endforeach
                     </select>
                 </label>
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Provincia
                     </span>
@@ -190,7 +188,7 @@
                         @endforeach
                     </select>
                 </label>
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Distrito
                     </span>
@@ -208,7 +206,7 @@
             </div>
 
             <div class="grid md:grid-cols-3 md:gap-6">
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Tipo de Dirección
                     </span>
@@ -223,7 +221,7 @@
                     </select>
                     <x-input-error for="applicant.tipodireccion_id" />
                 </label>
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Dirección
                     </span>
@@ -239,7 +237,7 @@
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
             <div class="grid md:grid-cols-3 md:gap-6">
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Teléfono del Postulante
                     </span>
@@ -248,7 +246,7 @@
                         placeholder="Ejem: 955123456" />
                     <x-input-error for="applicant.postulante_telefono" />
                 </label>
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Teléfono del Apoderado
                     </span>
@@ -258,7 +256,7 @@
                         placeholder="Ejem: 955123456" />
                     <x-input-error for="applicant.postulante_telefonoAp" />
                 </label>
-                <label class="block mb-6">
+                <label class="block mb-10">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Correo Electrónico
                     </span>
@@ -281,7 +279,7 @@
             </div>
         </div>
 
-        <div class="{{ $currentStep == 2 ? 'animate-slide-in-right' : 'hidden' }}">
+        <div class="{{ $currentStep == 2 ? 'animate-slide-in-right relative' : 'hidden' }}">
 
             <div class="my-8 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Información Académica</h4>
@@ -549,9 +547,16 @@
                     Siguiente
                 </button>
             </div>
+
+            @if ($alertAmountModality)
+                <x-alert />
+            @endif
         </div>
 
         <div class="{{ $currentStep == 3 ? 'animate-slide-in-right' : 'hidden' }}">
+            {{$profilePhoto}}
+            {{$reverseDniPhoto}}
+            {{$frontDniPhoto}}
             <div class="my-8 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Archivos Requeridos
                 </h4>
@@ -566,7 +571,7 @@
                             class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                             Foto Carnet Postulante
                         </span>
-                        <input type="file" name="profilePhoto" wire:model="profilePhoto"
+                        <input type="file" name="profilePhoto" wire:model="profilePhoto" wire:ignore
                             class="block w-full text-sm text-slate-500
                     file:mr-4 file:py-2 file:px-4
                     file:rounded-full file:border-0
@@ -691,17 +696,13 @@
                 </button>
                 @if ($accordance)
                     <button type="submit"
-                        class="cursor-pointer mt-4 text-white bg-blue-600 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center animate-slide-in-right">
+                        class="cursor-pointer mt-4 text-white bg-blue-600 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center animate-slide-in-down">
                         Finalizar y Enviar
                     </button>
                 @endif
             </div>
         @endif
     </form>
-
-    @if ($alertAmountModality)
-        <x-alert />
-    @endif
 
     <div wire:offline>
         You are now offline.

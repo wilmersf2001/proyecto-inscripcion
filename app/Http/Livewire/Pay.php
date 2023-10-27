@@ -39,10 +39,9 @@ class Pay extends Component
         ->where('Oficina', $this->agencyNumber)
         ->where('Fecha', $this->payDay)
         ->first();
-      if ($this->bank) {
-        $this->amount = $this->bank->Importe;
-      } else {
-        $this->amount = 0;
+        
+      $this->amount = $this->bank ? $this->bank->Importe : 0;
+      if (!$this->bank) {
         session()->flash('warning');
       }
     }

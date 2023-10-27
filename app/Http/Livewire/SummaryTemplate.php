@@ -26,7 +26,6 @@ class SummaryTemplate extends Component
   }
   public function render()
   {
-    $this->applicant = Postulante::find(50);
     $dateNac = Carbon::create($this->applicant->postulante_fechNac)->locale('es_PE');
     $this->formattedDateNac = $dateNac->isoFormat('D [de] MMMM [del] YYYY');
     $this->nameSexo = $this->applicant->sexo->sexo_descripcion;
