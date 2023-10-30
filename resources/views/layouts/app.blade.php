@@ -32,7 +32,7 @@
                 </div>
             </div>
         </nav>
-        <main>
+        <main class="min-h-full">
           @yield('content')
         </main>
     </div>

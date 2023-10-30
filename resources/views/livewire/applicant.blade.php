@@ -41,7 +41,7 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Apellido Paterno
                     </span>
-                    <input type="text" name="apPaterno" wire:model="applicant.postulante_apPaterno"
+                    <input type="text" name="ap_paterno" wire:model="applicant.postulante_apPaterno"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                     <x-input-error for="applicant.postulante_apPaterno" />
                 </label>
@@ -50,7 +50,7 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Apellido Materno
                     </span>
-                    <input type="text" name="apMaterno" wire:model="applicant.postulante_apMaterno"
+                    <input type="text" name="ap_materno" wire:model="applicant.postulante_apMaterno"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                     <x-input-error for="applicant.postulante_apMaterno" />
                 </label>
@@ -61,7 +61,7 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Fecha de Nacimiento
                     </span>
-                    <input type="date" name="fechaNacimiento" wire:model="applicant.postulante_fechNac"
+                    <input type="date" name="fecha_nacimiento" wire:model="applicant.postulante_fechNac"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                     <x-input-error for="applicant.postulante_fechNac" />
                 </label>
@@ -130,7 +130,7 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Distrito
                     </span>
-                    <select name="distritoNac" wire:model="applicant.distrito_id"
+                    <select name="distrito_nac" wire:model="applicant.distrito_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($districtsBirth as $districtBirth)
@@ -192,7 +192,7 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Distrito
                     </span>
-                    <select name="distritoRes" wire:model="applicant.distrito_id_direccion"
+                    <select name="distrito_res" wire:model="applicant.distrito_id_direccion"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($districtsReside as $districtReside)
@@ -210,7 +210,7 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Tipo de Dirección
                     </span>
-                    <select name="tipoDireccion" wire:model="applicant.tipodireccion_id"
+                    <select name="tipo_direccion" wire:model="applicant.tipodireccion_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($adressType as $adress)
@@ -250,7 +250,7 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Teléfono del Apoderado
                     </span>
-                    <input type="tel" name="telefonoAp" wire:model="applicant.postulante_telefonoAp"
+                    <input type="tel" name="telefono_ap" wire:model="applicant.postulante_telefonoAp"
                         maxlength="9"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 955123456" />
@@ -273,7 +273,7 @@
                     Cancelar
                 </a>
                 <button type="button" wire:click="nextStep"
-                    class="cursor-pointer mt-4 text-white bg-blue-600 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    class="cursor-pointer mt-4 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                     Siguiente
                 </button>
             </div>
@@ -436,7 +436,7 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Programa Académico al que Postula
                     </span>
-                    <select name="programaAcademico_id" wire:model="applicant.escuela_id"
+                    <select name="programa_academico_id" wire:model="applicant.escuela_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($academicPrograms as $academicProgram)
@@ -523,10 +523,11 @@
                         <select name="anno_egreso" wire:model="applicant.postulante_anioEgres"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                             <option class="hidden">Seleccionar</option>
-                            @for ($i = $minimumYear; $i <= date('Y'); $i++)
-                                <option value={{ $i }}>
-                                    {{ $i }}
-                                </option>
+                            @php
+                                $maxYear = $applicant->modalidad_id == 3 ? date('Y') - 1 : date('Y');
+                            @endphp
+                            @for ($i = $minimumYear; $i <= $maxYear; $i++)
+                                <option value="{{ $i }}">{{ $i }}</option>
                             @endfor
                         </select>
                     @else
@@ -543,7 +544,7 @@
                     Atrás
                 </button>
                 <button type="button" wire:click="nextStep"
-                    class="cursor-pointer mt-4 text-white bg-blue-600 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    class="cursor-pointer mt-4 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                     Siguiente
                 </button>
             </div>
@@ -554,9 +555,7 @@
         </div>
 
         <div class="{{ $currentStep == 3 ? 'animate-slide-in-right' : 'hidden' }}">
-            {{$profilePhoto}}
-            {{$reverseDniPhoto}}
-            {{$frontDniPhoto}}
+
             <div class="my-8 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Archivos Requeridos
                 </h4>
@@ -571,7 +570,8 @@
                             class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                             Foto Carnet Postulante
                         </span>
-                        <input type="file" name="profilePhoto" wire:model="profilePhoto" wire:ignore
+                        <input type="file" name="profilePhoto" wire:model="profilePhoto"
+                            wire:click="$set('profilePhoto', null)"
                             class="block w-full text-sm text-slate-500
                     file:mr-4 file:py-2 file:px-4
                     file:rounded-full file:border-0
@@ -582,7 +582,6 @@
                         <x-input-error for="profilePhoto" />
                     </label>
                 </div>
-
             </div>
 
             <div class="grid md:grid-cols-2 md:gap-6">
@@ -597,6 +596,7 @@
                             DNI Parte Anverso
                         </span>
                         <input type="file" name="reverseDniPhoto" wire:model="reverseDniPhoto"
+                            wire:click="$set('reverseDniPhoto', null)"
                             class="block w-full text-sm text-slate-500
                     file:mr-4 file:py-2 file:px-4
                     file:rounded-full file:border-0
@@ -619,6 +619,7 @@
                             DNI Parte Reverso
                         </span>
                         <input type="file" name="frontDniPhoto" wire:model="frontDniPhoto"
+                            wire:click="$set('frontDniPhoto', null)"
                             class="block w-full text-sm text-slate-500
                     file:mr-4 file:py-2 file:px-4
                     file:rounded-full file:border-0
@@ -637,7 +638,7 @@
                     Atrás
                 </button>
                 <button type="button" wire:click="nextStep"
-                    class="cursor-pointer mt-4 text-white bg-blue-600 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    class="cursor-pointer mt-4 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                     Siguiente
                 </button>
             </div>
@@ -696,7 +697,7 @@
                 </button>
                 @if ($accordance)
                     <button type="submit"
-                        class="cursor-pointer mt-4 text-white bg-blue-600 hover:bg-blue-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center animate-slide-in-down">
+                        class="cursor-pointer mt-4 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center animate-slide-in-down">
                         Finalizar y Enviar
                     </button>
                 @endif

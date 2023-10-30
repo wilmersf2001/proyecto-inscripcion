@@ -14,6 +14,7 @@ use App\Http\Controllers\PayController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 Route::get('/welcome', function () {
 	return view('welcome');
 });
@@ -26,3 +27,6 @@ Route::get('/', PayController::class)->name('start');
 Route::post('/registro-postulante', [PayController::class, "validatePayment"])->name('pay.validatePayment');
 Route::post('/store-applicant', [ApplicantController::class, "store"])->name('applicant.store');
 Route::get('/mensaje', [ApplicantController::class, "ending"])->name('applicant.ending');
+Route::any('/{any}', function () {
+	return view('page-not-found');
+})->where('any', '.*');

@@ -45,8 +45,8 @@ class StoreApplicantRequest extends FormRequest
             'selectedProvinceOriginSchoolId' => 'required|numeric',
             'selectedDistrictOriginSchoolId' => 'required|numeric',
             'profilePhoto' => 'required|mimes:jpeg,png|max:1024',
-            'reverseDniPhoto' => 'required|image|max:1024',
-            'frontDniPhoto' => 'required|image|max:1024',
+            'reverseDniPhoto' => 'required|mimes:jpeg,png|max:1024',
+            'frontDniPhoto' => 'required|mimes:jpeg,png|max:1024',
             'accordance' => 'required|accepted',
         ];
     }

@@ -9,6 +9,8 @@ class Postulante extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $table = 'admision_postulante';
 
     protected $primaryKey = 'postulante_id';
