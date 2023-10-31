@@ -3,9 +3,15 @@
 namespace App\Utils;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\File;
+use App\Models\Colegio;
+use App\Models\Departamento;
+use App\Models\Distrito;
 use App\Models\Postulante;
 use App\Models\Proceso;
+use App\Models\Provincia;
 use Carbon\Carbon;
+
 
 class  UtilFunction
 {
@@ -33,4 +39,14 @@ class  UtilFunction
     $svgFile = public_path('temp/' . $nameQr . '.svg');
     file_put_contents($svgFile, $qrCode);
   }
+  /* public function getImagePathByDni($dni)
+  {
+    $folderPath = public_path(Constantes::RUTA_FOTO_VALIDA);
+    $dniPath = $folderPath . '/' . $dni . '.jpg';
+    $applicantStatus = Postulante::where('postulante_numDocumento', $dni)->value('postulante_estado');
+    if (in_array($applicantStatus, Constantes::ESTADOS_VALIDOS_POSTULANTE) && is_file($dniPath)) {
+      return $dniPath;
+    }
+    return 0;
+  } */
 }

@@ -5,12 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Colegio;
 use App\Models\Distrito;
-use App\Models\Proceso;
+use App\Models\Escuela;
 use App\Models\Modalidad;
 use App\Models\Postulante;
-use App\Utils\UtilFunction;
-use App\Models\Escuela;
+use App\Models\Proceso;
 use App\Models\Sede;
+use App\Utils\UtilFunction;
 use Barryvdh\DomPDF\Facade\Pdf;
 class PdfController extends Controller
 {
@@ -38,6 +38,7 @@ class PdfController extends Controller
         'tipoColegio' => Colegio::find($applicant->colegio_id)->colegio_tipocolegio == 1 ? 'Nacional' : 'Privado'
       ];
 
-      return PDF::View('pdf-Vista', $data)->stream();
+      return PDF::loadView('Pdfconsulta.pdfData', $data)->stream();
+
     }
 }

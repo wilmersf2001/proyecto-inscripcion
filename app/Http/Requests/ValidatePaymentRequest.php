@@ -26,6 +26,7 @@ class ValidatePaymentRequest extends FormRequest
       'voucherNumber' => 'required|numeric|digits:7|exists:admision_banco,NumDoc',
       'agencyNumber' => 'required|numeric|digits:4|exists:admision_banco,Oficina',
       'payDay' => 'required|date',
+
     ];
   }
 }
