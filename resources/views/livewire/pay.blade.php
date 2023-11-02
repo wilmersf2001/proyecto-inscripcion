@@ -30,12 +30,12 @@
                 <label class="block mb-6">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
-                        Número de DNI
+                        Número de documento
                     </span>
-                    <input type="text" name="dni" wire:model="dni" minlength="8" maxlength="8"
+                    <input type="text" name="numDocument" wire:model="numDocument"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 75635..." />
-                    <x-input-error for="dni" />
+                    <x-input-error for="numDocument" />
                 </label>
                 <label class="block mb-6">
                     <span
@@ -92,7 +92,7 @@
 
                         <span class="text-sm font-semibold leading-6 tracking-wide text-gray-600">PEN</span>
                     </p>
-                    
+
                     <button type="submit"
                         class="mt-10 block w-full rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">INGRESAR</button>
 

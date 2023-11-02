@@ -10,7 +10,7 @@ use App\Models\Banco;
 class Pay extends Component
 {
   public $bank;
-  public string $dni = '';
+  public string $numDocument = '';
   public string $voucherNumber = '';
   public string $agencyNumber = '';
   public $payDay;
@@ -20,7 +20,7 @@ class Pay extends Component
   protected $messages = ValidatePayment::MESSAGES_ERROR;
 
   protected $rules = [
-    'dni' => 'required|numeric|digits:8',
+    'numDocument' => 'required|numeric|regex:/^\d{8,9}$/',
     'voucherNumber' => 'required|numeric|digits:7',
     'agencyNumber' => 'required|numeric|digits:4',
     'payDay' => 'required|date',
@@ -33,8 +33,8 @@ class Pay extends Component
 
   public function render()
   {
-    if ($this->dni && $this->voucherNumber && $this->agencyNumber && $this->payDay) {
-      $this->bank = Banco::where('dni_depositante', $this->dni)
+    if ($this->numDocument && $this->voucherNumber && $this->agencyNumber && $this->payDay) {
+      $this->bank = Banco::where('num_doc_depo', $this->numDocument)
         ->where('num_documento', $this->voucherNumber)
         ->where('num_oficina', $this->agencyNumber)
         ->where('fecha', $this->payDay)

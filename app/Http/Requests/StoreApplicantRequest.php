@@ -22,7 +22,8 @@ class StoreApplicantRequest extends FormRequest
   public function rules(): array
   {
     return [
-      'dni' => 'required|numeric|digits:8',
+      'num_documento' => 'required|numeric|digits:8',
+      'tipo_documento' => 'required|numeric',
       'num_voucher' => 'required|numeric|digits:7',
       'nombres' => 'required',
       'ap_paterno' => 'required',

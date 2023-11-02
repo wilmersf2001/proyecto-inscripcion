@@ -26,17 +26,17 @@ class SummaryTemplate extends Component
   }
   public function render()
   {
-    $dateNac = Carbon::create($this->applicant->postulante_fechNac)->locale('es_PE');
+    $dateNac = Carbon::create($this->applicant->fecha_nacimiento)->locale('es_PE');
     $this->formattedDateNac = $dateNac->isoFormat('D [de] MMMM [del] YYYY');
-    $this->nameSexo = $this->applicant->sexo->sexo_descripcion;
-    $this->distrit = $this->applicant->distrito->distrito_descripcion;
-    $this->districtAddress = $this->applicant->distritoDireccion->distrito_descripcion;
-    $this->typeAddress = $this->applicant->tipodireccion->tipodireccion_descripcion;
-    $this->districtSchool = $this->applicant->colegio->colegio_distrito;
-    $this->nameSchool = $this->applicant->colegio->colegio_descripcion;
-    $this->sede = $this->applicant->sede->sede_descripcion;
-    $this->programAcademic = $this->applicant->escuela->escuela_descripcion;
-    $this->modality = $this->applicant->modalidad->modalidad_descripcion;
+    $this->nameSexo = $this->applicant->sexo->descripcion;
+    $this->distrit = $this->applicant->distritoNac->nombre;
+    $this->districtAddress = $this->applicant->distritoRes->nombre;
+    $this->typeAddress = $this->applicant->tipodireccion->descripcion;
+    $this->districtSchool = $this->applicant->colegio->distrito;
+    $this->nameSchool = $this->applicant->colegio->nombre;
+    $this->sede = $this->applicant->sede->nombre;
+    $this->programAcademic = $this->applicant->programaAcademico->nombre;
+    $this->modality = $this->applicant->modalidad->descripcion;
   
     return view('livewire.summary-template');
   }

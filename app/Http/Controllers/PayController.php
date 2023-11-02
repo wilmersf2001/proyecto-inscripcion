@@ -23,9 +23,9 @@ class PayController extends Controller
 
   public function validatePayment(ValidatePaymentRequest $request)
   {
-    $dni = $request->dni;
+    $numDocument = $request->numDocument;
     $idBank = $request->idBank;
-    $applicant = $this->apiReniec->getApplicantDataByDni($dni);
+    $applicant = $this->apiReniec->getApplicantDataByDni($numDocument);
     $bank = Banco::find($idBank);
     if (!$bank) {
       return redirect()->route('start');

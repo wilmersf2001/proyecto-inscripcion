@@ -5,9 +5,9 @@ namespace App\Http\Requests\View\Message;
 class ValidatePayment
 {
   public const MESSAGES_ERROR = [
-    'dni.required' => 'dni es requerido',
-    'dni.numeric' => 'campo dni debe ser numérico',
-    'dni.digits' => 'campo dni debe tener 8 dígitos',
+    'numDocument.required' => 'dni es requerido',
+    'numDocument.numeric' => 'campo dni debe ser numérico',
+    'numDocument.regex' => 'este campo debe tener 8 o 9 dígitos',
     'voucherNumber.required' => 'voucher es requerido',
     'voucherNumber.numeric' => 'campo número de voucher debe ser numérico',
     'voucherNumber.digits' => 'campo número de voucher debe tener 7 dígitos',
