@@ -14,15 +14,15 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt class="text-sm font-medium leading-6 text-gray-900">Nombres</dt>
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {{ strtoupper($applicant->postulante_nombres) }}</dd>
+                            {{ strtoupper($applicant->nombres) }}</dd>
                     </div>
                 </div>
                 <div class="border-t border-gray-200 pt-4">
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt class="text-sm font-medium leading-6 text-gray-900">Apellidos</dt>
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {{ strtoupper($applicant->postulante_apPaterno) }}
-                            {{ strtoupper($applicant->postulante_apMaterno) }}
+                            {{ strtoupper($applicant->ap_paterno) }}
+                            {{ strtoupper($applicant->ap_materno) }}
                         </dd>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt class="text-sm font-medium leading-6 text-gray-900">Dirección</dt>
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {{ strtoupper($applicant->postulante_direccion) }}</dd>
+                            {{ strtoupper($applicant->direccion) }}</dd>
                     </div>
                 </div>
             </dl>
@@ -94,21 +94,21 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt class="text-sm font-medium leading-6 text-gray-900">Teléfono de Postulante</dt>
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {{ strtoupper($applicant->postulante_telefono) }}</dd>
+                            {{ strtoupper($applicant->telefono) }}</dd>
                     </div>
                 </div>
                 <div class="border-t border-gray-200 pt-4">
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt class="text-sm font-medium leading-6 text-gray-900">Teléfono de Apoderado</dt>
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {{ strtoupper($applicant->postulante_telefonoAp) }}</dd>
+                            {{ strtoupper($applicant->telefono_ap) }}</dd>
                     </div>
                 </div>
                 <div class="border-t border-gray-200 pt-4">
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt class="text-sm font-medium leading-6 text-gray-900">Correo Electrónico</dt>
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {{ $applicant->postulante_correo }}</dd>
+                            {{ $applicant->correo }}</dd>
                     </div>
                 </div>
             </dl>
@@ -142,7 +142,7 @@
                         <dt class="text-sm font-medium leading-6 text-gray-900">N° Postulación a Otras Universidades
                         </dt>
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {{ $applicant->postulante_numveceso }}</dd>
+                            {{ $applicant->num_veces_otros }}</dd>
                     </div>
                 </div>
             </dl>
@@ -175,7 +175,7 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt class="text-sm font-medium leading-6 text-gray-900">N° Postulación a la UNPRG</dt>
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {{ $applicant->postulante_numvecesu }}</dd>
+                            {{ $applicant->num_veces_unprg }}</dd>
                     </div>
                 </div>
                 <div class="border-t border-gray-200 pt-4">
@@ -190,7 +190,7 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt class="text-sm font-medium leading-6 text-gray-900">Año de Egreso</dt>
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {{ $applicant->postulante_anioEgres }}</dd>
+                            {{ $applicant->anno_egreso }}</dd>
                     </div>
                 </div>
             </dl>

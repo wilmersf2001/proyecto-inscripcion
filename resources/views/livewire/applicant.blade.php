@@ -18,8 +18,8 @@
 
     <form action="{{ route('applicant.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="dni" value="{{ $bank->dni_dep }}">
-        <input type="hidden" name="num_voucher" value="{{ $bank->NumDoc }}">
+        <input type="hidden" name="dni" value="{{ $bank->dni_depositante }}">
+        <input type="hidden" name="num_voucher" value="{{ $bank->num_documento }}">
         <div class="{{ $currentStep == 1 ? 'animate-slide-in-left' : 'hidden' }}">
             <div class="my-8 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Datos Personales Postulante</h4>
@@ -32,27 +32,27 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Nombres Completos
                     </span>
-                    <input type="text" name="nombres" wire:model="applicant.postulante_nombres"
+                    <input type="text" name="nombres" wire:model="applicant.nombres"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="applicant.postulante_nombres" />
+                    <x-input-error for="applicant.nombres" />
                 </label>
                 <label class="block mb-10">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Apellido Paterno
                     </span>
-                    <input type="text" name="ap_paterno" wire:model="applicant.postulante_apPaterno"
+                    <input type="text" name="ap_paterno" wire:model="applicant.ap_paterno"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="applicant.postulante_apPaterno" />
+                    <x-input-error for="applicant.ap_paterno" />
                 </label>
                 <label class="block mb-10">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Apellido Materno
                     </span>
-                    <input type="text" name="ap_materno" wire:model="applicant.postulante_apMaterno"
+                    <input type="text" name="ap_materno" wire:model="applicant.ap_materno"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="applicant.postulante_apMaterno" />
+                    <x-input-error for="applicant.ap_materno" />
                 </label>
             </div>
             <div class="grid md:grid-cols-3 md:gap-6">
@@ -75,7 +75,7 @@
                         <option class="hidden">Seleccionar</option>
                         @foreach ($generos as $genero)
                             <option value={{ $genero->sexo_id }}>
-                                {{ ucfirst(strtolower($genero->sexo_descripcion)) }}
+                                {{ ucfirst(strtolower($genero->descripcion)) }}
                             </option>
                         @endforeach
                     </select>
@@ -105,8 +105,8 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($departaments as $departament)
-                            <option value={{ $departament->departamento_id }}>
-                                {{ $departament->departamento_descripcion }}
+                            <option value={{ $departament->id }}>
+                                {{ $departament->nombre }}
                             </option>
                         @endforeach
                     </select>
@@ -120,8 +120,8 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($provincesBirth as $provinceBirth)
-                            <option value={{ $provinceBirth->provincia_id }}>
-                                {{ $provinceBirth->provincia_descripcion }}
+                            <option value={{ $provinceBirth->id }}>
+                                {{ $provinceBirth->nombre }}
                             </option>
                         @endforeach
                     </select>
@@ -130,16 +130,16 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Distrito
                     </span>
-                    <select name="distrito_nac" wire:model="applicant.distrito_id"
+                    <select name="distrito_nac" wire:model="applicant.distrito_nac_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($districtsBirth as $districtBirth)
-                            <option value={{ $districtBirth->distrito_id }}>
-                                {{ $districtBirth->distrito_descripcion }}
+                            <option value={{ $districtBirth->id }}>
+                                {{ $districtBirth->nombre }}
                             </option>
                         @endforeach
                     </select>
-                    <x-input-error for="applicant.distrito_id" />
+                    <x-input-error for="applicant.distrito_nac_id" />
                 </label>
             </div>
 
@@ -167,8 +167,8 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($departaments as $departament)
-                            <option value={{ $departament->departamento_id }}>
-                                {{ $departament->departamento_descripcion }}
+                            <option value={{ $departament->id }}>
+                                {{ $departament->nombre }}
                             </option>
                         @endforeach
                     </select>
@@ -182,8 +182,8 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($provincesReside as $provinceReside)
-                            <option value={{ $provinceReside->provincia_id }}>
-                                {{ ucfirst(strtolower($provinceReside->provincia_descripcion)) }}
+                            <option value={{ $provinceReside->id }}>
+                                {{ strtolower($provinceReside->nombre) }}
                             </option>
                         @endforeach
                     </select>
@@ -192,16 +192,16 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Distrito
                     </span>
-                    <select name="distrito_res" wire:model="applicant.distrito_id_direccion"
+                    <select name="distrito_res" wire:model="applicant.distrito_res_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($districtsReside as $districtReside)
-                            <option value={{ $districtReside->distrito_id }}>
-                                {{ $districtReside->distrito_descripcion }}
+                            <option value={{ $districtReside->id }}>
+                                {{ $districtReside->nombre }}
                             </option>
                         @endforeach
                     </select>
-                    <x-input-error for="applicant.distrito_id_direccion" />
+                    <x-input-error for="applicant.distrito_res_id" />
                 </label>
             </div>
 
@@ -210,25 +210,25 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Tipo de Dirección
                     </span>
-                    <select name="tipo_direccion" wire:model="applicant.tipodireccion_id"
+                    <select name="tipo_direccion" wire:model="applicant.tipo_direccion_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($adressType as $adress)
-                            <option value={{ $adress->tipodireccion_id }}>
+                            <option value={{ $adress->tipo_direccion_id }}>
                                 {{ $adress->tipodireccion_descripcion }}
                             </option>
                         @endforeach
                     </select>
-                    <x-input-error for="applicant.tipodireccion_id" />
+                    <x-input-error for="applicant.tipo_direccion_id" />
                 </label>
                 <label class="block mb-10">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Dirección
                     </span>
-                    <input type="text" name="direccion" wire:model="applicant.postulante_direccion"
+                    <input type="text" name="direccion" wire:model="applicant.direccion"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: Calle Ficticia 123" />
-                    <x-input-error for="applicant.postulante_direccion" />
+                    <x-input-error for="applicant.direccion" />
                 </label>
             </div>
 
@@ -241,29 +241,29 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Teléfono del Postulante
                     </span>
-                    <input type="tel" name="telefono" wire:model="applicant.postulante_telefono" maxlength="9"
+                    <input type="tel" name="telefono" wire:model="applicant.telefono" maxlength="9"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 955123456" />
-                    <x-input-error for="applicant.postulante_telefono" />
+                    <x-input-error for="applicant.telefono" />
                 </label>
                 <label class="block mb-10">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Teléfono del Apoderado
                     </span>
-                    <input type="tel" name="telefono_ap" wire:model="applicant.postulante_telefonoAp"
+                    <input type="tel" name="telefono_ap" wire:model="applicant.telefono_ap"
                         maxlength="9"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 955123456" />
-                    <x-input-error for="applicant.postulante_telefonoAp" />
+                    <x-input-error for="applicant.telefono_ap" />
                 </label>
                 <label class="block mb-10">
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Correo Electrónico
                     </span>
-                    <input type="email" name="correo" wire:model="applicant.postulante_correo"
+                    <input type="email" name="correo" wire:model="applicant.correo"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: postulante@gmail.com" />
-                    <x-input-error for="applicant.postulante_correo" />
+                    <x-input-error for="applicant.correo" />
                 </label>
             </div>
 
@@ -296,8 +296,8 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($departaments as $departament)
-                            <option value={{ $departament->departamento_id }}>
-                                {{ $departament->departamento_descripcion }}
+                            <option value={{ $departament->id }}>
+                                {{ $departament->nombre }}
                             </option>
                         @endforeach
                     </select>
@@ -313,8 +313,8 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($provincesOriginSchool as $provinceOriginSchool)
-                            <option value={{ $provinceOriginSchool->provincia_id }}>
-                                {{ $provinceOriginSchool->provincia_descripcion }}
+                            <option value={{ $provinceOriginSchool->id }}>
+                                {{ $provinceOriginSchool->nombre }}
                             </option>
                         @endforeach
                     </select>
@@ -330,8 +330,8 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($districtsOriginSchool as $districtOriginSchool)
-                            <option value={{ $districtOriginSchool->distrito_id }}>
-                                {{ $districtOriginSchool->distrito_descripcion }}
+                            <option value={{ $districtOriginSchool->id }}>
+                                {{ $districtOriginSchool->nombre }}
                             </option>
                         @endforeach
                     </select>
@@ -401,9 +401,9 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Número de veces que postula a otras universidades
                     </span>
-                    <input type="number" name="num_veces_otro" wire:model="applicant.postulante_numveceso"
+                    <input type="number" name="num_veces_otro" wire:model="applicant.num_veces_otros"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="applicant.postulante_numveceso" />
+                    <x-input-error for="applicant.num_veces_otros" />
                 </label>
             </div>
 
@@ -436,16 +436,16 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Programa Académico al que Postula
                     </span>
-                    <select name="programa_academico_id" wire:model="applicant.escuela_id"
+                    <select name="programa_academico_id" wire:model="applicant.programa_academico_id"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($academicPrograms as $academicProgram)
-                            <option value={{ $academicProgram->escuela_id }}>
+                            <option value={{ $academicProgram->programa_academico_id }}>
                                 {{ $academicProgram->escuela_descripcion }}
                             </option>
                         @endforeach
                     </select>
-                    <x-input-error for="applicant.escuela_id" />
+                    <x-input-error for="applicant.programa_academico_id" />
                 </label>
 
                 <label class="block mb-10">
@@ -453,9 +453,9 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Número de veces que postula a la UNPRG
                     </span>
-                    <input type="number" name="num_veces_unprg" wire:model="applicant.postulante_numvecesu"
+                    <input type="number" name="num_veces_unprg" wire:model="applicant.num_veces_unprg"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="applicant.postulante_numvecesu" />
+                    <x-input-error for="applicant.num_veces_unprg" />
                 </label>
             </div>
 
@@ -520,7 +520,7 @@
                         </div>
                     </div>
                     @if ($applicant->modalidad_id)
-                        <select name="anno_egreso" wire:model="applicant.postulante_anioEgres"
+                        <select name="anno_egreso" wire:model="applicant.anno_egreso"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                             <option class="hidden">Seleccionar</option>
                             @php
@@ -534,7 +534,7 @@
                         <input type="text" disabled placeholder="Seleccione el modalidad"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 block w-full rounded-md sm:text-sm disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" />
                     @endif
-                    <x-input-error for="applicant.postulante_anioEgres" />
+                    <x-input-error for="applicant.anno_egreso" />
                 </label>
             </div>
 

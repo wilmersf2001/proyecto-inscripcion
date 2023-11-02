@@ -19,7 +19,7 @@ class PdfController extends Controller
       $process = new Proceso();
       $utilFunction = new UtilFunction();
 
-      $applicant = Postulante::where('postulante_numDocumento', $dni)->first();
+      $applicant = Postulante::where('num_documento', $dni)->first();
       $today = $utilFunction->getDateToday();
       $pathImage = $utilFunction->getImagePathByDni($dni);
       $process = $process->getProcessNumber();
@@ -27,7 +27,7 @@ class PdfController extends Controller
       $data = [
         'postulante' => $applicant,
         'resultadoQr' => $utilFunction->dataQr($applicant->postulante_id),
-        'escuela' => Escuela::find($applicant->escuela_id)->escuela_descripcion,
+        'escuela' => Escuela::find($applicant->programa_academico_id)->escuela_descripcion,
         'modalidad' => Modalidad::find($applicant->modalidad_id)->modalidad_descripcion,
         'sede' => Sede::find($applicant->sede_id)->sede_descripcion,
         'colegio' => Colegio::find($applicant->colegio_id)->colegio_descripcion,

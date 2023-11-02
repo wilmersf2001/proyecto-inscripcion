@@ -9,15 +9,23 @@ class Modalidad extends Model
 {
     use HasFactory;
 
-    protected $table = 'admision_modalidad';
-
-    protected $primaryKey = 'modalidad_id';
+    protected $table = 'tb_modalidad';
 
     protected $fillable = [
-        'modalidad_descripcion',
-        'modalidad_montonacional',
-        'modalidad_montoparticular',
-        'modalidad_estado',
+        'descripcion',
+        'monto_nacional',
+        'monto_particular',
+        'estado',
         'examen_id',
     ];
+
+    public function postulantes()
+    {
+        return $this->hasMany(Postulante::class, 'modalidad_id');
+    }
+    
+    public function examen()
+    {
+        return $this->belongsTo(Examen::class, 'examen_id');
+    }
 }

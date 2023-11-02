@@ -5,17 +5,17 @@ namespace App\Http\Requests\View;
 class FirstStepApplicantRequest
 {
   public const FIRST_STEP_VALIDATE = [
-    'applicant.postulante_nombres' => 'required',
-    'applicant.postulante_apPaterno' => 'required',
-    'applicant.postulante_apMaterno' => 'required',
+    'applicant.nombres' => 'required',
+    'applicant.ap_paterno' => 'required',
+    'applicant.ap_materno' => 'required',
     'applicant.postulante_fechNac' => 'required|date|before:2012-01-01',
     'applicant.sexo_id' => 'required',
-    'applicant.distrito_id' => 'required',
-    'applicant.distrito_id_direccion' => 'required',
-    'applicant.tipodireccion_id' => 'required',
-    'applicant.postulante_direccion' => 'required',
-    'applicant.postulante_telefono' => 'required|numeric|digits:9',
-    'applicant.postulante_telefonoAp' => 'required|numeric|digits:9',
-    'applicant.postulante_correo' => 'required|email',
+    'applicant.distrito_nac_id' => 'required',
+    'applicant.distrito_res_id' => 'required',
+    'applicant.tipo_direccion_id' => 'required',
+    'applicant.direccion' => 'required',
+    'applicant.telefono' => 'required|numeric|digits:9',
+    'applicant.telefono_ap' => 'required|numeric|digits:9',
+    'applicant.correo' => 'required|email',
   ];
 }

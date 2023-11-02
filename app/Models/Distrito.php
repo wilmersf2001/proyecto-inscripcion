@@ -9,13 +9,21 @@ class Distrito extends Model
 {
     use HasFactory;
 
-    protected $table = 'admision_distrito';
-
-    protected $primaryKey = 'distrito_id';
+    protected $table = 'tb_distrito';
 
     protected $fillable = [
-        'distrito_descripcion',
-        'provincia_id',
-        'distrito_ubigeo'
+        'nombre',
+        'ubigeo',
+        'provincia_id'
     ];
+
+    public function provincia()
+    {
+        return $this->belongsTo(Provincia::class, 'provincia_id');
+    }
+
+    public function postulantes()
+    {
+        return $this->hasMany(Postulante::class, 'distrito_id');
+    }
 }

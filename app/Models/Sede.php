@@ -9,13 +9,20 @@ class Sede extends Model
 {
     use HasFactory;
 
-    protected $table = 'admision_sede';
-
-    protected $primaryKey = 'sede_id';
+    protected $table = 'tb_sede';
 
     protected $fillable = [
-        'sede_descripcion',
-        'sede_estado',
+        'nombre',
+        'estado'
     ];
 
+    public function postulantes()
+    {
+        return $this->hasMany(Postulante::class, 'sede_id');
+    }
+
+    public function programasAcademicos()
+    {
+        return $this->hasMany(ProgramaAcademico::class, 'sede_id');
+    }
 }

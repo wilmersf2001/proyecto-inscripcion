@@ -19,7 +19,7 @@ use App\Http\Requests\View\StepThreeApplicantRequest;
 use App\Http\Requests\View\Message\ValidateApplicant;
 use App\Models\Banco;
 use App\Models\Colegio;
-use App\Models\Escuela;
+use App\Models\ProgramaAcademico;
 use Carbon\Carbon;
 
 class Applicant extends Component
@@ -81,7 +81,7 @@ class Applicant extends Component
     $this->provincesOriginSchool = Provincia::all();
     $this->districtsOriginSchool = Distrito::all();
     $this->adressType = TipoDireccion::all();
-    $this->academicPrograms = Escuela::all();
+    $this->academicPrograms = ProgramaAcademico::all();
     $this->generos = Genero::all();
     $this->sedes = Sede::all();
     $this->modalities = Modalidad::all();

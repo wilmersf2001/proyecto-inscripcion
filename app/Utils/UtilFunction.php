@@ -43,7 +43,7 @@ class  UtilFunction
   {
     $folderPath = public_path(Constantes::RUTA_FOTO_VALIDA);
     $dniPath = $folderPath . '/' . $dni . '.jpg';
-    $applicantStatus = Postulante::where('postulante_numDocumento', $dni)->value('postulante_estado');
+    $applicantStatus = Postulante::where('num_documento', $dni)->value('postulante_estado');
     if (in_array($applicantStatus, Constantes::ESTADOS_VALIDOS_POSTULANTE) && is_file($dniPath)) {
       return $dniPath;
     }

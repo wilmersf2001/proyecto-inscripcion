@@ -11,38 +11,37 @@ class Postulante extends Model
 
     public $timestamps = false;
 
-    protected $table = 'admision_postulante';
-
-    protected $primaryKey = 'postulante_id';
+    protected $table = 'tb_postulante';
 
     protected $fillable = [
-        'postulante_nombres',
-        'postulante_apPaterno',
-        'postulante_apMaterno',
+        'nombres',
+        'ap_paterno',
+        'ap_materno',
+        'fecha_nacimiento',
+        'num_documento',
+        'tipo_documento',
+        'talla',
+        'num_voucher',
+        'direccion',
+        'correo',
+        'telefono',
+        'telefono_ap',
+        'anno_egreso',
+        'fecha_inscripcion',
+        'num_veces_unprg',
+        'num_veces_otros',
+        'codigo',
         'sexo_id',
-        'postulante_fechNac',
-        'postulante_numDocumento',
-        'postulante_talla',
-        'postulante_voucher',
-        'postulante_direccion',
-        'distrito_id_direccion',
-        'tipodireccion_id',
-        'postulante_correo',
-        'postulante_telefono',
-        'postulante_telefonoAp',
-        'postulante_anioEgres',
-        'postulante_fechInsc',
-        'postulante_numvecesu',
-        'postulante_numveceso',
-        'escuela_id',
-        'colegio_id',
-        'distrito_id',
-        'universidad_id',
-        'postulante_codigopostulante',
+        'distrito_nac_id',	
+        'distrito_res_id',
+        'tipo_direccion_id',
         'modalidad_id',
+        'programa_academico_id',
+        'colegio_id',
+        'universidad_id',
         'sede_id',
-        'postulante_estado',
-        'INGRESO',
+        'estado_postulante_id',
+        'ingreso',
     ];
 
     public function sexo()
@@ -50,29 +49,19 @@ class Postulante extends Model
         return $this->belongsTo(Genero::class, 'sexo_id');
     }
 
-    public function distrito()
+    public function distritoNac()
     {
-        return $this->belongsTo(Distrito::class, 'distrito_id');
+        return $this->belongsTo(Distrito::class, 'distrito_nac_id');
     }
 
-    public function distritoDireccion()
+    public function distritoRes()
     {
-        return $this->belongsTo(Distrito::class, 'distrito_id_direccion');
+        return $this->belongsTo(Distrito::class, 'distrito_res_id');
     }
 
-    public function tipoDireccion()
+    public function tipodireccion()
     {
-        return $this->belongsTo(TipoDireccion::class, 'tipodireccion_id');
-    }
-
-    public function colegio()
-    {
-        return $this->belongsTo(Colegio::class, 'colegio_id');
-    }
-
-    public function sede()
-    {
-        return $this->belongsTo(Sede::class, 'sede_id');
+        return $this->belongsTo(Tipodireccion::class, 'tipo_direccion_id');
     }
 
     public function modalidad()
@@ -80,17 +69,37 @@ class Postulante extends Model
         return $this->belongsTo(Modalidad::class, 'modalidad_id');
     }
 
-    public function escuela()
+    public function programaAcademico()
     {
-        return $this->belongsTo(Escuela::class, 'escuela_id');
+        return $this->belongsTo(ProgramaAcademico::class, 'programa_academico_id');
+    }
+
+    public function colegio()
+    {
+        return $this->belongsTo(Colegio::class, 'colegio_id');
+    }
+
+    public function universidad()
+    {
+        return $this->belongsTo(Universidad::class, 'universidad_id');
+    }
+
+    public function sede()
+    {
+        return $this->belongsTo(Sede::class, 'sede_id');
+    }
+
+    public function estadopostulante()
+    {
+        return $this->belongsTo(Estadopostulante::class, 'estado_postulante_id');
     }
 
     public static function fromArrayReniec(array $data){
         $postulante = new Postulante();
-        $postulante->postulante_nombres = $data['nombres'];
-        $postulante->postulante_apPaterno = $data['apellidoPaterno'];
-        $postulante->postulante_apMaterno = $data['apellidoMaterno'];
-        $postulante->postulante_numDocumento = $data['numeroDocumento'];
+        $postulante->nombres = $data['nombres'];
+        $postulante->ap_paterno = $data['apellidoPaterno'];
+        $postulante->ap_materno = $data['apellidoMaterno'];
+        $postulante->num_documento = $data['numeroDocumento'];
         return $postulante;
     }
 }

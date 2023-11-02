@@ -22,9 +22,9 @@ class ValidatePaymentRequest extends FormRequest
   public function rules(): array
   {
     return [
-      'dni' => 'required|numeric|digits:8|exists:admision_banco,dni_dep',
-      'voucherNumber' => 'required|numeric|digits:7|exists:admision_banco,NumDoc',
-      'agencyNumber' => 'required|numeric|digits:4|exists:admision_banco,Oficina',
+      'dni' => 'required|numeric|digits:8|exists:tb_banco,dni_depositante',
+      'voucherNumber' => 'required|numeric|digits:7|exists:tb_banco,num_documento',
+      'agencyNumber' => 'required|numeric|digits:4|exists:tb_banco,num_oficina',
       'payDay' => 'required|date',
 
     ];

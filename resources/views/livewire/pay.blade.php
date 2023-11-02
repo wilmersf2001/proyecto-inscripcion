@@ -25,7 +25,7 @@
 
             <div class="grid md:grid-cols-2 md:gap-6">
                 @if ($bank)
-                    <input type="hidden" name="idBank" value="{{ $bank->NumSecuencia }}" />
+                    <input type="hidden" name="idBank" value="{{ $bank->id }}" />
                 @endif
                 <label class="block mb-6">
                     <span

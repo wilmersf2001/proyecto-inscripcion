@@ -34,13 +34,13 @@ class Pay extends Component
   public function render()
   {
     if ($this->dni && $this->voucherNumber && $this->agencyNumber && $this->payDay) {
-      $this->bank = Banco::where('dni_dep', $this->dni)
-        ->where('NumDoc', $this->voucherNumber)
-        ->where('Oficina', $this->agencyNumber)
-        ->where('Fecha', $this->payDay)
+      $this->bank = Banco::where('dni_depositante', $this->dni)
+        ->where('num_documento', $this->voucherNumber)
+        ->where('num_oficina', $this->agencyNumber)
+        ->where('fecha', $this->payDay)
         ->first();
 
-      $this->amount = $this->bank ? $this->bank->Importe : 0;
+      $this->amount = $this->bank ? $this->bank->importe : 0;
       if (!$this->bank) {
         session()->flash('warning');
       }

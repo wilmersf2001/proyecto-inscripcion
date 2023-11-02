@@ -9,11 +9,14 @@ class Genero extends Model
 {
     use HasFactory;
 
-    protected $table = 'admision_sexo';
-
-    protected $primaryKey = 'sexo_id';
+    protected $table = 'tb_sexo';
 
     protected $fillable = [
-        'sexo_descripcion',
+        'descripcion',
     ];
+
+    public function postulantes()
+    {
+        return $this->hasMany(Postulante::class, 'sexo_id');
+    }
 }

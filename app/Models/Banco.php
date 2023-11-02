@@ -8,23 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Banco extends Model
 {
     use HasFactory;
-    protected $table = 'admision_banco';
-    protected $primaryKey = 'NumSecuencia';
+    protected $table = 'tb_banco';
 
     protected $fillable = [
-        'Oficina',
-        'Concepto',
-        'TipoDoc',
-        'NumDoc',
-        'Importe',
-        'Fecha',
-        'Hora',
-        'Estado',
-        'dni_dep',
-        'observacion_dep',
-        'recibo_dep',
-        'fecharecibo_dep',
-        'monto_dep',
-        'descripcion_dep',
+        'num_oficina',
+        'cod_concepto',
+        'tipo_documento',
+        'num_documento',
+        'importe',
+        'fecha',
+        'hora',
+        'estado',
+        'dni_depositante',
+        'observacion_depositante',
+        'recibo_depositante',
+        'fecharecibo_depositante',
+        'monto_depositante',
+        'descripcion_depositante',
     ];
 }

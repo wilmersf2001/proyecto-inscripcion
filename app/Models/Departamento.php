@@ -9,13 +9,11 @@ class Departamento extends Model
 {
     use HasFactory;
 
-    protected $table = 'admision_departamento';
-
-    protected $primaryKey = 'departamento_id';
+    protected $table = 'tb_departamento';
 
     protected $fillable = [
-        'departamento_descripcion',
-        'UBIGEO_DE'
+        'nombre',
+        'ubigeo'
     ];
 
     public function provincias()

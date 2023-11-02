@@ -9,15 +9,18 @@ class Provincia extends Model
 {
     use HasFactory;
 
-    protected $table = 'admision_provincia';
-
-    protected $primaryKey = 'provincia_id';
+    protected $table = 'tb_provincia';
 
     protected $fillable = [
-        'provincia_descripcion',
-        'UBIGEO_PR',
+        'nombre',
+        'ubigeo',
         'departamento_id'
     ];
+
+    public function departamento()
+    {
+        return $this->belongsTo(Departamento::class, 'departamento_id');
+    }
 
     public function distritos()
     {

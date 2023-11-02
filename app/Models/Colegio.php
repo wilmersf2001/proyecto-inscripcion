@@ -9,16 +9,24 @@ class Colegio extends Model
 {
     use HasFactory;
 
-    protected $table = 'admision_colegio';
-
-    protected $primaryKey = 'colegio_id';
+    protected $table = 'tb_colegio';
 
     protected $fillable = [
-        'colegio_descripcion',
-        'colegio_centropoblado',
-        'colegio_distrito',
-        'colegio_tipocolegio',
-        'departamento_id',
-        'colegio_ubigeo'
+        'nombre',
+        'centro_poblado',
+        'distrito',
+        'tipo',
+        'ubigeo',
+        'departamento_id'
     ];
+
+    public function postulantes()
+    {
+        return $this->hasMany(Postulante::class, 'colegio_id');
+    }
+
+    public function departamento()
+    {
+        return $this->belongsTo(Departamento::class, 'departamento_id');
+    }
 }

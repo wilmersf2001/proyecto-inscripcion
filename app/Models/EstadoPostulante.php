@@ -5,18 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TipoDireccion extends Model
+class EstadoPostulante extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_tipo_direccion';
+    protected $table = 'tb_estado_postulante';
 
     protected $fillable = [
-        'descripcion',
+        'descripcion'
     ];
 
     public function postulantes()
     {
-        return $this->hasMany(Postulante::class, 'tipo_direccion_id');
+        return $this->hasMany(Postulante::class, 'estado_postulante_id');
     }
 }
