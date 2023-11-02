@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Colegio;
 use App\Models\Distrito;
-use App\Models\Escuela;
+use App\Models\ProgramaAcademico;
 use App\Models\Modalidad;
 use App\Models\Postulante;
 use App\Models\Proceso;
@@ -21,24 +21,24 @@ class PdfController extends Controller
 
       $applicant = Postulante::where('num_documento', $dni)->first();
       $today = $utilFunction->getDateToday();
-      $pathImage = $utilFunction->getImagePathByDni($dni);
+      /* $pathImage = $utilFunction->getImagePathByDni($dni); */
       $process = $process->getProcessNumber();
 
       $data = [
         'postulante' => $applicant,
-        'resultadoQr' => $utilFunction->dataQr($applicant->postulante_id),
-        'escuela' => Escuela::find($applicant->programa_academico_id)->escuela_descripcion,
+         /*  'resultadoQr' => $utilFunction->dataQr($applicant->postulante_id),
+         'escuela' => ProgramaAcademico::find($applicant->programa_academico_id)->escuela_descripcion, */
         'modalidad' => Modalidad::find($applicant->modalidad_id)->modalidad_descripcion,
         'sede' => Sede::find($applicant->sede_id)->sede_descripcion,
         'colegio' => Colegio::find($applicant->colegio_id)->colegio_descripcion,
         'distritoNacimiento' => Distrito::find($applicant->distrito_id_direccion)->distrito_descripcion,
         'process' => $process,
         'today' => $today,
-        'pathImage' => $pathImage,
+        /* 'pathImage' => $pathImage, */
         'tipoColegio' => Colegio::find($applicant->colegio_id)->colegio_tipocolegio == 1 ? 'Nacional' : 'Privado'
       ];
 
-      return PDF::loadView('Pdfconsulta.pdfData', $data)->stream();
+      return PDF::loadView('livewire.pdfconsulta', $data)->stream();
 
     }
 }

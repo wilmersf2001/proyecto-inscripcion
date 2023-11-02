@@ -13,6 +13,7 @@ class Pdfconsulta extends Component
     public $voucherNumber;
     public $bank;
     public bool $alertpdf=false;
+
     protected $messages = ValidatePayment::MESSAGES_ERROR;
     protected $rules = [
         'dni' => 'required|numeric|digits:8',
@@ -29,15 +30,19 @@ class Pdfconsulta extends Component
     public function render()
     {
         if ($this->dni && $this->voucherNumber) {
-            $this->bank = Banco::where('dni_dep', $this->dni)
-              ->where('NumDoc', $this->voucherNumber)
-              ->first();
+            $this->bank = Banco::where('dni_depositante', $this->dni)
+                ->where('num_documento', $this->voucherNumber)
+                ->first();
 
             if (!$this->bank) {
                 $this->alertpdf = true;
-            }
-          }
 
+            }else{
+                $this->alertpdf = false;
+            }
+
+        }
         return view('livewire.Pdfconsulta');
-    }
+  }
+
 }

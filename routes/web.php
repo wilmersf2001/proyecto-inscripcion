@@ -24,11 +24,14 @@ Route::get('/pdf', function () {
 	return view('Pdf');
 });
 
+
 Route::get('/', PayController::class)->name('start');
 Route::post('/registro-postulante', [PayController::class, "validatePayment"])->name('pay.validatePayment');
 Route::post('/store-applicant', [ApplicantController::class, "store"])->name('applicant.store');
 Route::get('/mensaje', [ApplicantController::class, "ending"])->name('applicant.ending');
-Route::post('/pdf-consulta', [PdfController::class, "pdfData"])->name('Pdfconsulta.pdfData');
+Route::post('/pdf', [PdfController::class, "pdfData"])->name('Pdfconsulta.pdfData');
+
+
 
 
 
