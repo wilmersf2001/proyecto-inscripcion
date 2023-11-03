@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Banco extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+    
     protected $table = 'tb_banco';
 
     protected $fillable = [

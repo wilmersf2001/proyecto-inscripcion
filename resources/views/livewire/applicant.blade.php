@@ -3,20 +3,15 @@
     <x-step-by-step :currentStep="$currentStep" />
 
     @if ($currentStep < 3)
-        <div class="mx-auto max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none">
-            <div class="p-8 sm:p-10 lg:flex-auto">
-                <div class="flex items-center gap-x-4">
-                    <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">Información de pago realizado
-                        al Banco de la Nación</h4>
-                    <div class="h-px flex-auto bg-gray-100"></div>
-                </div>
+        <div class="mx-auto max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none bg-gray-50 mb-16">
+            <div class="p-2 sm:p-4 lg:flex-auto">
                 <ul role="list"
-                    class="mt-8 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6">
+                    class="grid grid-cols-1 gap-4 text-xs leading-3 text-gray-600 sm:grid-cols-4 sm:gap-6">
                     <li class="flex gap-x-3">
                         <p class="font-medium text-gray-900">Número de documento :</p> {{ $bank->num_doc_depo }}
                     </li>
                     <li class="flex gap-x-3">
-                        <p class="font-medium text-gray-900">Tipo de documento :</p> {{ $bank->tipo_doc_depo }}
+                        <p class="font-medium text-gray-900">Tipo de documento :</p> {{ ($bank->tipo_doc_depo == 1) ? 'DNI' : 'Carnet de Extranjería' }}
                     </li>
                     <li class="flex gap-x-3">
                         <p class="font-medium text-gray-900">Número de Voucher :</p> {{ $bank->num_documento }}
@@ -31,6 +26,7 @@
 
     <form action="{{ route('applicant.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="banco_id" value="{{ $bank->id }}">
         <input type="hidden" name="num_documento" value="{{ $bank->num_doc_depo }}">
         <input type="hidden" name="tipo_documento" value="{{ $bank->tipo_doc_depo }}">
         <input type="hidden" name="num_voucher" value="{{ $bank->num_documento }}">
@@ -563,7 +559,7 @@
             </div>
 
             @if ($alertAmountModality)
-                <x-alert />
+                <x-alert message="Importe insuficiente para acceder a dicha modalidad" />
             @endif
         </div>
 

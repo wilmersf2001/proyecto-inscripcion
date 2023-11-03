@@ -26,12 +26,12 @@ class  UtilFunction
   {
     $process = new Proceso();
     $processNumber = $process->getProcessNumber();
-    $nameQr = 'QR' . md5($requestApplicant['dni']);
+    $nameQr = 'QR' . md5($requestApplicant['num_documento']);
     $dataQr = implode('-', [
       $requestApplicant['nombres'],
       $requestApplicant['ap_paterno'],
       $requestApplicant['ap_materno'],
-      "DNI=" . $requestApplicant['dni'],
+      "DNI=" . $requestApplicant['num_documento'],
       "ADMISION $processNumber:{$requestApplicant['programa_academico_id']}",
       $requestApplicant['modalidad_id'],
     ]);
@@ -39,14 +39,31 @@ class  UtilFunction
     $svgFile = public_path('temp/' . $nameQr . '.svg');
     file_put_contents($svgFile, $qrCode);
   }
-  /* public function getImagePathByDni($dni)
+
+  public function getImagePathByDni($dni)
   {
-    $folderPath = public_path(Constantes::RUTA_FOTO_VALIDA);
+    $folderPath = public_path(Constants::RUTA_FOTO_VALIDA);
     $dniPath = $folderPath . '/' . $dni . '.jpg';
-    $applicantStatus = Postulante::where('num_documento', $dni)->value('postulante_estado');
-    if (in_array($applicantStatus, Constantes::ESTADOS_VALIDOS_POSTULANTE) && is_file($dniPath)) {
+    $applicantStatus = Postulante::where('num_documento', $dni)->value('estado_postulante_id');
+    if (in_array($applicantStatus, Constants::ESTADOS_VALIDOS_POSTULANTE) && is_file($dniPath)) {
       return $dniPath;
     }
     return 0;
-  } */
+  }
+  
+  public function dataQr($idApplicant)
+  {
+    $process = new Proceso();
+    $process = $process->getProcessNumber();
+    $applicant = Postulante::find($idApplicant);
+    $response = implode('-', [
+      $applicant->nombres,
+      $applicant->ap_paterno,
+      $applicant->ap_materno,
+      "DNI=" . $applicant->num_documento,
+      "ADMISION $process:{$applicant->escuela_id}",
+      $applicant->modalidad_id
+    ]);
+    return $response;
+  }
 }

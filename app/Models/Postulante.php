@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Utils\Constants;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -92,6 +93,11 @@ class Postulante extends Model
     public function estadopostulante()
     {
         return $this->belongsTo(Estadopostulante::class, 'estado_postulante_id');
+    }
+
+    public function estadoValidoFichaInscripcion()
+    {
+        return in_array($this->estado_postulante_id, Constants::ESTADOS_VALIDOS_POSTULANTE);
     }
 
     public static function fromArrayReniec(array $data){

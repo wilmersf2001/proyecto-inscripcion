@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreApplicantRequest;
+use App\Models\Banco;
 use App\Models\Postulante;
 use App\Utils\UtilFunction;
 use Illuminate\Http\Request;
@@ -18,9 +19,14 @@ class ApplicantController extends Controller
   }
   public function store(StoreApplicantRequest $request)
   {
-    dd($request->all());
     $utilFunction = new UtilFunction();
-    
+    $banco = Banco::find($request->banco_id);
+    if ($banco) {
+      $banco->update([
+        'estado' => 1,
+      ]);
+    }
+
     Postulante::create([
       'num_documento' => $request->num_documento,
       'tipo_documento' => $request->tipo_documento,
