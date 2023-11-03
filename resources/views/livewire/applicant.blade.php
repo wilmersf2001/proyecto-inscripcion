@@ -3,22 +3,32 @@
     <x-step-by-step :currentStep="$currentStep" />
 
     @if ($currentStep < 3)
-        <div class="flex p-2 mb-10 text-xs rounded-lg bg-gray-50" role="alert">
-            <div class="flex-1 text-center">
-                <span class="font-medium text-blue-800">DNI :</span> {{ $bank->dni_dep }}
-            </div>
-            <div class="flex-1 text-center">
-                <span class="font-medium text-blue-800">Voucher :</span> {{ $bank->NumDoc }}
-            </div>
-            <div class="flex-1 text-center">
-                <span class="font-medium text-blue-800">Importe :</span> S/. {{ $bank->Importe }}
+        <div class="mx-auto max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none bg-gray-50 mb-16">
+            <div class="p-2 sm:p-4 lg:flex-auto">
+                <ul role="list"
+                    class="grid grid-cols-1 gap-4 text-xs leading-3 text-gray-600 sm:grid-cols-4 sm:gap-6">
+                    <li class="flex gap-x-3">
+                        <p class="font-medium text-gray-900">Número de documento :</p> {{ $bank->num_doc_depo }}
+                    </li>
+                    <li class="flex gap-x-3">
+                        <p class="font-medium text-gray-900">Tipo de documento :</p> {{ ($bank->tipo_doc_depo == 1) ? 'DNI' : 'Carnet de Extranjería' }}
+                    </li>
+                    <li class="flex gap-x-3">
+                        <p class="font-medium text-gray-900">Número de Voucher :</p> {{ $bank->num_documento }}
+                    </li>
+                    <li class="flex gap-x-3">
+                        <p class="font-medium text-gray-900">Importe :</p> S/. {{ $bank->importe }}
+                    </li>
+                </ul>
             </div>
         </div>
     @endif
 
     <form action="{{ route('applicant.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="dni" value="{{ $bank->dni_depositante }}">
+        <input type="hidden" name="banco_id" value="{{ $bank->id }}">
+        <input type="hidden" name="num_documento" value="{{ $bank->num_doc_depo }}">
+        <input type="hidden" name="tipo_documento" value="{{ $bank->tipo_doc_depo }}">
         <input type="hidden" name="num_voucher" value="{{ $bank->num_documento }}">
         <div class="{{ $currentStep == 1 ? 'animate-slide-in-left' : 'hidden' }}">
             <div class="my-8 flex items-center gap-x-4">
@@ -61,9 +71,9 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Fecha de Nacimiento
                     </span>
-                    <input type="date" name="fecha_nacimiento" wire:model="applicant.postulante_fechNac"
+                    <input type="date" name="fecha_nacimiento" wire:model="applicant.fecha_nacimiento"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="applicant.postulante_fechNac" />
+                    <x-input-error for="applicant.fecha_nacimiento" />
                 </label>
                 <label class="block mb-10">
                     <span
@@ -74,7 +84,7 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($generos as $genero)
-                            <option value={{ $genero->sexo_id }}>
+                            <option value={{ $genero->id }}>
                                 {{ ucfirst(strtolower($genero->descripcion)) }}
                             </option>
                         @endforeach
@@ -183,7 +193,7 @@
                         <option class="hidden">Seleccionar</option>
                         @foreach ($provincesReside as $provinceReside)
                             <option value={{ $provinceReside->id }}>
-                                {{ strtolower($provinceReside->nombre) }}
+                                {{ $provinceReside->nombre }}
                             </option>
                         @endforeach
                     </select>
@@ -214,8 +224,8 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($adressType as $adress)
-                            <option value={{ $adress->tipo_direccion_id }}>
-                                {{ $adress->tipodireccion_descripcion }}
+                            <option value={{ $adress->id }}>
+                                {{ $adress->descripcion }}
                             </option>
                         @endforeach
                     </select>
@@ -250,8 +260,7 @@
                     <span class="block mb-2 text-sm font-medium text-gray-900">
                         Teléfono del Apoderado
                     </span>
-                    <input type="tel" name="telefono_ap" wire:model="applicant.telefono_ap"
-                        maxlength="9"
+                    <input type="tel" name="telefono_ap" wire:model="applicant.telefono_ap" maxlength="9"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 955123456" />
                     <x-input-error for="applicant.telefono_ap" />
@@ -378,15 +387,15 @@
                             <ul
                                 class="w-full absolute shadow bg-white max-w-md max-h-48 p-2 overflow-y-auto text-sm text-gray-700">
                                 @foreach ($schools as $school)
-                                    <li wire:click="updateSchool({{ $school->colegio_id }})">
+                                    <li wire:click="updateSchool({{ $school->id }})">
                                         <div
                                             class="flex items-center pl-2 rounded hover:bg-gray-100 dark:hover-bg-gray-200 cursor-pointer">
                                             <p
                                                 class="w-full py-2 text-xs font-medium text-gray-900 rounded dark:text-gray-900">
-                                                {{ $school->colegio_descripcion }}
+                                                {{ $school->nombre }}
                                             </p>
                                             <span
-                                                class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs text-blue-700 ring-1 ring-inset ring-blue-700/10">{{ $school->colegio_distrito }}</span>
+                                                class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs text-blue-700 ring-1 ring-inset ring-blue-700/10">{{ $school->distrito }}</span>
                                         </div>
                                     </li>
                                 @endforeach
@@ -423,8 +432,8 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($sedes as $sede)
-                            <option value={{ $sede->sede_id }}>
-                                {{ $sede->sede_descripcion }}
+                            <option value={{ $sede->id }}>
+                                {{ $sede->nombre }}
                             </option>
                         @endforeach
                     </select>
@@ -440,8 +449,8 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                         <option class="hidden">Seleccionar</option>
                         @foreach ($academicPrograms as $academicProgram)
-                            <option value={{ $academicProgram->programa_academico_id }}>
-                                {{ $academicProgram->escuela_descripcion }}
+                            <option value={{ $academicProgram->id }}>
+                                {{ $academicProgram->nombre }}
                             </option>
                         @endforeach
                     </select>
@@ -492,8 +501,8 @@
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                             <option class="hidden">Seleccionar</option>
                             @foreach ($modalities as $modalitie)
-                                <option value={{ $modalitie->modalidad_id }}>
-                                    {{ $modalitie->modalidad_descripcion }}
+                                <option value={{ $modalitie->id }}>
+                                    {{ $modalitie->descripcion }}
                                 </option>
                             @endforeach
                         </select>
@@ -524,7 +533,7 @@
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                             <option class="hidden">Seleccionar</option>
                             @php
-                                $maxYear = $applicant->modalidad_id == 3 ? date('Y') - 1 : date('Y');
+                                $maxYear = $applicant->modalidad_id != 10 ? date('Y') - 1 : date('Y');
                             @endphp
                             @for ($i = $minimumYear; $i <= $maxYear; $i++)
                                 <option value="{{ $i }}">{{ $i }}</option>
@@ -550,7 +559,7 @@
             </div>
 
             @if ($alertAmountModality)
-                <x-alert />
+                <x-alert message="Importe insuficiente para acceder a dicha modalidad" />
             @endif
         </div>
 

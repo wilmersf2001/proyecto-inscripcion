@@ -25,7 +25,7 @@ class StoreApplicantRequest extends FormRequest
             'applicant.nombres' => 'required',
             'applicant.ap_paterno' => 'required',
             'applicant.ap_materno' => 'required',
-            'applicant.postulante_fechNac' => 'required|date|before:2012-01-01',
+            'applicant.fecha_nacimiento' => 'required|date|before:2012-01-01',
             'applicant.sexo_id' => 'required|numeric',
             'applicant.distrito_nac_id' => 'required|numeric',
             'applicant.distrito_res_id' => 'required|numeric',

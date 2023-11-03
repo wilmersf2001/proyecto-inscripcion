@@ -22,7 +22,7 @@ class ValidatePaymentRequest extends FormRequest
   public function rules(): array
   {
     return [
-      'dni' => 'required|numeric|digits:8|exists:tb_banco,dni_depositante',
+      'numDocument' => 'required|numeric|regex:/^\d{8,9}$/|exists:tb_banco,num_doc_depo',
       'voucherNumber' => 'required|numeric|digits:7|exists:tb_banco,num_documento',
       'agencyNumber' => 'required|numeric|digits:4|exists:tb_banco,num_oficina',
       'payDay' => 'required|date',

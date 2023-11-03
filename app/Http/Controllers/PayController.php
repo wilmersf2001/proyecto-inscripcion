@@ -23,13 +23,16 @@ class PayController extends Controller
 
   public function validatePayment(ValidatePaymentRequest $request)
   {
-    $dni = $request->dni;
+    $numDocument = $request->numDocument;
     $idBank = $request->idBank;
-    $applicant = $this->apiReniec->getApplicantDataByDni($dni);
     $bank = Banco::find($idBank);
     if (!$bank) {
       return redirect()->route('start');
     }
+    if($bank->estado == 1){
+      return redirect()->route('start')->with('alert', 'El voucher ya fue registrado');
+    }
+    $applicant = $this->apiReniec->getApplicantDataByDni($numDocument);
     return view('register-applicant', compact('applicant', 'bank'));
   }
 }

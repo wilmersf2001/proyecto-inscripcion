@@ -8,22 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class Banco extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
+    
     protected $table = 'tb_banco';
 
     protected $fillable = [
         'num_oficina',
         'cod_concepto',
-        'tipo_documento',
+        'tipo_doc_pago',
         'num_documento',
         'importe',
         'fecha',
         'hora',
         'estado',
-        'dni_depositante',
-        'observacion_depositante',
-        'recibo_depositante',
-        'fecharecibo_depositante',
-        'monto_depositante',
-        'descripcion_depositante',
+        'num_doc_depo', // DNI, Carnet de extranjeria
+        'tipo_doc_depo', // 1: DNI, 9: Carnet de extranjeria
+        'observacion_depo',
+        'recibo_depo',
+        'fecharecibo_depo',
+        'monto_depo',
+        'descripcion_depo',
     ];
 }

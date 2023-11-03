@@ -81,10 +81,10 @@ class Applicant extends Component
     $this->provincesOriginSchool = Provincia::all();
     $this->districtsOriginSchool = Distrito::all();
     $this->adressType = TipoDireccion::all();
-    $this->academicPrograms = ProgramaAcademico::all();
     $this->generos = Genero::all();
     $this->sedes = Sede::all();
-    $this->modalities = Modalidad::all();
+    $this->academicPrograms = ProgramaAcademico::where('estado', 1)->get();
+    $this->modalities = Modalidad::where('estado', 1)->get();
     $today = Carbon::now()->locale('es_PE');
     $this->formattedToday = $today->isoFormat('D [de] MMMM [del] YYYY');
   }
@@ -92,11 +92,12 @@ class Applicant extends Component
   public function render()
   {
     if ($this->selectedDistrictOriginSchoolId) {
-      $ubigeoDistrito = Distrito::where("distrito_id", $this->selectedDistrictOriginSchoolId)->first()->distrito_ubigeo;
-      $this->schools = Colegio::where('colegio_descripcion', 'like', '%' . $this->searchSchoolName . '%')
-        ->where('colegio_tipocolegio', $this->typeSchool)
-        ->where('colegio_ubigeo', $ubigeoDistrito)
+      $ubigeoDistrito = Distrito::find($this->selectedDistrictOriginSchoolId)->ubigeo;
+      $this->schools = Colegio::where('nombre', 'like', '%' . $this->searchSchoolName . '%')
+        ->where('tipo', $this->typeSchool)
+        ->where('ubigeo', $ubigeoDistrito)
         ->get();
+
       if ($this->schools->isEmpty() && $this->typeSchool && $this->searchSchoolName != '') {
         session()->flash('null', 'colegio no encontrado.');
       }
@@ -107,12 +108,12 @@ class Applicant extends Component
   public function changePlaceBirth(string $action, int $idlocation)
   {
     if ($action == 'DEPARTMENT') {
-      $this->provincesBirth = Departamento::where('departamento_id', $idlocation)->first()->provincias;
-      $provinceBirthId = $this->provincesBirth->first()->provincia_id;
-      $this->districtsBirth = Provincia::where('provincia_id', $provinceBirthId)->first()->distritos;
+      $this->provincesBirth = Departamento::find($idlocation)->provincias()->get();
+      $provinceBirthId = $this->provincesBirth->first()->id;
+      $this->districtsBirth = Provincia::find($provinceBirthId)->distritos()->get();
       $this->reset('selectedProvinceBirthId');
     } elseif ($action == 'PROVINCE') {
-      $this->districtsBirth = Provincia::where('provincia_id', $idlocation)->first()->distritos;
+      $this->districtsBirth = Provincia::find($idlocation)->distritos()->get();
     }
     $this->applicant->distrito_id = null;
   }
@@ -120,12 +121,12 @@ class Applicant extends Component
   public function changePlaceReside(string $action, int $idlocation)
   {
     if ($action == 'DEPARTMENT') {
-      $this->provincesReside = Departamento::where('departamento_id', $idlocation)->first()->provincias;
-      $provinceResideId = $this->provincesReside->first()->provincia_id;
-      $this->districtsReside = Provincia::where('provincia_id', $provinceResideId)->first()->distritos;
+      $this->provincesReside = Departamento::find($idlocation)->provincias()->get();
+      $provinceResideId = $this->provincesReside->first()->id;
+      $this->districtsReside = Provincia::find($provinceResideId)->distritos()->get();
       $this->reset('selectedProvinceResideId');
     } elseif ($action == 'PROVINCE') {
-      $this->districtsReside = Provincia::where('provincia_id', $idlocation)->first()->distritos;
+      $this->districtsReside = Provincia::find($idlocation)->distritos()->get();
     }
     $this->applicant->distrito_id_direccion = null;
   }
@@ -133,12 +134,12 @@ class Applicant extends Component
   public function changePlaceOriginSchool(string $action, int $idlocation)
   {
     if ($action == 'DEPARTMENT') {
-      $this->provincesOriginSchool = Departamento::where('departamento_id', $idlocation)->first()->provincias;
-      $provinceOriginSchoolId = $this->provincesOriginSchool->first()->provincia_id;
-      $this->districtsOriginSchool = Provincia::where('provincia_id', $provinceOriginSchoolId)->first()->distritos;
+      $this->provincesOriginSchool = Departamento::find($idlocation)->provincias()->get();
+      $provinceOriginSchoolId = $this->provincesOriginSchool->first()->id;
+      $this->districtsOriginSchool = Provincia::find($provinceOriginSchoolId)->distritos()->get();
       $this->reset(['selectedProvinceOriginSchoolId', 'selectedDistrictOriginSchoolId']);
     } elseif ($action == 'PROVINCE') {
-      $this->districtsOriginSchool = Provincia::where('provincia_id', $idlocation)->first()->distritos;
+      $this->districtsOriginSchool = Provincia::find($idlocation)->distritos()->get();
       $this->reset(['selectedDistrictOriginSchoolId']);
     }
   }
@@ -152,9 +153,9 @@ class Applicant extends Component
 
   public function updateSchool(int $idSchool)
   {
-    $school = Colegio::where('colegio_id', $idSchool)->first();
-    $this->searchSchoolName = $school->colegio_descripcion;
-    $this->applicant->colegio_id = $school->colegio_id;
+    $school = Colegio::find($idSchool);
+    $this->searchSchoolName = $school->nombre;
+    $this->applicant->colegio_id = $school->id;
     $this->showSchools = false;
   }
 
@@ -172,15 +173,14 @@ class Applicant extends Component
 
   public function validateModality(int $idModalidad)
   {
-    $modality = Modalidad::where('modalidad_id', $idModalidad)->first();
-    $amount = ($this->typeSchool == 1) ? $modality->modalidad_montonacional : $modality->modalidad_montoparticular;
-    if ($amount > $this->bank->Importe) {
+    $modality = Modalidad::find($idModalidad);
+    $amount = ($this->typeSchool == 1) ? $modality->monto_nacional : $modality->monto_particular;
+    if ($amount > $this->bank->importe) {
       $this->applicant->modalidad_id = null;
       $this->alertAmountModality = true;
     } else {
-      $modalityYear = ($idModalidad == 3) ? date('Y') - 2 : (($idModalidad == 10) ? date('Y') : 1940);
-      $this->minimumYear = $modalityYear;
-      $this->applicant->postulante_anoEgreso = null;
+      $this->minimumYear = ($idModalidad == 3) ? date('Y') - 2 : (($idModalidad == 10) ? date('Y') : 1940);
+      $this->applicant->anno_egreso = null;
       $this->alertAmountModality = false;
     }
   }

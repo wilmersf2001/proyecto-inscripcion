@@ -2,43 +2,53 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Colegio;
-use App\Models\Distrito;
-use App\Models\ProgramaAcademico;
-use App\Models\Modalidad;
+use App\Http\Requests\ValidatePdfRequest;
 use App\Models\Postulante;
 use App\Models\Proceso;
-use App\Models\Sede;
+use Illuminate\Http\Request;
 use App\Utils\UtilFunction;
 use Barryvdh\DomPDF\Facade\Pdf;
+
 class PdfController extends Controller
 {
-    public function pdfData($dni)
-    {
-      $process = new Proceso();
-      $utilFunction = new UtilFunction();
+  public function __invoke()
+  {
+    return view('ficha-inscripcion');
+  }
+  public function validatePdf(ValidatePdfRequest $request)
+  {
+    $process = new Proceso();
+    $utilFunction = new UtilFunction();
+    $applicant = Postulante::where('num_documento', $request->num_documento)
+      ->where('num_voucher', $request->num_voucher)
+      ->first();
 
-      $applicant = Postulante::where('num_documento', $dni)->first();
+    if (!$applicant) {
+      return redirect()->route('pdf.startPdfQuery')->with('error', 'Postulante no registrado');
+    }
+
+    if ($applicant->estadoValidoFichaInscripcion()) {
       $today = $utilFunction->getDateToday();
-      /* $pathImage = $utilFunction->getImagePathByDni($dni); */
+      $pathImage = $utilFunction->getImagePathByDni($request->num_documento);
       $process = $process->getProcessNumber();
 
       $data = [
         'postulante' => $applicant,
-         /*  'resultadoQr' => $utilFunction->dataQr($applicant->postulante_id),
-         'escuela' => ProgramaAcademico::find($applicant->programa_academico_id)->escuela_descripcion, */
-        'modalidad' => Modalidad::find($applicant->modalidad_id)->modalidad_descripcion,
-        'sede' => Sede::find($applicant->sede_id)->sede_descripcion,
-        'colegio' => Colegio::find($applicant->colegio_id)->colegio_descripcion,
-        'distritoNacimiento' => Distrito::find($applicant->distrito_id_direccion)->distrito_descripcion,
+        'resultadoQr' => $utilFunction->dataQr($applicant->id),
+        'escuela' => $applicant->programaAcademico->nombre,
+        'modalidad' => $applicant->modalidad->descripcion,
+        'sede' => $applicant->sede->nombre,
+        'colegio' => $applicant->colegio->nombre,
+        'distritoNacimiento' => $applicant->distritoNac->nombre,
         'process' => $process,
         'today' => $today,
-        /* 'pathImage' => $pathImage, */
-        'tipoColegio' => Colegio::find($applicant->colegio_id)->colegio_tipocolegio == 1 ? 'Nacional' : 'Privado'
+        'pathImage' => $pathImage,
+        'tipoColegio' => $applicant->colegio->tipo == 1 ? 'Nacional' : 'Privado'
       ];
-
-      return PDF::loadView('livewire.pdfconsulta', $data)->stream();
-
+    } else {
+      return redirect()->route('pdf.startPdfQuery')->with('error', 'Ficha de inscripción en proceso de validación');
     }
+
+    return PDF::loadView('pdf-ficha-inscripcion', $data)->stream();
+  }
 }

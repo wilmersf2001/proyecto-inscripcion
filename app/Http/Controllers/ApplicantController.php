@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreApplicantRequest;
+use App\Models\Banco;
 use App\Models\Postulante;
 use App\Utils\UtilFunction;
 use Illuminate\Http\Request;
@@ -19,17 +20,24 @@ class ApplicantController extends Controller
   public function store(StoreApplicantRequest $request)
   {
     $utilFunction = new UtilFunction();
-    
+    $banco = Banco::find($request->banco_id);
+    if ($banco) {
+      $banco->update([
+        'estado' => 1,
+      ]);
+    }
+
     Postulante::create([
-      'num_documento' => $request->dni,
-      'postulante_voucher' => $request->num_voucher,
+      'num_documento' => $request->num_documento,
+      'tipo_documento' => $request->tipo_documento,
+      'num_voucher' => $request->num_voucher,
       'nombres' => $request->nombres,
       'ap_paterno' => $request->ap_paterno,
       'ap_materno' => $request->ap_materno,
-      'postulante_fechNac' => $request->fecha_nacimiento,
+      'fecha_nacimiento' => $request->fecha_nacimiento,
       'sexo_id' => $request->sexo_id,
-      'distrito_id' => $request->distrito_nac,
-      'distrito_id_direccion' => $request->distrito_res,
+      'distrito_nac_id' => $request->distrito_nac,
+      'distrito_res_id' => $request->distrito_res,
       'tipo_direccion_id' => $request->tipo_direccion,
       'direccion' => $request->direccion,
       'telefono' => $request->telefono,
@@ -42,9 +50,9 @@ class ApplicantController extends Controller
       'num_veces_unprg' => $request->num_veces_unprg,
       'modalidad_id' => $request->modalidad_id,
       'anno_egreso' => $request->anno_egreso,
-      'postulante_fechInsc' => now(),
-      'postulante_codigopostulante' => '001061', // esto es de prueba
-      'postulante_estado' => '1',
+      'fecha_inscripcion' => now(),
+      'codigo' => $request->tipo_documento == 1 ? $request->num_documento : substr($request->num_documento, 1),
+      'estado_postulante_id' => '1',
     ]);
 
     $this->uploadImage($request->file('profilePhoto'), 'P-' . $request->dni, 'archivos/FotoPerfil');

@@ -46,3 +46,4 @@ class Pdfconsulta extends Component
   }
 
 }
+
