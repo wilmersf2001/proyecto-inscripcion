@@ -22,7 +22,7 @@ class StoreApplicantRequest extends FormRequest
   public function rules(): array
   {
     return [
-      'num_documento' => 'required|numeric|digits:8',
+      'num_documento' => 'required|numeric|regex:/^\d{8,9}$/',
       'tipo_documento' => 'required|numeric',
       'num_voucher' => 'required|numeric|digits:7',
       'nombres' => 'required',

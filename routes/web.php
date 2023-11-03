@@ -19,19 +19,14 @@ use App\Http\Controllers\PdfController;
 Route::get('/welcome', function () {
 	return view('welcome');
 });
-
-Route::get('/pdf', function () {
-	return view('Pdf');
-});
-
+// Registro de postulante
 Route::get('/', PayController::class)->name('start');
 Route::post('/registro-postulante', [PayController::class, "validatePayment"])->name('pay.validatePayment');
 Route::post('/store-applicant', [ApplicantController::class, "store"])->name('applicant.store');
 Route::get('/mensaje', [ApplicantController::class, "ending"])->name('applicant.ending');
-Route::post('/pdf-consulta', [PdfController::class, "pdfData"])->name('Pdfconsulta.pdfData');
-
-
-
+// Ficha de inscripción
+Route::get('/ficha-inscripcion', PdfController::class)->name('pdf.startPdfQuery');
+Route::post('/ficha-inscripcion', [PdfController::class, "validatePdf"])->name('pdf.validatePdf');
 
 Route::any('/{any}', function () {
 	return view('page-not-found');

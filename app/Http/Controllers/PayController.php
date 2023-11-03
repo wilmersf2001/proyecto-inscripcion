@@ -25,11 +25,14 @@ class PayController extends Controller
   {
     $numDocument = $request->numDocument;
     $idBank = $request->idBank;
-    $applicant = $this->apiReniec->getApplicantDataByDni($numDocument);
     $bank = Banco::find($idBank);
     if (!$bank) {
       return redirect()->route('start');
     }
+    if($bank->estado == 1){
+      return redirect()->route('start')->with('alert', 'El voucher ya fue registrado');
+    }
+    $applicant = $this->apiReniec->getApplicantDataByDni($numDocument);
     return view('register-applicant', compact('applicant', 'bank'));
   }
 }
