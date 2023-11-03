@@ -3,7 +3,7 @@
     <x-step-by-step :currentStep="$currentStep" />
 
     @if ($currentStep < 3)
-        <div class="mx-auto max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+        <div class="mx-auto max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none">
             <div class="p-8 sm:p-10 lg:flex-auto">
                 <div class="flex items-center gap-x-4">
                     <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">Información de pago realizado
