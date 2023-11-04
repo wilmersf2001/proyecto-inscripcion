@@ -82,7 +82,7 @@ class Applicant extends Component
     $this->districtsOriginSchool = Distrito::all();
     $this->adressType = TipoDireccion::all();
     $this->generos = Genero::all();
-    $this->sedes = Sede::all();
+    $this->sedes = Sede::where('estado', 1)->get();
     $this->academicPrograms = ProgramaAcademico::where('estado', 1)->get();
     $this->modalities = Modalidad::where('estado', 1)->get();
     $today = Carbon::now()->locale('es_PE');
@@ -115,7 +115,7 @@ class Applicant extends Component
     } elseif ($action == 'PROVINCE') {
       $this->districtsBirth = Provincia::find($idlocation)->distritos()->get();
     }
-    $this->applicant->distrito_id = null;
+    $this->applicant->distrito_nac_id = null;
   }
 
   public function changePlaceReside(string $action, int $idlocation)
@@ -128,7 +128,7 @@ class Applicant extends Component
     } elseif ($action == 'PROVINCE') {
       $this->districtsReside = Provincia::find($idlocation)->distritos()->get();
     }
-    $this->applicant->distrito_id_direccion = null;
+    $this->applicant->distrito_res_id = null;
   }
 
   public function changePlaceOriginSchool(string $action, int $idlocation)
@@ -137,7 +137,7 @@ class Applicant extends Component
       $this->provincesOriginSchool = Departamento::find($idlocation)->provincias()->get();
       $provinceOriginSchoolId = $this->provincesOriginSchool->first()->id;
       $this->districtsOriginSchool = Provincia::find($provinceOriginSchoolId)->distritos()->get();
-      $this->reset(['selectedProvinceOriginSchoolId', 'selectedDistrictOriginSchoolId']);
+      $this->reset(['selectedProvinceOriginSchoolId', 'selectedDistrictOriginSchoolId','searchSchoolName']);
     } elseif ($action == 'PROVINCE') {
       $this->districtsOriginSchool = Provincia::find($idlocation)->distritos()->get();
       $this->reset(['selectedDistrictOriginSchoolId']);

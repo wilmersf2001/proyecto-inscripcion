@@ -28,7 +28,7 @@ class StoreApplicantRequest extends FormRequest
       'nombres' => 'required',
       'ap_paterno' => 'required',
       'ap_materno' => 'required',
-      'fecha_nacimiento' => 'required|date',
+      'fecha_nacimiento' => 'required|date|before:2008-01-01',
       'sexo_id' => 'required|numeric',
       'distrito_nac' => 'required|numeric',
       'distrito_res' => 'required|numeric',
@@ -44,9 +44,9 @@ class StoreApplicantRequest extends FormRequest
       'anno_egreso' => 'required|numeric|digits:4',
       'colegio_id' => 'required|numeric',
       'num_veces_otro' => 'required|numeric|integer|gte:0',
-      'profilePhoto' => 'required|image|max:1024',
-      'reverseDniPhoto' => 'required|image|max:1024',
-      'frontDniPhoto' => 'required|image|max:1024',
+      'profilePhoto' => 'required|mimes:jpeg|max:1024',
+      'reverseDniPhoto' => 'required|mimes:jpeg|max:1024',
+      'frontDniPhoto' => 'required|mimes:jpeg|max:1024',
       'accordance' => 'required|accepted',
     ];
   }

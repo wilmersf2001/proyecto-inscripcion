@@ -5,13 +5,13 @@
     @if ($currentStep < 3)
         <div class="mx-auto max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none bg-gray-50 mb-16">
             <div class="p-2 sm:p-4 lg:flex-auto">
-                <ul role="list"
-                    class="grid grid-cols-1 gap-4 text-xs leading-3 text-gray-600 sm:grid-cols-4 sm:gap-6">
+                <ul role="list" class="grid grid-cols-1 gap-4 text-xs leading-3 text-gray-600 sm:grid-cols-4 sm:gap-6">
                     <li class="flex gap-x-3">
                         <p class="font-medium text-gray-900">Número de documento :</p> {{ $bank->num_doc_depo }}
                     </li>
                     <li class="flex gap-x-3">
-                        <p class="font-medium text-gray-900">Tipo de documento :</p> {{ ($bank->tipo_doc_depo == 1) ? 'DNI' : 'Carnet de Extranjería' }}
+                        <p class="font-medium text-gray-900">Tipo de documento :</p>
+                        {{ $bank->tipo_doc_depo == 1 ? 'DNI' : 'Carnet de Extranjería' }}
                     </li>
                     <li class="flex gap-x-3">
                         <p class="font-medium text-gray-900">Número de Voucher :</p> {{ $bank->num_documento }}
@@ -573,7 +573,10 @@
 
             <div class="grid md:grid-cols-1 md:gap-6 mb-10">
                 <div class="flex items-center justify-center space-x-6">
-                    <x-icons.user />
+                    <div class="shrink-0">
+                        <img src="{{ asset('images/foto-carnet.jpg') }}" alt="FOTO CARNET" width="80"
+                            height="80" />
+                    </div>
                     <label class="block">
                         <span
                             class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
@@ -596,8 +599,8 @@
             <div class="grid md:grid-cols-2 md:gap-6">
                 <div class="flex items-center justify-center space-x-6 mb-10">
                     <div class="shrink-0">
-                        <img src="{{ asset('images/dni-anverso.png') }}" alt="DNI ANVERSO" width="80"
-                            height="80" />
+                        <img src="{{ asset('images/dni-anverso.png') }}" alt="DNI ANVERSO" width="140"
+                            height="140" />
                     </div>
                     <label class="block">
                         <span
@@ -619,8 +622,8 @@
 
                 <div class="flex items-center justify-center space-x-6 mb-10">
                     <div class="shrink-0">
-                        <img src="{{ asset('images/dni-reverso.png') }}" alt="DNI REVERSO" width="80"
-                            height="80" />
+                        <img src="{{ asset('images/dni-reverso.png') }}" alt="DNI REVERSO" width="140"
+                            height="140" />
                     </div>
                     <label class="block">
                         <span
@@ -640,7 +643,6 @@
                     </label>
                 </div>
             </div>
-
             <div class="flex w-full justify-end">
                 <button type="button" wire:click="previousStep"
                     class="cursor-pointer mt-4 mr-4 text-gray-900 bg-white hover:bg-gray-100 shadow-md focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">

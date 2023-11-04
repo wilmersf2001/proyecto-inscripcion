@@ -55,9 +55,9 @@ class ApplicantController extends Controller
       'estado_postulante_id' => '1',
     ]);
 
-    $this->uploadImage($request->file('profilePhoto'), 'P-' . $request->dni, 'archivos/FotoPerfil');
-    $this->uploadImage($request->file('reverseDniPhoto'), 'R-' . $request->dni, 'archivos/DniReverso');
-    $this->uploadImage($request->file('frontDniPhoto'), 'A-' . $request->dni, 'archivos/DniAnverso');
+    $this->uploadImage($request->file('profilePhoto'), $request->num_documento, 'archivos/FotoPerfil');
+    $this->uploadImage($request->file('reverseDniPhoto'), 'R-' . $request->num_documento, 'archivos/DniReverso');
+    $this->uploadImage($request->file('frontDniPhoto'), 'A-' . $request->num_documento, 'archivos/DniAnverso');
 
     $utilFunction->saveQr($request->all());
 

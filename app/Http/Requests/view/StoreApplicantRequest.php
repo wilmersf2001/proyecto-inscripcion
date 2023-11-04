@@ -25,7 +25,7 @@ class StoreApplicantRequest extends FormRequest
             'applicant.nombres' => 'required',
             'applicant.ap_paterno' => 'required',
             'applicant.ap_materno' => 'required',
-            'applicant.fecha_nacimiento' => 'required|date|before:2012-01-01',
+            'applicant.fecha_nacimiento' => 'required|date|before:2008-01-01',
             'applicant.sexo_id' => 'required|numeric',
             'applicant.distrito_nac_id' => 'required|numeric',
             'applicant.distrito_res_id' => 'required|numeric',
@@ -44,9 +44,9 @@ class StoreApplicantRequest extends FormRequest
             'typeSchool' => 'required|numeric',
             'selectedProvinceOriginSchoolId' => 'required|numeric',
             'selectedDistrictOriginSchoolId' => 'required|numeric',
-            'profilePhoto' => 'required|mimes:jpeg,png|max:1024',
-            'reverseDniPhoto' => 'required|mimes:jpeg,png|max:1024',
-            'frontDniPhoto' => 'required|mimes:jpeg,png|max:1024',
+            'profilePhoto' => 'required|mimes:jpeg|max:1024',
+            'reverseDniPhoto' => 'required|mimes:jpeg|max:1024',
+            'frontDniPhoto' => 'required|mimes:jpeg|max:1024',
             'accordance' => 'required|accepted',
         ];
     }
