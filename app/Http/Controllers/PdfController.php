@@ -27,6 +27,10 @@ class PdfController extends Controller
       return redirect()->route('pdf.startPdfQuery')->with('error', 'Postulante no registrado');
     }
 
+    if($applicant->estadoObservadoFichaInscripcion()){
+        return redirect()->route('pdf.startPdfQuery')->with('error', 'Ficha de inscripción observada');
+    }
+
     if ($applicant->estadoValidoFichaInscripcion()) {
       $today = $utilFunction->getDateToday();
       $pathImage = $utilFunction->getImagePathByDni($request->num_documento);
