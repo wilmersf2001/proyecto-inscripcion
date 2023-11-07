@@ -10,11 +10,11 @@ use App\Models\Banco;
 class Pay extends Component
 {
   public $bank;
-  public string $numDocument = '';
-  public string $voucherNumber = '';
-  public string $agencyNumber = '';
+  public $numDocument = '';
+  public $voucherNumber = '';
+  public $agencyNumber = '';
   public $payDay;
-  public float $amount;
+  public $amount;
 
 
   protected $messages = ValidatePayment::MESSAGES_ERROR;

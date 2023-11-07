@@ -15,17 +15,9 @@ use Carbon\Carbon;
 
 class  UtilFunction
 {
-  public function getDateToday()
+  public static function saveQr(array $requestApplicant)
   {
-    $today = Carbon::now()->locale('es_PE');
-    $formattedDate = $today->isoFormat('D [de] MMMM [del] YYYY');
-    return $formattedDate;
-  }
-
-  public function saveQr(array $requestApplicant)
-  {
-    $process = new Proceso();
-    $processNumber = $process->getProcessNumber();
+    $processNumber = Proceso::getProcessNumber();
     $nameQr = 'QR' . md5($requestApplicant['num_documento']);
     $dataQr = implode('-', [
       $requestApplicant['nombres'],
@@ -40,6 +32,13 @@ class  UtilFunction
     file_put_contents($svgFile, $qrCode);
   }
 
+  public function getDateToday()
+  {
+    $today = Carbon::now()->locale('es_PE');
+    $formattedDate = $today->isoFormat('D [de] MMMM [del] YYYY');
+    return $formattedDate;
+  }
+
   public function getImagePathByDni($dni)
   {
     $folderPath = public_path(Constants::RUTA_FOTO_VALIDA);
@@ -50,7 +49,7 @@ class  UtilFunction
     }
     return 0;
   }
-  
+
   public function dataQr($idApplicant)
   {
     $process = new Proceso();

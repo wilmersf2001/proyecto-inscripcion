@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\DistribucionVacante;
 use Livewire\WithFileUploads;
 use App\Models\Genero;
 use App\Models\Modalidad;
@@ -19,6 +20,7 @@ use App\Http\Requests\View\StepThreeApplicantRequest;
 use App\Http\Requests\View\Message\ValidateApplicant;
 use App\Models\Banco;
 use App\Models\Colegio;
+use App\Models\Pais;
 use App\Models\ProgramaAcademico;
 use Carbon\Carbon;
 
@@ -33,6 +35,7 @@ class Applicant extends Component
   public $selectedProvinceBirthId;
   public $provincesReside;
   public $districtsReside;
+  public $countries;
   public $selectedProvinceResideId;
   public $provincesOriginSchool;
   public $districtsOriginSchool;
@@ -56,6 +59,7 @@ class Applicant extends Component
   public bool $accordance = false;
   public bool $showSchools = false;
   public bool $alertAmountModality = false;
+  public $tipo_documento;
   protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
   protected function rules()
@@ -82,11 +86,12 @@ class Applicant extends Component
     $this->districtsOriginSchool = Distrito::all();
     $this->adressType = TipoDireccion::all();
     $this->generos = Genero::all();
+    $this->countries = Pais::all();
     $this->sedes = Sede::where('estado', 1)->get();
-    $this->academicPrograms = ProgramaAcademico::where('estado', 1)->get();
     $this->modalities = Modalidad::where('estado', 1)->get();
     $today = Carbon::now()->locale('es_PE');
     $this->formattedToday = $today->isoFormat('D [de] MMMM [del] YYYY');
+    $this->tipo_documento = $this->bank->tipo_doc_depo;
   }
 
   public function render()
@@ -137,7 +142,7 @@ class Applicant extends Component
       $this->provincesOriginSchool = Departamento::find($idlocation)->provincias()->get();
       $provinceOriginSchoolId = $this->provincesOriginSchool->first()->id;
       $this->districtsOriginSchool = Provincia::find($provinceOriginSchoolId)->distritos()->get();
-      $this->reset(['selectedProvinceOriginSchoolId', 'selectedDistrictOriginSchoolId','searchSchoolName']);
+      $this->reset(['selectedProvinceOriginSchoolId', 'selectedDistrictOriginSchoolId', 'searchSchoolName']);
     } elseif ($action == 'PROVINCE') {
       $this->districtsOriginSchool = Provincia::find($idlocation)->distritos()->get();
       $this->reset(['selectedDistrictOriginSchoolId']);
@@ -182,6 +187,7 @@ class Applicant extends Component
       $this->minimumYear = ($idModalidad == 3) ? date('Y') - 2 : (($idModalidad == 10) ? date('Y') : 1940);
       $this->applicant->anno_egreso = null;
       $this->alertAmountModality = false;
+      $this->academicPrograms = DistribucionVacante::where('modalidad_id', $idModalidad)->get();
     }
   }
 

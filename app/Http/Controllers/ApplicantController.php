@@ -19,7 +19,6 @@ class ApplicantController extends Controller
   }
   public function store(StoreApplicantRequest $request)
   {
-    $utilFunction = new UtilFunction();
     $banco = Banco::find($request->banco_id);
     if ($banco) {
       $banco->update([
@@ -46,6 +45,7 @@ class ApplicantController extends Controller
       'colegio_id' => $request->colegio_id,
       'num_veces_otros' => $request->num_veces_otro,
       'sede_id' => $request->sede_id,
+      'pais_id' => $request->tipo_documento == 1 ? 134 : $request->pais_id,
       'programa_academico_id' => $request->programa_academico_id,
       'num_veces_unprg' => $request->num_veces_unprg,
       'modalidad_id' => $request->modalidad_id,
@@ -59,7 +59,7 @@ class ApplicantController extends Controller
     $this->uploadImage($request->file('reverseDniPhoto'), 'R-' . $request->num_documento, 'archivos/DniReverso');
     $this->uploadImage($request->file('frontDniPhoto'), 'A-' . $request->num_documento, 'archivos/DniAnverso');
 
-    $utilFunction->saveQr($request->all());
+    UtilFunction::saveQr($request->all());
 
     return redirect()->route('applicant.ending');
   }

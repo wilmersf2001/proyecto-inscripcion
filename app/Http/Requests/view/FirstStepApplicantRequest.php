@@ -11,6 +11,7 @@ class FirstStepApplicantRequest
     'applicant.fecha_nacimiento' => 'required|date|before:2008-01-01',
     'applicant.sexo_id' => 'required',
     'applicant.distrito_nac_id' => 'required',
+    'applicant.pais_id' => 'required_if:tipo_documento,9',
     'applicant.distrito_res_id' => 'required',
     'applicant.tipo_direccion_id' => 'required',
     'applicant.direccion' => 'required',

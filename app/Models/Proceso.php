@@ -10,7 +10,7 @@ class Proceso extends Model
     use HasFactory;
 
     protected $table = 'tb_proceso';
-    
+
     protected $fillable = [
         'numero',
         'descripcion',
@@ -19,9 +19,9 @@ class Proceso extends Model
         'estado'
     ];
 
-    public function getProcessNumber()
+    public static function getProcessNumber()
     {
-        $process = $this->where('estado', 1)->first();
+        $process = self::where('estado', 1)->first();
         return $process ? date('Y', strtotime($process->fecha_inicio)) . ' - ' . $process->numero : null;
     }
 }

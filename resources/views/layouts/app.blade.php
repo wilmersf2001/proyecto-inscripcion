@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
     @vite('resources/css/app.css')
+    @vite('resources/js/app.js')
     @livewireStyles
 </head>
 
@@ -32,26 +33,11 @@
                 </div>
             </div>
         </nav>
-        <main class="min-h-full">
-          @yield('content')
+        <main class="min-h-full pt-8">
+            @yield('content')
         </main>
     </div>
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const questionTriggers = document.querySelectorAll(".question-trigger");
-            questionTriggers.forEach(function(trigger) {
-                trigger.addEventListener("mouseenter", function() {
-                    const popover = this.nextElementSibling;
-                    popover.style.display = "flex";
-                });
-                trigger.addEventListener("mouseleave", function() {
-                    const popover = this.nextElementSibling;
-                    popover.style.display = "none";
-                });
-            });
-        });
-    </script>
+
     @livewireScripts
 </body>
 

@@ -42,6 +42,7 @@ class Postulante extends Model
         'universidad_id',
         'sede_id',
         'estado_postulante_id',
+        'pais_id',
         'ingreso',
     ];
 
@@ -95,10 +96,15 @@ class Postulante extends Model
         return $this->belongsTo(Estadopostulante::class, 'estado_postulante_id');
     }
 
+    public function pais()
+    {
+        return $this->belongsTo(Pais::class, 'pais_id');
+    }
     public function estadoValidoFichaInscripcion()
     {
         return in_array($this->estado_postulante_id, Constants::ESTADOS_VALIDOS_POSTULANTE);
     }
+
 
     public static function fromArrayReniec(array $data){
         $postulante = new Postulante();

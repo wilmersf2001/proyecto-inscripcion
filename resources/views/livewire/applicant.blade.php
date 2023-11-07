@@ -11,7 +11,7 @@
                     </li>
                     <li class="flex gap-x-3">
                         <p class="font-medium text-gray-900">Tipo de documento :</p>
-                        {{ $bank->tipo_doc_depo == 1 ? 'DNI' : 'Carnet de Extranjería' }}
+                        {{ $tipo_documento == 1 ? 'DNI' : 'Carnet de Extranjería' }}
                     </li>
                     <li class="flex gap-x-3">
                         <p class="font-medium text-gray-900">Número de Voucher :</p> {{ $bank->num_documento }}
@@ -28,7 +28,7 @@
         @csrf
         <input type="hidden" name="banco_id" value="{{ $bank->id }}">
         <input type="hidden" name="num_documento" value="{{ $bank->num_doc_depo }}">
-        <input type="hidden" name="tipo_documento" value="{{ $bank->tipo_doc_depo }}">
+        <input type="hidden" name="tipo_documento" value="{{ $tipo_documento }}">
         <input type="hidden" name="num_voucher" value="{{ $bank->num_documento }}">
         <div class="{{ $currentStep == 1 ? 'animate-slide-in-left' : 'hidden' }}">
             <div class="my-8 flex items-center gap-x-4">
@@ -37,44 +37,14 @@
             </div>
 
             <div class="grid md:grid-cols-3 md:gap-6">
-                <label class="block mb-10">
-                    <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                        Nombres Completos
-                    </span>
-                    <input type="text" name="nombres" wire:model="applicant.nombres"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="applicant.nombres" />
-                </label>
-                <label class="block mb-10">
-                    <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                        Apellido Paterno
-                    </span>
-                    <input type="text" name="ap_paterno" wire:model="applicant.ap_paterno"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="applicant.ap_paterno" />
-                </label>
-                <label class="block mb-10">
-                    <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                        Apellido Materno
-                    </span>
-                    <input type="text" name="ap_materno" wire:model="applicant.ap_materno"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="applicant.ap_materno" />
-                </label>
+                <x-input-form span="Nombres Completos" name="nombres" model="applicant.nombres" />
+                <x-input-form span="Apellido Paterno" name="ap_paterno" model="applicant.ap_paterno" />
+                <x-input-form span="Apellido Materno" name="ap_materno" model="applicant.ap_materno" />
             </div>
+
             <div class="grid md:grid-cols-3 md:gap-6">
-                <label class="block mb-10">
-                    <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                        Fecha de Nacimiento
-                    </span>
-                    <input type="date" name="fecha_nacimiento" wire:model="applicant.fecha_nacimiento"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="applicant.fecha_nacimiento" />
-                </label>
+                <x-input-form span="Fecha de Nacimiento" name="fecha_nacimiento" model="applicant.fecha_nacimiento"
+                    type="date" />
                 <label class="block mb-10">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
@@ -105,60 +75,81 @@
                 </div>
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
-
-            <div class="grid md:grid-cols-3 md:gap-6">
-                <label class="block mb-10">
-                    <span class="block mb-2 text-sm font-medium text-gray-900">
-                        Departamento
-                    </span>
-                    <select wire:change="changePlaceBirth('DEPARTMENT',$event.target.value)"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option class="hidden">Seleccionar</option>
-                        @foreach ($departaments as $departament)
-                            <option value={{ $departament->id }}>
-                                {{ $departament->nombre }}
-                            </option>
-                        @endforeach
-                    </select>
-                </label>
-                <label class="block mb-10">
-                    <span class="block mb-2 text-sm font-medium text-gray-900">
-                        Provincia
-                    </span>
-                    <select wire:change="changePlaceBirth('PROVINCE',$event.target.value)"
-                        wire:model="selectedProvinceBirthId"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option class="hidden">Seleccionar</option>
-                        @foreach ($provincesBirth as $provinceBirth)
-                            <option value={{ $provinceBirth->id }}>
-                                {{ $provinceBirth->nombre }}
-                            </option>
-                        @endforeach
-                    </select>
-                </label>
-                <label class="block mb-10">
-                    <span class="block mb-2 text-sm font-medium text-gray-900">
-                        Distrito
-                    </span>
-                    <select name="distrito_nac" wire:model="applicant.distrito_nac_id"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option class="hidden">Seleccionar</option>
-                        @foreach ($districtsBirth as $districtBirth)
-                            <option value={{ $districtBirth->id }}>
-                                {{ $districtBirth->nombre }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <x-input-error for="applicant.distrito_nac_id" />
-                </label>
-            </div>
+            @if ($tipo_documento == 1)
+                <div class="grid md:grid-cols-3 md:gap-6">
+                    <label class="block mb-10">
+                        <span class="block mb-2 text-sm font-medium text-gray-900">
+                            Departamento
+                        </span>
+                        <select wire:change="changePlaceBirth('DEPARTMENT',$event.target.value)"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                            <option class="hidden">Seleccionar</option>
+                            @foreach ($departaments as $departament)
+                                <option value={{ $departament->id }}>
+                                    {{ $departament->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </label>
+                    <label class="block mb-10">
+                        <span class="block mb-2 text-sm font-medium text-gray-900">
+                            Provincia
+                        </span>
+                        <select wire:change="changePlaceBirth('PROVINCE',$event.target.value)"
+                            wire:model="selectedProvinceBirthId"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                            <option class="hidden">Seleccionar</option>
+                            @foreach ($provincesBirth as $provinceBirth)
+                                <option value={{ $provinceBirth->id }}>
+                                    {{ $provinceBirth->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </label>
+                    <label class="block mb-10">
+                        <span class="block mb-2 text-sm font-medium text-gray-900">
+                            Distrito
+                        </span>
+                        <select name="distrito_nac" wire:model="applicant.distrito_nac_id"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                            <option class="hidden">Seleccionar</option>
+                            @foreach ($districtsBirth as $districtBirth)
+                                <option value={{ $districtBirth->id }}>
+                                    {{ $districtBirth->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <x-input-error for="applicant.distrito_nac_id" />
+                    </label>
+                </div>
+            @else
+                @php
+                    $applicant->distrito_nac_id = 1868;
+                @endphp
+                <input type="hidden" name="distrito_nac" wire:model="applicant.distrito_nac_id">
+                <div class="grid md:grid-cols-3 md:gap-6">
+                    <label class="block mb-10">
+                        <span class="block mb-2 text-sm font-medium text-gray-900">
+                            País de Procedencia
+                        </span>
+                        <select name="pais_id" wire:model="applicant.pais_id"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                            <option class="hidden">Seleccionar</option>
+                            @foreach ($countries as $country)
+                                <option value={{ $country->id }}>
+                                    {{ $country->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                        <x-input-error for="applicant.pais_id" />
+                    </label>
+                </div>
+            @endif
 
             <div class="mb-8 mt-4 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Lugar de Residencia</h4>
                 <div class="relative">
-                    <button type="button" class="question-trigger font-medium text-blue-600 hover:underline">
-                        <x-icons.question />
-                    </button>
+                    <x-icons.question />
                     <x-message-question>
                         <x-slot name="message">
                             Correspondiente a la ubicación actual donde vive el postulante.
@@ -231,15 +222,8 @@
                     </select>
                     <x-input-error for="applicant.tipo_direccion_id" />
                 </label>
-                <label class="block mb-10">
-                    <span class="block mb-2 text-sm font-medium text-gray-900">
-                        Dirección
-                    </span>
-                    <input type="text" name="direccion" wire:model="applicant.direccion"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-                        placeholder="Ejem: Calle Ficticia 123" />
-                    <x-input-error for="applicant.direccion" />
-                </label>
+                <x-input-form span="Dirección" name="direccion" model="applicant.direccion"
+                    placeholder="Ejem: Calle Ficticia 123" />
             </div>
 
             <div class="mb-8 mt-4 flex items-center gap-x-4">
@@ -247,33 +231,14 @@
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
             <div class="grid md:grid-cols-3 md:gap-6">
-                <label class="block mb-10">
-                    <span class="block mb-2 text-sm font-medium text-gray-900">
-                        Teléfono del Postulante
-                    </span>
-                    <input type="tel" name="telefono" wire:model="applicant.telefono" maxlength="9"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-                        placeholder="Ejem: 955123456" />
-                    <x-input-error for="applicant.telefono" />
-                </label>
-                <label class="block mb-10">
-                    <span class="block mb-2 text-sm font-medium text-gray-900">
-                        Teléfono del Apoderado
-                    </span>
-                    <input type="tel" name="telefono_ap" wire:model="applicant.telefono_ap" maxlength="9"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-                        placeholder="Ejem: 955123456" />
-                    <x-input-error for="applicant.telefono_ap" />
-                </label>
-                <label class="block mb-10">
-                    <span class="block mb-2 text-sm font-medium text-gray-900">
-                        Correo Electrónico
-                    </span>
-                    <input type="email" name="correo" wire:model="applicant.correo"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
-                        placeholder="Ejem: postulante@gmail.com" />
-                    <x-input-error for="applicant.correo" />
-                </label>
+                <x-input-form span="Teléfono del Postulante" name="telefono" model="applicant.telefono"
+                    placeholder="Ejem: 955123456" maxlength='9' />
+
+                <x-input-form span="Teléfono del Apoderado" name="telefono_ap" model="applicant.telefono_ap"
+                    placeholder="Ejem: 955123456" maxlength='9' />
+
+                <x-input-form span="Correo Electrónico" name="correo" model="applicant.correo" type="email"
+                    placeholder="Ejem: postulante@gmail.com" />
             </div>
 
             <div class="flex w-full justify-end">
@@ -405,15 +370,6 @@
                     <x-input-error for="applicant.colegio_id" />
                 </label>
 
-                <label class="block mb-10">
-                    <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                        Número de veces que postula a otras universidades
-                    </span>
-                    <input type="number" name="num_veces_otro" wire:model="applicant.num_veces_otros"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="applicant.num_veces_otros" />
-                </label>
             </div>
 
             <div class="mb-8 mt-4 flex items-center gap-x-4">
@@ -423,6 +379,7 @@
             </div>
 
             <div class="grid md:grid-cols-3 md:gap-6">
+
                 <label class="block mb-10">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
@@ -440,61 +397,21 @@
                     <x-input-error for="applicant.sede_id" />
                 </label>
 
-                <label class="block mb-10">
-                    <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                        Programa Académico al que Postula
-                    </span>
-                    <select name="programa_academico_id" wire:model="applicant.programa_academico_id"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option class="hidden">Seleccionar</option>
-                        @foreach ($academicPrograms as $academicProgram)
-                            <option value={{ $academicProgram->id }}>
-                                {{ $academicProgram->nombre }}
-                            </option>
-                        @endforeach
-                    </select>
-                    <x-input-error for="applicant.programa_academico_id" />
-                </label>
+                <x-input-form span="Número de veces que postula a la UNPRG" name="num_veces_unprg"
+                    model="applicant.num_veces_unprg" type="number" />
 
-                <label class="block mb-10">
-                    <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                        Número de veces que postula a la UNPRG
-                    </span>
-                    <input type="number" name="num_veces_unprg" wire:model="applicant.num_veces_unprg"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="applicant.num_veces_unprg" />
-                </label>
+                <x-input-form span="Número de veces que postula a otras universidades" name="num_veces_otro"
+                    model="applicant.num_veces_otros" type="number" />
+
             </div>
 
             <div class="grid md:grid-cols-3 md:gap-6">
+
                 <label class="block mb-10">
-                    <div class="flex">
-                        <span
-                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                            Modalidad
-                        </span>
-                        <div class="relative">
-                            <x-icons.question />
-                            <x-message-question>
-                                <x-slot name="message">
-                                    <p class="text-xs font-medium text-gray-900">Recuerda:</p>
-                                    <ul>
-                                        <li class="before:content-['*'] before:mr-0.5 before:text-red-500">La modalidad
-                                            5to de secundaria es solo para los postulantes que
-                                            han culminado el 5to de secundaria en el mismo año en curso.
-                                        </li>
-                                        <li class="before:content-['*'] before:mr-0.5 before:text-red-500">
-                                            La modalida de dos primeros puestos es solo para los postulantes que
-                                            han culminado el 5to dentro de un plazo de 2 años con respecto al año en
-                                            curso.
-                                        </li>
-                                    </ul>
-                                </x-slot>
-                            </x-message-question>
-                        </div>
-                    </div>
+                    <span
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                        Modalidad
+                    </span>
                     @if ($typeSchool)
                         <select name="modalidad_id" wire:model="applicant.modalidad_id"
                             wire:change="validateModality($event.target.value)"
@@ -514,20 +431,32 @@
                 </label>
 
                 <label class="block mb-10">
-                    <div class="flex">
-                        <span
-                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                            Año de Egreso del Colegio
-                        </span>
-                        <div class="relative">
-                            <x-icons.question />
-                            <x-message-question>
-                                <x-slot name="message">
-                                    Este campo depende de la modalidad seleccionada.
-                                </x-slot>
-                            </x-message-question>
-                        </div>
-                    </div>
+                    <span
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                        Programa Académico al que Postula
+                    </span>
+                    @if ($applicant->modalidad_id)
+                        <select name="programa_academico_id" wire:model="applicant.programa_academico_id"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                            <option class="hidden">Seleccionar</option>
+                            @foreach ($academicPrograms as $academicProgram)
+                                <option value={{ $academicProgram->programa_academico_id }}>
+                                    {{ $academicProgram->programaAcademico->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @else
+                        <input type="text" disabled placeholder="Seleccione la modalidad"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 block w-full rounded-md sm:text-sm disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" />
+                    @endif
+                    <x-input-error for="applicant.programa_academico_id" />
+                </label>
+
+                <label class="block mb-10">
+                    <span
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                        Año de Egreso del Colegio
+                    </span>
                     @if ($applicant->modalidad_id)
                         <select name="anno_egreso" wire:model="applicant.anno_egreso"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
@@ -545,6 +474,7 @@
                     @endif
                     <x-input-error for="applicant.anno_egreso" />
                 </label>
+
             </div>
 
             <div class="flex w-full justify-end">
@@ -571,77 +501,20 @@
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
 
-            <div class="grid md:grid-cols-1 md:gap-6 mb-10">
-                <div class="flex items-center justify-center space-x-6">
-                    <div class="shrink-0">
-                        <img src="{{ asset('images/foto-carnet.jpg') }}" alt="FOTO CARNET" width="80"
-                            height="80" />
-                    </div>
-                    <label class="block">
-                        <span
-                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                            Foto Carnet Postulante
-                        </span>
-                        <input type="file" name="profilePhoto" wire:model="profilePhoto"
-                            wire:click="$set('profilePhoto', null)"
-                            class="block w-full text-sm text-slate-500
-                    file:mr-4 file:py-2 file:px-4
-                    file:rounded-full file:border-0
-                    file:text-ms file:font-semibold
-                    file:bg-blue-50 file:text-blue-700
-                    hover:file:bg-blue-100
-                  " />
-                        <x-input-error for="profilePhoto" />
-                    </label>
-                </div>
+            <div class="grid md:grid-cols-1 md:gap-6 mb-20">
+                <x-input-file span="Foto Carnet Postulante" name="profilePhoto" model="profilePhoto"
+                    alt="FOTO CARNET" src="images/foto-carnet.jpg" click="$set('profilePhoto', null)" />
             </div>
 
-            <div class="grid md:grid-cols-2 md:gap-6">
-                <div class="flex items-center justify-center space-x-6 mb-10">
-                    <div class="shrink-0">
-                        <img src="{{ asset('images/dni-anverso.png') }}" alt="DNI ANVERSO" width="140"
-                            height="140" />
-                    </div>
-                    <label class="block">
-                        <span
-                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                            DNI Parte Anverso
-                        </span>
-                        <input type="file" name="reverseDniPhoto" wire:model="reverseDniPhoto"
-                            wire:click="$set('reverseDniPhoto', null)"
-                            class="block w-full text-sm text-slate-500
-                    file:mr-4 file:py-2 file:px-4
-                    file:rounded-full file:border-0
-                    file:text-ms file:font-semibold
-                    file:bg-blue-50 file:text-blue-700
-                    hover:file:bg-blue-100
-                  " />
-                        <x-input-error for="reverseDniPhoto" />
-                    </label>
-                </div>
+            <div class="grid md:grid-cols-2 md:gap-6 mb-10">
 
-                <div class="flex items-center justify-center space-x-6 mb-10">
-                    <div class="shrink-0">
-                        <img src="{{ asset('images/dni-reverso.png') }}" alt="DNI REVERSO" width="140"
-                            height="140" />
-                    </div>
-                    <label class="block">
-                        <span
-                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                            DNI Parte Reverso
-                        </span>
-                        <input type="file" name="frontDniPhoto" wire:model="frontDniPhoto"
-                            wire:click="$set('frontDniPhoto', null)"
-                            class="block w-full text-sm text-slate-500
-                    file:mr-4 file:py-2 file:px-4
-                    file:rounded-full file:border-0
-                    file:text-ms file:font-semibold
-                    file:bg-blue-50 file:text-blue-700
-                    hover:file:bg-blue-100
-                  " />
-                        <x-input-error for="frontDniPhoto" />
-                    </label>
-                </div>
+                <x-input-file span="DNI Parte Anverso" name="frontDniPhoto" model="frontDniPhoto" alt="DNI ANVERSO"
+                    src="images/dni-anverso.png" click="$set('frontDniPhoto', null)" size="140" />
+
+                <x-input-file span="DNI Parte Reverso" name="reverseDniPhoto" model="reverseDniPhoto"
+                    alt="DNI REVERSO" src="images/dni-reverso.png" click="$set('reverseDniPhoto', null)"
+                    size="140" />
+
             </div>
             <div class="flex w-full justify-end">
                 <button type="button" wire:click="previousStep"
@@ -656,7 +529,7 @@
         </div>
 
         @if ($currentStep > 3)
-            @livewire('summary-template', ['applicant' => $applicant])
+            @livewire('summary-template', ['applicant' => $applicant, 'tipo_documento' => $tipo_documento])
 
             <div
                 class="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">

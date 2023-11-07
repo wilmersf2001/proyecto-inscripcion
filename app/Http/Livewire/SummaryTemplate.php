@@ -19,10 +19,12 @@ class SummaryTemplate extends Component
   public string $sede;
   public string $programAcademic;
   public string $modality;
+  public $tipo_documento;
 
-  public function mount(Postulante $applicant)
+  public function mount(Postulante $applicant, int $tipo_documento)
   {
     $this->applicant = $applicant;
+    $this->tipo_documento = $tipo_documento;
   }
   public function render()
   {
@@ -37,7 +39,6 @@ class SummaryTemplate extends Component
     $this->sede = $this->applicant->sede->nombre;
     $this->programAcademic = $this->applicant->programaAcademico->nombre;
     $this->modality = $this->applicant->modalidad->descripcion;
-  
     return view('livewire.summary-template');
   }
 }
