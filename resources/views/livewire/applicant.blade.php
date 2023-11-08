@@ -37,9 +37,15 @@
             </div>
 
             <div class="grid md:grid-cols-3 md:gap-6">
-                <x-input-form span="Nombres Completos" name="nombres" model="applicant.nombres" />
-                <x-input-form span="Apellido Paterno" name="ap_paterno" model="applicant.ap_paterno" />
-                <x-input-form span="Apellido Materno" name="ap_materno" model="applicant.ap_materno" />
+                @php
+                    $disable = $applicant->nombres != null ? 1 : 0;
+                @endphp
+                <x-input-form span="Nombres Completos" name="nombres" model="applicant.nombres"
+                    disable="{{ $disable }}" />
+                <x-input-form span="Apellido Paterno" name="ap_paterno" model="applicant.ap_paterno"
+                    disable="{{ $disable }}" />
+                <x-input-form span="Apellido Materno" name="ap_materno" model="applicant.ap_materno"
+                    disable="{{ $disable }}" />
             </div>
 
             <div class="grid md:grid-cols-3 md:gap-6">

@@ -4,6 +4,7 @@ use App\Http\Controllers\ApplicantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PayController;
 use App\Http\Controllers\PdfController;
+use App\Http\Controllers\PhotoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +28,8 @@ Route::get('/mensaje', [ApplicantController::class, "ending"])->name('applicant.
 // Ficha de inscripción
 Route::get('/ficha-inscripcion', PdfController::class)->name('pdf.startPdfQuery');
 Route::post('/ficha-inscripcion', [PdfController::class, "validatePdf"])->name('pdf.validatePdf');
+// Rectificar foto
+Route::post('/rectificar-foto', [PhotoController::class, "store"])->name('photo.store');
 
 Route::any('/{any}', function () {
 	return view('page-not-found');

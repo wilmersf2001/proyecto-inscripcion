@@ -26,7 +26,7 @@ class PdfController extends Controller
     }
 
     if ($applicant->estadoObservadoFichaInscripcion()) {
-      return redirect()->route('pdf.startPdfQuery')->with('error', 'Ficha de inscripción observada');
+      return view('rectifier-photo-applicant', compact('applicant'));
     }
 
     if ($applicant->estadoValidoFichaInscripcion()) {

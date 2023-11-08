@@ -33,7 +33,7 @@
                 </div>
             </div>
         </nav>
-        <main class="min-h-full pt-8">
+        <main class="min-h-full pt-8 mx-auto max-w-7xl px-6 lg:px-8">
             @yield('content')
         </main>
     </div>
