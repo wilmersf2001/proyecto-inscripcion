@@ -23,13 +23,14 @@
             </div>
         </div>
     @endif
-
+    {{ $applicant->modalidad->id }}
     <form action="{{ route('applicant.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="banco_id" value="{{ $bank->id }}">
         <input type="hidden" name="num_documento" value="{{ $bank->num_doc_depo }}">
         <input type="hidden" name="tipo_documento" value="{{ $tipo_documento }}">
         <input type="hidden" name="num_voucher" value="{{ $bank->num_documento }}">
+        <input type="hidden" name="modalidad_id" value="{{ $applicant->modalidad_id }}">
         <div class="{{ $currentStep == 1 ? 'animate-slide-in-left' : 'hidden' }}">
             <div class="my-8 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Datos Personales Postulante</h4>
@@ -37,9 +38,6 @@
             </div>
 
             <div class="grid md:grid-cols-3 md:gap-6">
-                @php
-                    $disable = $applicant->nombres != null ? 1 : 0;
-                @endphp
                 <x-input-form span="Nombres Completos" name="nombres" model="applicant.nombres"
                     disable="{{ $disable }}" />
                 <x-input-form span="Apellido Paterno" name="ap_paterno" model="applicant.ap_paterno"
@@ -320,20 +318,6 @@
             </div>
 
             <div class="grid md:grid-cols-3 md:gap-6">
-                <label class="block mb-10">
-                    <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                        Tipo de colegio de procedencia
-                    </span>
-                    <select wire:model="typeSchool" wire:change="resetSchoolId"
-                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option class="hidden">Seleccionar</option>
-                        <option value="1">Nacional</option>
-                        <option value="2">Particular</option>
-                    </select>
-                    <x-input-error for="typeSchool" />
-                </label>
-
                 <label class="block mb-10 relative">
                     <input type="hidden" name="colegio_id" wire:model="applicant.colegio_id">
                     <span
@@ -376,6 +360,29 @@
                     <x-input-error for="applicant.colegio_id" />
                 </label>
 
+                <label class="block mb-10">
+                    <span
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                        Año de Egreso del Colegio
+                    </span>
+                    @if ($applicant->modalidad_id)
+                        <select name="anno_egreso" wire:model="applicant.anno_egreso"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                            <option class="hidden">Seleccionar</option>
+                            @php
+                                $maxYear = $applicant->modalidad_id != 10 ? date('Y') - 1 : date('Y');
+                            @endphp
+                            @for ($i = $minimumYear; $i <= $maxYear; $i++)
+                                <option value="{{ $i }}">{{ $i }}</option>
+                            @endfor
+                        </select>
+                    @else
+                        <input type="text" disabled placeholder="Seleccione el modalidad"
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 block w-full rounded-md sm:text-sm disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" />
+                    @endif
+                    <x-input-error for="applicant.anno_egreso" />
+                </label>
+
             </div>
 
             <div class="mb-8 mt-4 flex items-center gap-x-4">
@@ -403,39 +410,6 @@
                     <x-input-error for="applicant.sede_id" />
                 </label>
 
-                <x-input-form span="Número de veces que postula a la UNPRG" name="num_veces_unprg"
-                    model="applicant.num_veces_unprg" type="number" />
-
-                <x-input-form span="Número de veces que postula a otras universidades" name="num_veces_otro"
-                    model="applicant.num_veces_otros" type="number" />
-
-            </div>
-
-            <div class="grid md:grid-cols-3 md:gap-6">
-
-                <label class="block mb-10">
-                    <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                        Modalidad
-                    </span>
-                    @if ($typeSchool)
-                        <select name="modalidad_id" wire:model="applicant.modalidad_id"
-                            wire:change="validateModality($event.target.value)"
-                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                            <option class="hidden">Seleccionar</option>
-                            @foreach ($modalities as $modalitie)
-                                <option value={{ $modalitie->id }}>
-                                    {{ $modalitie->descripcion }}
-                                </option>
-                            @endforeach
-                        </select>
-                    @else
-                        <input type="text" disabled placeholder="Seleccione tipo de colegio"
-                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 block w-full rounded-md sm:text-sm disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" />
-                    @endif
-                    <x-input-error for="applicant.modalidad_id" />
-                </label>
-
                 <label class="block mb-10">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
@@ -458,29 +432,15 @@
                     <x-input-error for="applicant.programa_academico_id" />
                 </label>
 
-                <label class="block mb-10">
-                    <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                        Año de Egreso del Colegio
-                    </span>
-                    @if ($applicant->modalidad_id)
-                        <select name="anno_egreso" wire:model="applicant.anno_egreso"
-                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                            <option class="hidden">Seleccionar</option>
-                            @php
-                                $maxYear = $applicant->modalidad_id != 10 ? date('Y') - 1 : date('Y');
-                            @endphp
-                            @for ($i = $minimumYear; $i <= $maxYear; $i++)
-                                <option value="{{ $i }}">{{ $i }}</option>
-                            @endfor
-                        </select>
-                    @else
-                        <input type="text" disabled placeholder="Seleccione el modalidad"
-                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 block w-full rounded-md sm:text-sm disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" />
-                    @endif
-                    <x-input-error for="applicant.anno_egreso" />
-                </label>
+                <x-input-form span="Número de veces que postula a la UNPRG" name="num_veces_unprg"
+                    model="applicant.num_veces_unprg" type="number" />
 
+
+            </div>
+
+            <div class="grid md:grid-cols-3 md:gap-6">
+                <x-input-form span="Número de veces que postula a otras universidades" name="num_veces_otro"
+                    model="applicant.num_veces_otros" type="number" />
             </div>
 
             <div class="flex w-full justify-end">
@@ -508,8 +468,10 @@
             </div>
 
             <div class="grid md:grid-cols-1 md:gap-6 mb-20">
+
                 <x-input-file span="Foto Carnet Postulante" name="profilePhoto" model="profilePhoto"
                     alt="FOTO CARNET" src="images/foto-carnet.jpg" click="$set('profilePhoto', null)" />
+
             </div>
 
             <div class="grid md:grid-cols-2 md:gap-6 mb-10">

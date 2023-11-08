@@ -30,7 +30,7 @@
             <div class="mt-8">
                 <div class="flow-root">
                     <div
-                        class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 justify-items-center">
+                        class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-1 xl:gap-x-8 justify-items-center">
                         <div class="group relative">
                             <div
                                 class="relative aspect-h-1 aspect-w-1 w-60 overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-80">
@@ -60,7 +60,7 @@
                             </label>
                         </div>
 
-                        <div class="group relative">
+                        {{-- <div class="group relative">
                             <div
                                 class="aspect-h-1 aspect-w-1 w-60 overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-80 flex items-center">
                                 <div>
@@ -109,7 +109,7 @@
                             " />
                                 <x-input-error for="reverseDniPhoto" />
                             </label>
-                        </div>
+                        </div> --}}
 
                     </div>
                 </div>

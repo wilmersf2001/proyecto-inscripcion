@@ -26,7 +26,8 @@ class ValidatePaymentRequest extends FormRequest
       'voucherNumber' => 'required|numeric|digits:7|exists:tb_banco,num_documento',
       'agencyNumber' => 'required|numeric|digits:4|exists:tb_banco,num_oficina',
       'payDay' => 'required|date',
-
+      'modalityId' => 'required|numeric',
+      'typeSchoolId' => 'required|numeric',
     ];
   }
 }

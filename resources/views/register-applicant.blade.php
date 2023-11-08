@@ -4,6 +4,6 @@
 
 @section('content')
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-        @livewire('applicant', ['responseApiReniec' => $applicant, 'bank' => $bank])
+        @livewire('applicant', ['responseApiReniec' => $applicant, 'bank' => $bank, 'typeSchool' => $typeSchool])
     </div>
 @endsection

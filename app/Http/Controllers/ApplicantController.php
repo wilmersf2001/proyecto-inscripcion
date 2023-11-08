@@ -17,7 +17,7 @@ class ApplicantController extends Controller
       $file->move(public_path($destination), $nombreArchivo);
     }
   }
-  public function store(StoreApplicantRequest $request)
+  public function store(Request $request)
   {
     $banco = Banco::find($request->banco_id);
     if ($banco) {

@@ -18,5 +18,9 @@ class ValidatePayment
     'agencyNumber.exists' => 'número de agencia no encontrado',
     'payDay.required' => 'fecha de pago es requerido',
     'payDay.date' => 'campo fecha de pago debe ser una fecha',
+    'modalityId.required' => 'modalidad es requerido',
+    'modalityId.numeric' => 'campo modalidad debe ser numérico',
+    'typeSchoolId.required' => 'tipo de colegio es requerido',
+    'typeSchoolId.numeric' => 'campo tipo de colegio debe ser numérico',
   ];
 }

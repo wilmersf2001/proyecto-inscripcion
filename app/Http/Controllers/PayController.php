@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ValidatePaymentRequest;
 use App\Models\Banco;
+use App\Models\Modalidad;
 use App\Models\Postulante;
 use Illuminate\Http\Request;
 use App\Services\ApiReniecService;
@@ -26,6 +27,7 @@ class PayController extends Controller
   {
     $numDocument = $request->numDocument;
     $idBank = $request->idBank;
+    $typeSchool = $request->typeSchoolId;
 
     $bank = Banco::find($idBank);
     if (!$bank) {
@@ -39,7 +41,15 @@ class PayController extends Controller
       return redirect()->route('start')->with('alert', 'El postulante ya se encuentra registrado');
     }
 
+    $modality = Modalidad::find($request->modalityId);
+    $amount = ($typeSchool == 1) ? $modality->monto_nacional : $modality->monto_particular;
+    if ($amount > $bank->importe) {
+      return redirect()->route('start')->with('alert', 'El monto del voucher no es suficiente para la modalidad seleccionada');
+    }
+
     $applicant = $this->apiReniec->getApplicantDataByDni($numDocument);
-    return view('register-applicant', compact('applicant', 'bank'));
+    $applicant->modalidad_id = $request->modalityId;
+
+    return view('register-applicant', compact('applicant', 'bank', 'typeSchool'));
   }
 }

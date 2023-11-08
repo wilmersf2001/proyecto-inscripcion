@@ -60,6 +60,7 @@ class Applicant extends Component
   public bool $showSchools = false;
   public bool $alertAmountModality = false;
   public $tipo_documento;
+  public $disable;
   protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
   protected function rules()
@@ -73,7 +74,7 @@ class Applicant extends Component
     $this->validateOnly($propertyName);
   }
 
-  public function mount(Postulante $responseApiReniec, Banco $bank)
+  public function mount(Postulante $responseApiReniec, Banco $bank, $typeSchool)
   {
     $this->applicant = $responseApiReniec;
     $this->bank = $bank;
@@ -92,6 +93,10 @@ class Applicant extends Component
     $today = Carbon::now()->locale('es_PE');
     $this->formattedToday = $today->isoFormat('D [de] MMMM [del] YYYY');
     $this->tipo_documento = $this->bank->tipo_doc_depo;
+    $this->typeSchool = $typeSchool;
+    $this->academicPrograms = DistribucionVacante::where('modalidad_id', $this->applicant->modalidad_id)->get();
+    $this->disable = $this->applicant->nombres != null ? 1 : 0;
+    $this->minimumYear = ($this->applicant->modalidad_id == 3) ? date('Y') - 2 : (($this->applicant->modalidad_id == 10) ? date('Y') : 1940);
   }
 
   public function render()
@@ -187,7 +192,6 @@ class Applicant extends Component
       $this->minimumYear = ($idModalidad == 3) ? date('Y') - 2 : (($idModalidad == 10) ? date('Y') : 1940);
       $this->applicant->anno_egreso = null;
       $this->alertAmountModality = false;
-      $this->academicPrograms = DistribucionVacante::where('modalidad_id', $idModalidad)->get();
     }
   }
 
