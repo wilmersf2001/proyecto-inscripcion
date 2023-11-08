@@ -147,7 +147,7 @@
     </form>
 
     @if (session('alert'))
-        <x-alert message="{{ session('alert') }}" />
+        <x-alert-modal message="{{ session('alert') }}" />
     @endif
     {{-- @if (session('alert'))
         <x-alert-modal message="{{ session('alert') }}" />

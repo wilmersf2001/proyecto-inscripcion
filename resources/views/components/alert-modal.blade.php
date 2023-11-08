@@ -35,7 +35,9 @@
 <script>
     const modal = document.querySelector('.relative');
     const btnAceptar = document.getElementById('btnAceptar');
-    btnAceptar.addEventListener('click', function() {
-        modal.style.display = 'none';
+    btnAceptar.add('click', function() {
+    modal.style.display = 'none';
+
     });
+
 </script>
