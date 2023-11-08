@@ -17,24 +17,26 @@ class PdfController extends Controller
   }
   public function validatePdf(ValidatePdfRequest $request)
   {
-    $process = new Proceso();
-    $utilFunction = new UtilFunction();
     $applicant = Postulante::where('num_documento', $request->num_documento)
       ->where('num_voucher', $request->num_voucher)
       ->first();
 
     if (!$applicant) {
-      return redirect()->route('pdf.startPdfQuery')->with('error', 'Postulante no registrado');
+      return redirect()->route('pdf.startPdfQuery')->with('error', 'Postulante no registrado o datos incorrectos');
+    }
+
+    if ($applicant->estadoObservadoFichaInscripcion()) {
+      return redirect()->route('pdf.startPdfQuery')->with('error', 'Ficha de inscripción observada');
     }
 
     if ($applicant->estadoValidoFichaInscripcion()) {
-      $today = $utilFunction->getDateToday();
-      $pathImage = $utilFunction->getImagePathByDni($request->num_documento);
-      $process = $process->getProcessNumber();
+      $today = UtilFunction::getDateToday();
+      $pathImage = UtilFunction::getImagePathByDni($request->num_documento);
+      $process = Proceso::getProcessNumber();
 
       $data = [
         'postulante' => $applicant,
-        'resultadoQr' => $utilFunction->dataQr($applicant->id),
+        'resultadoQr' => UtilFunction::dataQr($applicant->id),
         'escuela' => $applicant->programaAcademico->nombre,
         'modalidad' => $applicant->modalidad->descripcion,
         'sede' => $applicant->sede->nombre,

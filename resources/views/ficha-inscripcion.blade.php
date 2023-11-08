@@ -8,7 +8,7 @@
             <div class="mx-auto mt-5 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-10 lg:mx-0 lg:flex lg:max-w-none">
                 <div class="p-8 sm:p-10 lg:flex-auto">
                     <div class="mt-4 flex items-center gap-x-4">
-                        <h4 class="flex-none text-lg font-semibold leading-6 text-indigo-600">Consultar Inscripción
+                        <h4 class="flex-none text-lg font-semibold leading-6 text-indigo-600">CONSULTAR INSCRIPCIÓN
                         </h4>
                         <div class="h-px flex-auto bg-gray-100"></div>
                     </div>
@@ -22,12 +22,13 @@
                         <li class="text-gray-400"><span class="text-gray-600">Debe esperar a que sus fotos sean aprobadas
                                 para poder generar su ficha de inscripción.</span></li>
                         <li class="text-gray-400"><span class="text-gray-600">La aprobación de las fotos o las observaciones
-                                sobre las mismas se comunicarán a través de su correo electrónico o consultando aqui.</span></li>
+                                sobre las mismas se comunicarán a través de su correo electrónico o consultando aqui.</span>
+                        </li>
                     </ul>
                 </div>
                 <div class="lg:w-full lg:max-w-md lg:flex-shrink-0">
                     <div class="flex min-h-full flex-col justify-center lg:px-8">
-                        <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
+                        <div class="mt-4 sm:mx-auto sm:w-full sm:max-w-sm p-4">
                             @livewire('ficha-inscripcion')
                         </div>
                     </div>

@@ -33,7 +33,7 @@ class Postulante extends Model
         'num_veces_otros',
         'codigo',
         'sexo_id',
-        'distrito_nac_id',	
+        'distrito_nac_id',
         'distrito_res_id',
         'tipo_direccion_id',
         'modalidad_id',
@@ -105,8 +105,13 @@ class Postulante extends Model
         return in_array($this->estado_postulante_id, Constants::ESTADOS_VALIDOS_POSTULANTE);
     }
 
+    public function estadoObservadoFichaInscripcion()
+    {
+        return in_array($this->estado_postulante_id, Constants::ESTADOS_OBSERVADOS_POSTULANTE);
+    }
 
-    public static function fromArrayReniec(array $data){
+    public static function fromArrayReniec(array $data)
+    {
         $postulante = new Postulante();
         $postulante->nombres = $data['nombres'];
         $postulante->ap_paterno = $data['apellidoPaterno'];

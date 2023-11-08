@@ -32,14 +32,14 @@ class  UtilFunction
     file_put_contents($svgFile, $qrCode);
   }
 
-  public function getDateToday()
+  public static function getDateToday()
   {
     $today = Carbon::now()->locale('es_PE');
     $formattedDate = $today->isoFormat('D [de] MMMM [del] YYYY');
     return $formattedDate;
   }
 
-  public function getImagePathByDni($dni)
+  public static function getImagePathByDni($dni)
   {
     $folderPath = public_path(Constants::RUTA_FOTO_VALIDA);
     $dniPath = $folderPath . '/' . $dni . '.jpg';
@@ -50,10 +50,9 @@ class  UtilFunction
     return 0;
   }
 
-  public function dataQr($idApplicant)
+  public static function dataQr($idApplicant)
   {
-    $process = new Proceso();
-    $process = $process->getProcessNumber();
+    $process = Proceso::getProcessNumber();
     $applicant = Postulante::find($idApplicant);
     $response = implode('-', [
       $applicant->nombres,

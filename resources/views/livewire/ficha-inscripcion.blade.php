@@ -33,6 +33,6 @@
         </div>
     </form>
     @if (session('error'))
-        <x-alert message="{{ session('error') }}" />
+        <x-alert-modal message="{{ session('error') }}" />
     @endif
 </div>
