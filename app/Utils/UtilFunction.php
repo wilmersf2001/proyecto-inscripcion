@@ -3,13 +3,8 @@
 namespace App\Utils;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Illuminate\Support\Facades\File;
-use App\Models\Colegio;
-use App\Models\Departamento;
-use App\Models\Distrito;
 use App\Models\Postulante;
 use App\Models\Proceso;
-use App\Models\Provincia;
 use Carbon\Carbon;
 
 
@@ -69,5 +64,11 @@ class  UtilFunction
   {
     $minimumYear = ($idModalidad == 3) ? date('Y') - 2 : (($idModalidad == 10) ? date('Y') : 1940);
     return $minimumYear;
+  }
+
+  public static function formattedDate($date)
+  {
+    $dateNac = Carbon::create($date)->locale('es_PE');
+    return $dateNac->isoFormat('D [de] MMMM [del] YYYY');
   }
 }

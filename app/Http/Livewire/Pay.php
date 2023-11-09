@@ -51,7 +51,7 @@ class Pay extends Component
 
       $this->amount = $this->bank ? $this->bank->importe : 0;
       if (!$this->bank) {
-        session()->flash('warnig');
+        session()->flash('warning');
       }
     }
     return view('livewire.pay');

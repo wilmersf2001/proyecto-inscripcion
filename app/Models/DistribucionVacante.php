@@ -36,6 +36,6 @@ class DistribucionVacante extends Model
     public static function getProgramasAcademicosByModalidad($modalidadId)
     {
         return DistribucionVacante::where('modalidad_id', $modalidadId)
-            ->get();
+            ->get()->sortBy('programaAcademico.nombre');
     }
 }

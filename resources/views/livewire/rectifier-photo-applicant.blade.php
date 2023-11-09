@@ -27,13 +27,48 @@
                 </div>
             </div>
 
+            <div class="mt-8 flex items-center gap-x-4">
+                <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">CARNET</h4>
+                <div class="h-px flex-auto bg-gray-100"></div>
+            </div>
+            <ul role="list"
+                class="mt-6 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600 sm:grid-cols-2 sm:gap-6">
+                <li class="flex gap-x-3">
+                    <x-icons.check />
+                    Iluminación uniforme y suave, evitando sombras fuertes en el rostro.
+                </li>
+                <li class="flex gap-x-3">
+                    <x-icons.check />
+                    La imagen que enfoque correctamente tu rostro y utiliza fondo blanco.
+                </li>
+                <li class="flex gap-x-3">
+                    <x-icons.check />
+                    Ropa apropiada, evita estampados llamativos.
+                </li>
+                <li class="flex gap-x-3">
+                    <x-icons.check />
+                    Expresión facial tranquila y neutral, sin sonreír ni fruncir el ceño.
+                </li>
+            </ul>
+            <div class="mt-6 flex items-center gap-x-4">
+                <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">DNI</h4>
+                <div class="h-px flex-auto bg-gray-100"></div>
+            </div>
+            <ul role="list" class="mt-6 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600">
+                <li class="flex gap-x-3">
+                    <x-icons.check />
+                    Asegúrate de que la imagen del esté completamente legible y sin reflejos para evitar
+                    problemas al verificar la información.
+                </li>
+            </ul>
+
             <div class="mt-8">
                 <div class="flow-root">
                     <div
-                        class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-1 xl:gap-x-8 justify-items-center">
-                        <div class="group relative">
+                        class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 justify-items-center">
+                        <div class="group relative flex flex-col items-center justify-center">
                             <div
-                                class="relative aspect-h-1 aspect-w-1 w-60 overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-80">
+                                class="relative aspect-h-1 aspect-w-1 w-40 overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-60">
                                 <div class="h-full w-full">
                                     <img src="{{ asset('recursos/foto-carnet.jpg') }}" alt=""
                                         class="h-full w-full object-cover object-center lg:h-full lg:w-full">
@@ -60,9 +95,9 @@
                             </label>
                         </div>
 
-                        {{-- <div class="group relative">
+                        <div class="group relative flex flex-col items-center justify-center">
                             <div
-                                class="aspect-h-1 aspect-w-1 w-60 overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-80 flex items-center">
+                                class="aspect-h-1 aspect-w-1 w-40 overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-60 flex items-center">
                                 <div>
                                     <img src="{{ asset('recursos/dni-anverso.jpg') }}" alt="">
                                 </div>
@@ -85,9 +120,9 @@
                             </label>
                         </div>
 
-                        <div class="group relative">
+                        <div class="group relative flex flex-col items-center justify-center">
                             <div
-                                class="aspect-h-1 aspect-w-1 w-60 overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-80 flex items-center">
+                                class="aspect-h-1 aspect-w-1 w-40 overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-60 flex items-center">
                                 <div>
                                     <img src="{{ asset('recursos/dni-reverso.jpg') }}"
                                         alt="Front of men&#039;s Basic Tee in black.">
@@ -109,7 +144,7 @@
                             " />
                                 <x-input-error for="reverseDniPhoto" />
                             </label>
-                        </div> --}}
+                        </div>
 
                     </div>
                 </div>

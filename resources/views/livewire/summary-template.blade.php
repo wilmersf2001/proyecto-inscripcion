@@ -53,9 +53,10 @@
                 <div class="pt-2">
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         @if ($tipo_documento == 1)
-                            <dt class="text-sm font-medium leading-6 text-gray-900">Distrito de Nacimiento</dt>
+                            <dt class="text-sm font-medium leading-6 text-gray-900">Ubicación de Nacimiento</dt>
                             <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                                {{ strtoupper($distrit) }}
+                                {{ $applicant->distritoNac->provincia->departamento->nombre }} |
+                                {{ $applicant->distritoNac->provincia->nombre }} | {{ strtoupper($distritNac) }}
                             </dd>
                         @else
                             <dt class="text-sm font-medium leading-6 text-gray-900">País de Procedencia</dt>
@@ -67,9 +68,11 @@
                 </div>
                 <div class="border-t border-gray-200 pt-4">
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt class="text-sm font-medium leading-6 text-gray-900">Distrito de Residencia</dt>
+                        <dt class="text-sm font-medium leading-6 text-gray-900">Ubicación de Residencia</dt>
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {{ strtoupper($districtAddress) }}</dd>
+                            {{ $applicant->distritoRes->provincia->departamento->nombre }} |
+                            {{ $applicant->distritoRes->provincia->nombre }} | {{ strtoupper($districtAddress) }}
+                        </dd>
                     </div>
                 </div>
                 <div class="border-t border-gray-200 pt-4">

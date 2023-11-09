@@ -11,7 +11,7 @@
                     </li>
                     <li class="flex gap-x-3">
                         <p class="font-medium text-gray-900">Tipo de documento :</p>
-                        {{ $tipo_documento == 1 ? 'DNI' : 'Carnet de Extranjería' }}
+                        {{ $bank->tipo_doc_depo == 1 ? 'DNI' : 'Carnet de Extranjería' }}
                     </li>
                     <li class="flex gap-x-3">
                         <p class="font-medium text-gray-900">Número de Voucher :</p> {{ $bank->num_documento }}
@@ -23,12 +23,11 @@
             </div>
         </div>
     @endif
-
     <form action="{{ route('applicant.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="banco_id" value="{{ $bank->id }}">
         <input type="hidden" name="num_documento" value="{{ $bank->num_doc_depo }}">
-        <input type="hidden" name="tipo_documento" value="{{ $tipo_documento }}">
+        <input type="hidden" name="tipo_documento" value="{{ $bank->tipo_doc_depo }}">
         <input type="hidden" name="num_voucher" value="{{ $bank->num_documento }}">
         <input type="hidden" name="modalidad_id" value="{{ $applicant->modalidad_id }}">
         <div class="{{ $currentStep == 1 ? 'animate-slide-in-left' : 'hidden' }}">
@@ -79,7 +78,7 @@
                 </div>
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
-            @if ($tipo_documento == 1)
+            @if ($bank->tipo_doc_depo == 1)
                 <div class="grid md:grid-cols-3 md:gap-6">
                     <label class="block mb-10">
                         <span class="block mb-2 text-sm font-medium text-gray-900">
@@ -467,37 +466,74 @@
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
 
-            <div class="grid md:grid-cols-1 md:gap-6 mb-20">
+            <div class="mx-auto grid max-w-7xl gap-x-8 gap-y-20 xl:grid-cols-3">
+                <div class="max-w-2xl">
+                    <div class="flex items-center gap-x-4">
+                        <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">CARNET</h4>
+                        <div class="h-px flex-auto bg-gray-100"></div>
+                    </div>
+                    <ul role="list" class="mt-4 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600">
+                        <li class="flex gap-x-3">
+                            <x-icons.check />
+                            Iluminación uniforme y suave, evitando sombras fuertes en el rostro.
+                        </li>
+                        <li class="flex gap-x-3">
+                            <x-icons.check />
+                            La imagen que enfoque correctamente tu rostro y utiliza fondo blanco.
+                        </li>
+                        <li class="flex gap-x-3">
+                            <x-icons.check />
+                            Ropa apropiada, evita estampados llamativos.
+                        </li>
+                        <li class="flex gap-x-3">
+                            <x-icons.check />
+                            Expresión facial tranquila y neutral, sin sonreír ni fruncir el ceño.
+                        </li>
+                    </ul>
+                    <div class="mt-6 flex items-center gap-x-4">
+                        <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">DNI</h4>
+                        <div class="h-px flex-auto bg-gray-100"></div>
+                    </div>
+                    <ul role="list" class="mt-4 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600">
+                        <li class="flex gap-x-3">
+                            <x-icons.check />
+                            Asegúrate de que la imagen del esté completamente legible y sin reflejos para evitar
+                            problemas al verificar la información.
+                        </li>
+                    </ul>
+                </div>
+                <div class="grid gap-x-8 gap-y-12 sm:grid-cols-1 sm:gap-y-16 xl:col-span-2">
+                    <div>
+                        <div class="grid md:grid-cols-1 md:gap-6">
+                            <x-input-file span="Foto Carnet Postulante" name="profilePhoto" model="profilePhoto"
+                                alt="FOTO CARNET" src="images/foto-carnet.jpg" click="$set('profilePhoto', null)" />
+                        </div>
 
-                <x-input-file span="Foto Carnet Postulante" name="profilePhoto" model="profilePhoto"
-                    alt="FOTO CARNET" src="images/foto-carnet.jpg" click="$set('profilePhoto', null)" />
-
-            </div>
-
-            <div class="grid md:grid-cols-2 md:gap-6 mb-10">
-
-                <x-input-file span="DNI Parte Anverso" name="frontDniPhoto" model="frontDniPhoto" alt="DNI ANVERSO"
-                    src="images/dni-anverso.png" click="$set('frontDniPhoto', null)" size="140" />
-
-                <x-input-file span="DNI Parte Reverso" name="reverseDniPhoto" model="reverseDniPhoto"
-                    alt="DNI REVERSO" src="images/dni-reverso.png" click="$set('reverseDniPhoto', null)"
-                    size="140" />
-
-            </div>
-            <div class="flex w-full justify-end">
-                <button type="button" wire:click="previousStep"
-                    class="cursor-pointer mt-4 mr-4 text-gray-900 bg-white hover:bg-gray-100 shadow-md focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                    Atrás
-                </button>
-                <button type="button" wire:click="nextStep"
-                    class="cursor-pointer mt-4 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                    Siguiente
-                </button>
+                        <div class="grid md:grid-cols-2 md:gap-6 mb-10">
+                            <x-input-file span="DNI Parte Anverso" name="frontDniPhoto" model="frontDniPhoto"
+                                alt="DNI ANVERSO" src="images/dni-anverso.png" click="$set('frontDniPhoto', null)"
+                                size="140" />
+                            <x-input-file span="DNI Parte Reverso" name="reverseDniPhoto" model="reverseDniPhoto"
+                                alt="DNI REVERSO" src="images/dni-reverso.png" click="$set('reverseDniPhoto', null)"
+                                size="140" />
+                        </div>
+                        <div class="flex w-full justify-end">
+                            <button type="button" wire:click="previousStep"
+                                class="cursor-pointer mt-4 mr-4 text-gray-900 bg-white hover:bg-gray-100 shadow-md focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                Atrás
+                            </button>
+                            <button type="button" wire:click="nextStep"
+                                class="cursor-pointer mt-4 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                Siguiente
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         @if ($currentStep > 3)
-            @livewire('summary-template', ['applicant' => $applicant, 'tipo_documento' => $tipo_documento])
+            @livewire('summary-template', ['applicant' => $applicant, 'tipo_documento' => $bank->tipo_doc_depo])
 
             <div
                 class="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">

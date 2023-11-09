@@ -6,6 +6,7 @@ use App\Http\Requests\ValidatePaymentRequest;
 use App\Models\Banco;
 use App\Models\Modalidad;
 use App\Models\Postulante;
+use App\Models\Proceso;
 use Illuminate\Http\Request;
 use App\Services\ApiReniecService;
 
@@ -20,7 +21,8 @@ class PayController extends Controller
 
   public function __invoke()
   {
-    return view('validate-payment');
+    $processNumber = Proceso::getProcessNumber();
+    return view('validate-payment', compact('processNumber'));
   }
 
   public function validatePayment(ValidatePaymentRequest $request)

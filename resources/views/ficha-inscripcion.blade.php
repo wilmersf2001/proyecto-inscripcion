@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="flex justify-center">
-        <div class="mx-auto mt-5 max-w-lg rounded-3xl ring-1 ring-gray-200 sm:mt-10 lg:mx-0 lg:flex lg:max-w-4xl">
+        <div class="mx-auto max-w-lg rounded-3xl ring-1 ring-gray-200 lg:flex lg:max-w-4xl">
             <div class="p-8 sm:p-10 lg:flex-auto">
                 <div class="mt-4 flex items-center gap-x-4">
                     <h4 class="flex-none text-lg font-semibold leading-6 text-indigo-600">CONSULTAR INSCRIPCIÓN

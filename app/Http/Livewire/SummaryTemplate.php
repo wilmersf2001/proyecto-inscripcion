@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Postulante;
+use App\Utils\UtilFunction;
 use Livewire\Component;
 use Carbon\Carbon;
 
@@ -11,7 +12,7 @@ class SummaryTemplate extends Component
   public Postulante $applicant;
   public string $nameSexo;
   public $formattedDateNac;
-  public string $distrit;
+  public string $distritNac;
   public string $districtAddress;
   public string $typeAddress;
   public string $districtSchool;
@@ -28,10 +29,9 @@ class SummaryTemplate extends Component
   }
   public function render()
   {
-    $dateNac = Carbon::create($this->applicant->fecha_nacimiento)->locale('es_PE');
-    $this->formattedDateNac = $dateNac->isoFormat('D [de] MMMM [del] YYYY');
+    $this->formattedDateNac = UtilFunction::formattedDate($this->applicant->fecha_nacimiento);
     $this->nameSexo = $this->applicant->sexo->descripcion;
-    $this->distrit = $this->applicant->distritoNac->nombre;
+    $this->distritNac = $this->applicant->distritoNac->nombre;
     $this->districtAddress = $this->applicant->distritoRes->nombre;
     $this->typeAddress = $this->applicant->tipodireccion->descripcion;
     $this->districtSchool = $this->applicant->colegio->distrito;

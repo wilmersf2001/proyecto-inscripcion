@@ -5,7 +5,7 @@
 @section('content')
     <div class="py-10 px-20">
         <div class="relative transform overflow-hidden rounded-lg bg-white text-left transition-all w-full">
-            <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+            <div class="bg-blue-50 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                 <div class="sm:flex sm:items-start">
                     <div
                         class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
@@ -16,9 +16,9 @@
                         </svg>
                     </div>
                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">IMPORTANTE</h3>
-                        <div class="mt-2">
-                            <p class="text-sm text-gray-500">En las próximas horas se estará enviando a su correo
+                        <h3 class="text-xl font-semibold leading-6 text-blue-950" id="modal-title">IMPORTANTE</h3>
+                        <div class="mt-4">
+                            <p class="text-base text-gray-500">En las próximas horas se estará enviando a su correo
                                 electronico la constancia de inscripción al proceso de Admisión 2024-I
                                 La cual debera imprimir y canjearla por su carné de postulante en la Oficina General de
                                 Sistemas

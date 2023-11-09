@@ -57,7 +57,6 @@ class Applicant extends Component
   public bool $accordance = false;
   public bool $showSchools = false;
   public bool $alertAmountModality = false;
-  public $tipo_documento;
   public $disable;
   protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
@@ -89,9 +88,8 @@ class Applicant extends Component
     $this->sedes = Sede::getSedesEnabled();
     $this->modalities = Modalidad::getModalidadesEnabled();
     $this->formattedToday = UtilFunction::getDateToday();
-    $this->tipo_documento = $this->bank->tipo_doc_depo;
     $this->typeSchool = $typeSchool;
-    $this->academicPrograms = DistribucionVacante::getProgramasAcademicosByModalidad($this->applicant->modalidad_id)->sortBy('programaAcademico.nombre');
+    $this->academicPrograms = DistribucionVacante::getProgramasAcademicosByModalidad($this->applicant->modalidad_id);
     $this->disable = $this->applicant->nombres != null ? 1 : 0;
     $this->minimumYear = UtilFunction::getMinimumYearByModalidad($this->applicant->modalidad_id);
   }
