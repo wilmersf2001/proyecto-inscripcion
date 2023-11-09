@@ -23,6 +23,8 @@ use App\Models\Banco;
 use App\Models\Colegio;
 use App\Models\Pais;
 
+use Illuminate\Support\Facades\Cache;
+
 class Applicant extends Component
 {
   use WithFileUploads;
@@ -71,7 +73,7 @@ class Applicant extends Component
     $this->validateOnly($propertyName);
   }
 
-  public function mount(Postulante $responseApiReniec, Banco $bank, $typeSchool)
+   public function mount(Postulante $responseApiReniec, Banco $bank, $typeSchool)
   {
     $this->applicant = $responseApiReniec;
     $this->bank = $bank;

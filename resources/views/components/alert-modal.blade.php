@@ -1,4 +1,4 @@
-<div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+<div id="myModal" class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
     <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
 
     <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -33,11 +33,8 @@
 </div>
 
 <script>
-    const modal = document.querySelector('.relative');
-    const btnAceptar = document.getElementById('btnAceptar');
-    btnAceptar.add('click', function() {
-    modal.style.display = 'none';
-
+    document.getElementById('btnAceptar').addEventListener('click', function() {
+        var modal = document.getElementById('myModal');
+        modal.style.display = 'none';
     });
-
 </script>
