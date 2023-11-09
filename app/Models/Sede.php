@@ -25,4 +25,9 @@ class Sede extends Model
     {
         return $this->hasMany(ProgramaAcademico::class, 'sede_id');
     }
+
+    public static function getSedesEnabled()
+    {
+        return Sede::where('estado', 1)->get();
+    }
 }

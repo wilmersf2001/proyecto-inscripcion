@@ -33,4 +33,9 @@ class DistribucionVacante extends Model
         return $this->belongsTo(Sede::class, 'sede_id');
     }
 
+    public static function getProgramasAcademicosByModalidad($modalidadId)
+    {
+        return DistribucionVacante::where('modalidad_id', $modalidadId)
+            ->get();
+    }
 }

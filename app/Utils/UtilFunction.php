@@ -64,4 +64,10 @@ class  UtilFunction
     ]);
     return $response;
   }
+
+  public static function getMinimumYearByModalidad($idModalidad)
+  {
+    $minimumYear = ($idModalidad == 3) ? date('Y') - 2 : (($idModalidad == 10) ? date('Y') : 1940);
+    return $minimumYear;
+  }
 }

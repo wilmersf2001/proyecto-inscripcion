@@ -23,7 +23,7 @@
             </div>
         </div>
     @endif
-    {{ $applicant->modalidad->id }}
+
     <form action="{{ route('applicant.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="banco_id" value="{{ $bank->id }}">

@@ -23,9 +23,14 @@ class Modalidad extends Model
     {
         return $this->hasMany(Postulante::class, 'modalidad_id');
     }
-    
+
     public function examen()
     {
         return $this->belongsTo(Examen::class, 'examen_id');
+    }
+
+    public static function getModalidadesEnabled()
+    {
+        return Modalidad::where('estado', 1)->get();
     }
 }
