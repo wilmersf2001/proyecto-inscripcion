@@ -15,7 +15,7 @@ class RectifierPhotoApplicant extends Component
     public $photo = [];
     public $observedPhotos;
     public $numberObserved;
-    public $disabled = true;
+    public $disabled = false;
     public $numberPhotos;
 
     protected function rules()
@@ -37,14 +37,18 @@ class RectifierPhotoApplicant extends Component
         $this->observedPhotos = $observedPhotos;
         $this->applicant = $applicant;
         $this->numberPhotos = count($observedPhotos);
+        $this->validate();
     }
     public function render()
     {
+        if (!$this->getErrorBag()) {
+            $this->disabled = true;
+        }
         return view('livewire.rectifier-photo-applicant');
     }
     public function store()
     {
-        $this->disabled = false;
+        $this->disabled = true;
         $this->validate();
     }
 }

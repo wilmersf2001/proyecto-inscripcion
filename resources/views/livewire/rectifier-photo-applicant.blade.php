@@ -101,7 +101,9 @@
                               file:bg-blue-50 file:text-blue-700
                               hover:file:bg-blue-100
                             " />
-                                    <x-input-error for="photo.{{ $photo['name'] }}" />
+                                    @if ($disabled)
+                                        <x-input-error for="photo.{{ $photo['name'] }}" />
+                                    @endif
                                 </label>
                             </div>
                         @endforeach
@@ -113,7 +115,7 @@
 
         <div class="border-t border-gray-200 px-4 py-6 sm:px-20">
             <div class="mt-6 flex justify-end">
-                @if ($disabled || !$errors->isEmpty())
+                @if (!$errors->isEmpty())
                     <button type="button" wire:click="store"
                         class="rounded-md border border-transparent px-6 py-3 text-base font-medium bg-indigo-500 text-gray-200 border-slate-200 shadow-none">Rectificar
                         Fotos</button>
@@ -122,6 +124,15 @@
                         class="rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Rectificar
                         Fotos</button>
                 @endif
+                {{-- @if ($disabled || !$errors->isEmpty())
+                    <button type="button" wire:click="store"
+                        class="rounded-md border border-transparent px-6 py-3 text-base font-medium bg-indigo-500 text-gray-200 border-slate-200 shadow-none">Rectificar
+                        Fotos</button>
+                @else
+                    <button type="submit"
+                        class="rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Rectificar
+                        Fotos</button>
+                @endif --}}
             </div>
         </div>
     </form>

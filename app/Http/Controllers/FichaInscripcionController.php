@@ -67,6 +67,7 @@ class FichaInscripcionController extends Controller
 
     public function storeRectifiedPhotos(StoreRectifierPhotoRequest $request)
     {
+        dd($request->all());
         $applicant = Postulante::find($request->applicant_id);
         if ($request->hasFile('photo_perfil')) {
             $image = $request->file('photo_perfil');
