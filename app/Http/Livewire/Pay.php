@@ -9,13 +9,11 @@ use App\Models\Modalidad;
 
 class Pay extends Component
 {
-  public $bank;
   public $numDocument = '';
   public $voucherNumber = '';
   public $agencyNumber = '';
   public $modalities;
   public $payDay;
-  public $amount;
   public $modalityId;
   public $typeSchoolId;
 
@@ -42,18 +40,6 @@ class Pay extends Component
 
   public function render()
   {
-    if ($this->numDocument && $this->voucherNumber && $this->agencyNumber && $this->payDay) {
-      $this->bank = Banco::where('num_doc_depo', $this->numDocument)
-        ->where('num_documento', $this->voucherNumber)
-        ->where('num_oficina', $this->agencyNumber)
-        ->where('fecha', $this->payDay)
-        ->first();
-
-      $this->amount = $this->bank ? $this->bank->importe : 0;
-      if (!$this->bank) {
-        session()->flash('warning');
-      }
-    }
     return view('livewire.pay');
   }
 }

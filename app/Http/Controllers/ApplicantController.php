@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreApplicantRequest;
 use App\Models\Banco;
 use App\Models\Postulante;
+use App\Utils\Constants;
 use App\Utils\UtilFunction;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
@@ -15,17 +16,19 @@ class ApplicantController extends Controller
   {
     if ($file) {
       $filename = $name . '.' . $file->getClientOriginalExtension();
-      Storage::disk('public')->put($destination . $filename, file_get_contents($file));
+      Storage::disk(Constants::DISK_STORAGE)->put($destination . $filename, file_get_contents($file));
     }
   }
   public function store(StoreApplicantRequest $request)
   {
     $banco = Banco::find($request->banco_id);
-    if ($banco) {
-      $banco->update([
-        'estado' => 1,
-      ]);
+    if (!$banco) {
+      return response()->json(['error' => 'Banco no encontrado'], 404);
     }
+
+    $banco->update([
+      'estado' => 1,
+    ]);
 
     Postulante::create([
       'num_documento' => $request->num_documento,
@@ -56,9 +59,9 @@ class ApplicantController extends Controller
       'estado_postulante_id' => '1',
     ]);
 
-    $this->uploadImage($request->file('profilePhoto'), $request->num_documento, 'fotos-inscripcion/foto-carnet/');
-    $this->uploadImage($request->file('reverseDniPhoto'), 'R-' . $request->num_documento, 'fotos-inscripcion/dni-reverso/');
-    $this->uploadImage($request->file('frontDniPhoto'), 'A-' . $request->num_documento, 'fotos-inscripcion/dni-anverso/');
+    $this->uploadImage($request->file('profilePhoto'), $request->num_documento, Constants::RUTA_FOTO_CARNET_INSCRIPTO);
+    $this->uploadImage($request->file('reverseDniPhoto'), 'R-' . $request->num_documento, Constants::RUTA_DNI_REVERSO_INSCRIPTO);
+    $this->uploadImage($request->file('frontDniPhoto'), 'A-' . $request->num_documento, Constants::RUTA_DNI_ANVERSO_INSCRIPTO);
 
     UtilFunction::saveQr($request->all());
 

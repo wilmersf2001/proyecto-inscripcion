@@ -3,7 +3,7 @@
 use App\Http\Controllers\ApplicantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PayController;
-use App\Http\Controllers\PdfController;
+use App\Http\Controllers\FichaInscripcionController;
 use App\Http\Controllers\PhotoController;
 
 /*
@@ -26,10 +26,9 @@ Route::post('/registro-postulante', [PayController::class, "validatePayment"])->
 Route::post('/store-applicant', [ApplicantController::class, "store"])->name('applicant.store');
 Route::get('/mensaje', [ApplicantController::class, "ending"])->name('applicant.ending');
 // Ficha de inscripción
-Route::get('/ficha-inscripcion', PdfController::class)->name('pdf.startPdfQuery');
-Route::post('/ficha-inscripcion', [PdfController::class, "validatePdf"])->name('pdf.validatePdf');
-// Rectificar foto
-Route::post('/rectificar-foto', [PhotoController::class, "store"])->name('photo.store');
+Route::get('/ficha-inscripcion', FichaInscripcionController::class)->name('pdf.startPdfQuery');
+Route::post('/ficha-inscripcion', [FichaInscripcionController::class, "validatePdf"])->name('pdf.validatePdf');
+Route::post('/rectificar-foto', [FichaInscripcionController::class, "storeRectifiedPhotos"])->name('photo.storeRectifiedPhotos');
 
 Route::any('/{any}', function () {
 	return view('page-not-found');

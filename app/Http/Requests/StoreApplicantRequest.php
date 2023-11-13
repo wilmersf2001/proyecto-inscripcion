@@ -48,6 +48,7 @@ class StoreApplicantRequest extends FormRequest
       'reverseDniPhoto' => 'required|mimes:jpeg|max:1024',
       'frontDniPhoto' => 'required|mimes:jpeg|max:1024',
       'accordance' => 'required|accepted',
+      'banco_id' => 'required|numeric|',
     ];
   }
 }

@@ -28,19 +28,25 @@ class PayController extends Controller
   public function validatePayment(ValidatePaymentRequest $request)
   {
     $numDocument = $request->numDocument;
-    $idBank = $request->idBank;
     $typeSchool = $request->typeSchoolId;
 
-    $bank = Banco::find($idBank);
+    $bank = Banco::where('num_doc_depo', $request->numDocument)
+      ->where('num_documento', $request->voucherNumber)
+      ->where('num_oficina', $request->agencyNumber)
+      ->where('fecha', $request->payDay)
+      ->first();
+
     if (!$bank) {
-      return redirect()->route('start');
+      return redirect()->route('start')->with('alert', 'Pago no encontrado, por favor verifique que los datos esten correctamentes ingresados');
     }
+
     if ($bank->estado == 1) {
-      return redirect()->route('start')->with('alert', 'El voucher ya fue registrado');
+      return redirect()->route('start')->with('alert', 'Los datos del voucher ingresados ya fueron registrados');
     }
+
     $postulante = Postulante::where('num_documento', $numDocument)->first();
     if ($postulante && $postulante->estado_postulante_id != 11) {
-      return redirect()->route('start')->with('alert', 'El postulante ya se encuentra registrado');
+      return redirect()->route('start')->with('alert', 'El postulante ya se encuentra registrado en el proceso de admisión');
     }
 
     $modality = Modalidad::find($request->modalityId);

@@ -16,6 +16,7 @@ class RectifierPhotoApplicant extends Component
     public $observedPhotos;
     public $numberObserved;
     public $disabled = true;
+    public $numberPhotos;
 
     protected function rules()
     {
@@ -35,6 +36,7 @@ class RectifierPhotoApplicant extends Component
     {
         $this->observedPhotos = $observedPhotos;
         $this->applicant = $applicant;
+        $this->numberPhotos = count($observedPhotos);
     }
     public function render()
     {

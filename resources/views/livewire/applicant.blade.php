@@ -4,7 +4,7 @@
 
     @if ($currentStep < 3)
         <div class="mx-auto max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none bg-gray-50 mb-16">
-            <div class="p-2 sm:p-4 lg:flex-auto">
+            <div class="p-4 lg:flex-auto">
                 <ul role="list" class="grid grid-cols-1 gap-4 text-xs leading-3 text-gray-600 sm:grid-cols-4 sm:gap-6">
                     <li class="flex gap-x-3">
                         <p class="font-medium text-gray-900">Número de documento :</p> {{ $bank->num_doc_depo }}

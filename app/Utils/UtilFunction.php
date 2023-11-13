@@ -82,7 +82,7 @@ class  UtilFunction
       if ($i == 1) $filepath = $pathFolderPhotos . 'A-' . $dni . '.jpg';
       if ($i == 2) $filepath = $pathFolderPhotos . 'R-' . $dni . '.jpg';
 
-      if (Storage::disk('public')->exists($filepath)) {
+      if (Storage::disk(Constants::DISK_STORAGE)->exists($filepath)) {
         $urlPhoto = Storage::url($filepath);
         $photosObserved[] = [
           'url' => $urlPhoto,

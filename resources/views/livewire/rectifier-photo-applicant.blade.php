@@ -1,5 +1,5 @@
 <div>
-    <form action="{{ route('photo.store') }}" method="POST" class="flex flex-col bg-white px-2 sm:px-20"
+    <form action="{{ route('photo.storeRectifiedPhotos') }}" method="POST" class="flex flex-col bg-white px-2 sm:px-20"
         enctype="multipart/form-data">
         @csrf
         <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
@@ -67,7 +67,8 @@
 
             <div class="mt-8">
                 <div class="flow-root">
-                    <div class="mt-6 grid gap-x-6 gap-y-10 grid-cols-1 lg:grid-cols-3 xl:gap-x-8 justify-items-center">
+                    <div
+                        class="mt-6 grid gap-x-6 gap-y-10 grid-cols-1 {{ $numberPhotos == 3 ? 'lg:grid-cols-3' : 'sm:grid-cols-2' }} xl:gap-x-8 justify-items-center">
                         @foreach ($observedPhotos as $photo)
                             <div class="group relative flex flex-col items-center justify-center">
                                 <div
@@ -88,7 +89,7 @@
                                 <label class="block mt-4">
                                     <span
                                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                                        Foto {{ $photo['name'] }}
+                                        Foto {{ $photo['indicator'] == 0 ? '' : 'DNI' }} {{ $photo['name'] }}
                                     </span>
                                     <input type="file" wire:model="photo.{{ $photo['name'] }}"
                                         name="photo.{{ $photo['name'] }}"
@@ -107,6 +108,7 @@
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="number_photos" value="{{ $numberPhotos }}">
         </div>
 
         <div class="border-t border-gray-200 px-4 py-6 sm:px-20">
