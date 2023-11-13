@@ -3,5 +3,5 @@
 @section('title', 'Registro Completado')
 
 @section('content')
-    @livewire('rectifier-photo-applicant', ['applicant' => $applicant])
+    @livewire('rectifier-photo-applicant', ['applicant' => $applicant, 'observedPhotos' => $observedPhotos])
 @endsection

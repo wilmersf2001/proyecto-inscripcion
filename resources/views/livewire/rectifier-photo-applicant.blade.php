@@ -1,6 +1,9 @@
 <div>
-    <form class="flex flex-col bg-white px-2 sm:px-20">
+    <form action="{{ route('photo.store') }}" method="POST" class="flex flex-col bg-white px-2 sm:px-20"
+        enctype="multipart/form-data">
+        @csrf
         <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+            <input type="hidden" name="applicant_id" value="{{ $applicant->id }}">
             <div class="flex items-center sm:px-16 bg-red-50 py-4 rounded-2xl">
 
                 <div class="sm:flex sm:items-start">
@@ -64,88 +67,43 @@
 
             <div class="mt-8">
                 <div class="flow-root">
-                    <div
-                        class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 justify-items-center">
-                        <div class="group relative flex flex-col items-center justify-center">
-                            <div
-                                class="relative aspect-h-1 aspect-w-1 w-40 overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-60">
-                                <div class="h-full w-full">
-                                    <img src="{{ asset('recursos/foto-carnet.jpg') }}" alt=""
-                                        class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+                    <div class="mt-6 grid gap-x-6 gap-y-10 grid-cols-1 lg:grid-cols-3 xl:gap-x-8 justify-items-center">
+                        @foreach ($observedPhotos as $photo)
+                            <div class="group relative flex flex-col items-center justify-center">
+                                <div
+                                    class="relative aspect-h-1 aspect-w-1 w-40 overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-60">
+                                    <div class="h-full w-full flex items-center">
+                                        @if ($photo['indicator'] == 0)
+                                            <img src="{{ asset($photo['url']) }}" alt=""
+                                                class="h-full w-full object-cover object-center lg:h-full lg:w-full">
+                                        @else
+                                            <img src="{{ asset('recursos/dni-anverso.jpg') }}" alt="">
+                                        @endif
+                                    </div>
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <div class="text-red-500 text-9xl">X</div>
+                                    </div>
                                 </div>
-                                <div class="absolute inset-0 flex items-center justify-center">
-                                    <div class="text-red-500 text-9xl">X</div>
-                                </div>
-                            </div>
 
-                            <label class="block mt-4">
-                                <span
-                                    class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                                    Foto de Carnet
-                                </span>
-                                <input type="file" wire:model="profilePhoto" wire:click="$set('profilePhoto', null)"
-                                    class="block w-full text-sm text-slate-500
+                                <label class="block mt-4">
+                                    <span
+                                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                                        Foto {{ $photo['name'] }}
+                                    </span>
+                                    <input type="file" wire:model="photo.{{ $photo['name'] }}"
+                                        name="photo.{{ $photo['name'] }}"
+                                        wire:click="$set('photo.{{ $photo['name'] }}', '')"
+                                        class="block w-full text-sm text-slate-500
                               file:mr-4 file:py-2 file:px-4
                               file:rounded-full file:border-0
                               file:text-ms file:font-semibold
                               file:bg-blue-50 file:text-blue-700
                               hover:file:bg-blue-100
                             " />
-                                <x-input-error for="profilePhoto" />
-                            </label>
-                        </div>
-
-                        <div class="group relative flex flex-col items-center justify-center">
-                            <div
-                                class="aspect-h-1 aspect-w-1 w-40 overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-60 flex items-center">
-                                <div>
-                                    <img src="{{ asset('recursos/dni-anverso.jpg') }}" alt="">
-                                </div>
+                                    <x-input-error for="photo.{{ $photo['name'] }}" />
+                                </label>
                             </div>
-                            <label class="block mt-4">
-                                <span
-                                    class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                                    Foto DNI Anverso
-                                </span>
-                                <input type="file" wire:model="frontDniPhoto"
-                                    wire:click="$set('frontDniPhoto', null)"
-                                    class="block w-full text-sm text-slate-500
-                              file:mr-4 file:py-2 file:px-4
-                              file:rounded-full file:border-0
-                              file:text-ms file:font-semibold
-                              file:bg-blue-50 file:text-blue-700
-                              hover:file:bg-blue-100
-                            " />
-                                <x-input-error for="frontDniPhoto" />
-                            </label>
-                        </div>
-
-                        <div class="group relative flex flex-col items-center justify-center">
-                            <div
-                                class="aspect-h-1 aspect-w-1 w-40 overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-60 flex items-center">
-                                <div>
-                                    <img src="{{ asset('recursos/dni-reverso.jpg') }}"
-                                        alt="Front of men&#039;s Basic Tee in black.">
-                                </div>
-                            </div>
-                            <label class="block mt-4">
-                                <span
-                                    class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                                    Foto DNI Reverso
-                                </span>
-                                <input type="file" wire:model="reverseDniPhoto"
-                                    wire:click="$set('reverseDniPhoto', null)"
-                                    class="block w-full text-sm text-slate-500
-                              file:mr-4 file:py-2 file:px-4
-                              file:rounded-full file:border-0
-                              file:text-ms file:font-semibold
-                              file:bg-blue-50 file:text-blue-700
-                              hover:file:bg-blue-100
-                            " />
-                                <x-input-error for="reverseDniPhoto" />
-                            </label>
-                        </div>
-
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -153,9 +111,15 @@
 
         <div class="border-t border-gray-200 px-4 py-6 sm:px-20">
             <div class="mt-6 flex justify-end">
-                <button type="button"
-                    class="rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Rectificar
-                    Fotos</button>
+                @if ($disabled || !$errors->isEmpty())
+                    <button type="button" wire:click="store"
+                        class="rounded-md border border-transparent px-6 py-3 text-base font-medium bg-indigo-500 text-gray-200 border-slate-200 shadow-none">Rectificar
+                        Fotos</button>
+                @else
+                    <button type="submit"
+                        class="rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Rectificar
+                        Fotos</button>
+                @endif
             </div>
         </div>
     </form>

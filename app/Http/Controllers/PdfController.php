@@ -26,7 +26,8 @@ class PdfController extends Controller
     }
 
     if ($applicant->estadoObservadoFichaInscripcion()) {
-      return view('rectifier-photo-applicant', compact('applicant'));
+      $observedPhotos = UtilFunction::getPhotosObservedByDni($applicant->num_documento);
+      return view('rectifier-photo-applicant', compact('applicant', 'observedPhotos'));
     }
 
     if ($applicant->estadoValidoFichaInscripcion()) {

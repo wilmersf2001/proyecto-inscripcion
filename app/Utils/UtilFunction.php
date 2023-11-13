@@ -3,6 +3,7 @@
 namespace App\Utils;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Postulante;
 use App\Models\Proceso;
 use Carbon\Carbon;
@@ -70,5 +71,26 @@ class  UtilFunction
   {
     $dateNac = Carbon::create($date)->locale('es_PE');
     return $dateNac->isoFormat('D [de] MMMM [del] YYYY');
+  }
+
+  public static function getPhotosObservedByDni(string $dni)
+  {
+    $pathFolderPhotosObserved = Constants::RUTA_FOTOS_OBSERVADAS;
+    $photosObserved = [];
+    foreach ($pathFolderPhotosObserved as $i => $pathFolderPhotos) {
+      if ($i == 0) $filepath = $pathFolderPhotos . $dni . '.jpg';
+      if ($i == 1) $filepath = $pathFolderPhotos . 'A-' . $dni . '.jpg';
+      if ($i == 2) $filepath = $pathFolderPhotos . 'R-' . $dni . '.jpg';
+
+      if (Storage::disk('public')->exists($filepath)) {
+        $urlPhoto = Storage::url($filepath);
+        $photosObserved[] = [
+          'url' => $urlPhoto,
+          'indicator' => $i,
+          'name' => $i == 0 ? 'perfil' : ($i == 1 ? 'anverso' : 'reverso')
+        ];
+      }
+    }
+    return $photosObserved;
   }
 }

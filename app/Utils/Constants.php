@@ -7,6 +7,7 @@ class Constants
   //RUTAS DE FOTOS
   public const RUTA_FOTO_VALIDA = 'archivos/FotoOk';
   public const RUTA_FOTO_OBSERVADA = 'archivos/Observadas/Fotos';
+  public const RUTA_FOTOS_OBSERVADAS = ['fotos-observadas/foto-carnet/', 'fotos-observadas/dni-anverso/', 'fotos-observadas/dni-reverso/'];
 
   //ESTADOS DE POSTULANTES
 
