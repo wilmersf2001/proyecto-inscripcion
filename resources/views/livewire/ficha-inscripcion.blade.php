@@ -1,5 +1,5 @@
 <div>
-    <form class="space-y-6" action="{{ route('pdf.validatePdf') }}" method="POST">
+    <form class="space-y-6" action="{{ route('ficha.validatePdf') }}" method="POST">
         @csrf
         <div>
             <label for="num_documento"
@@ -34,5 +34,8 @@
     </form>
     @if (session('error'))
         <x-alert-modal message="{{ session('error') }}" />
+    @endif
+    @if (session('success'))
+        <x-alert message="{{ session('success') }}" />
     @endif
 </div>

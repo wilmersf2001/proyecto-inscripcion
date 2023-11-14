@@ -101,7 +101,7 @@
         </div>
         <div class="-mt-2 p-2 lg:mt-0 lg:w-full lg:max-w-md lg:flex-shrink-0">
             <div
-                class="h-full rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center lg:py-16">
+                class="h-full rounded-2xl bg-gray-50 py-10 text-center ring-1 ring-inset ring-gray-900/5 lg:flex lg:flex-col lg:justify-center">
                 <div class="mx-auto max-w-xs px-8">
                     <div class="flex justify-center items-center">
                         <img src="{{ asset('images/logo_bn.png') }}" alt="Banco de la nacion" width="45"

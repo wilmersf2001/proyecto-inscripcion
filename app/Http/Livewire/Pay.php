@@ -4,7 +4,6 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Http\Requests\View\Message\ValidatePayment;
-use App\Models\Banco;
 use App\Models\Modalidad;
 
 class Pay extends Component

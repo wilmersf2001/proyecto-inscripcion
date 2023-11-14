@@ -14,10 +14,12 @@ use App\Utils\Constants;
 
 class FichaInscripcionController extends Controller
 {
-    private function uploadImage($file, string $name, string $destination)
+    protected function uploadIfFileExists($file, string $name, string $destination)
     {
-        $filename = $name . '.' . $file->getClientOriginalExtension();
-        Storage::disk('public')->put($destination . $filename, file_get_contents($file));
+        if ($file) {
+            $filename = $name . '.' . $file->getClientOriginalExtension();
+            Storage::disk('public')->put($destination . $filename, file_get_contents($file));
+        }
     }
 
     public function __invoke()
@@ -32,7 +34,7 @@ class FichaInscripcionController extends Controller
             ->first();
 
         if (!$applicant) {
-            return redirect()->route('pdf.startPdfQuery')->with('error', 'Postulante no encontrado o datos ingresados incorrectamente');
+            return redirect()->route('ficha.startPdfQuery')->with('error', 'Postulante no encontrado o datos ingresados incorrectamente');
         }
 
         if ($applicant->estadoObservadoFichaInscripcion()) {
@@ -59,7 +61,7 @@ class FichaInscripcionController extends Controller
                 'tipoColegio' => $applicant->colegio->tipo == 1 ? 'Nacional' : 'Privado'
             ];
         } else {
-            return redirect()->route('pdf.startPdfQuery')->with('error', 'Ficha de inscripción en proceso de validación, por favor vuelva a intentarlo más tarde');
+            return redirect()->route('ficha.startPdfQuery')->with('error', 'Ficha de inscripción se encuentra en proceso de validación, por favor vuelva a intentarlo más tarde');
         }
 
         return PDF::loadView('pdf-ficha-inscripcion', $data)->stream();
@@ -67,22 +69,11 @@ class FichaInscripcionController extends Controller
 
     public function storeRectifiedPhotos(StoreRectifierPhotoRequest $request)
     {
-        dd($request->all());
         $applicant = Postulante::find($request->applicant_id);
-        if ($request->hasFile('photo_perfil')) {
-            $image = $request->file('photo_perfil');
-            $fileName = $applicant->num_documento;
-            $this->uploadImage($image, $fileName, Constants::RUTA_FOTO_CARNET_RECTIFICADO);
-        }
-        if ($request->hasFile('photo_anverso')) {
-            $image = $request->file('photo_anverso');
-            $fileName = 'A-' . $applicant->num_documento;
-            $this->uploadImage($image, $fileName, Constants::RUTA_DNI_ANVERSO_RECTIFICADO);
-        }
-        if ($request->hasFile('photo_reverso')) {
-            $image = $request->file('photo_reverso');
-            $fileName = 'R-' . $applicant->num_documento;
-            $this->uploadImage($image, $fileName, Constants::RUTA_DNI_REVERSO_RECTIFICADO);
-        }
+        $this->uploadIfFileExists($request->file('photo_perfil'), $applicant->num_documento, Constants::RUTA_FOTO_CARNET_RECTIFICADO);
+        $this->uploadIfFileExists($request->file('photo_anverso'), 'A-' . $applicant->num_documento, Constants::RUTA_DNI_ANVERSO_RECTIFICADO);
+        $this->uploadIfFileExists($request->file('photo_reverso'), 'R-' . $applicant->num_documento, Constants::RUTA_DNI_REVERSO_RECTIFICADO);
+
+        return redirect()->route('ficha.startPdfQuery')->with('success', 'Tus fotos han sido rectificadas y enviadas correctamente, por favor vuelva a intentarlo más tarde');
     }
 }

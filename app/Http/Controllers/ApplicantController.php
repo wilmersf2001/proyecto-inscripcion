@@ -65,11 +65,11 @@ class ApplicantController extends Controller
 
     UtilFunction::saveQr($request->all());
 
-    return redirect()->route('applicant.ending');
+    return redirect()->route('applicant.finalMessage');
   }
 
-  public function ending()
+  public function finalMessage()
   {
-    return view('ending');
+    return view('final-message');
   }
 }

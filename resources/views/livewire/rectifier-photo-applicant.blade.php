@@ -1,5 +1,5 @@
 <div>
-    <form action="{{ route('photo.storeRectifiedPhotos') }}" method="POST" class="flex flex-col bg-white px-2 sm:px-20"
+    <form action="{{ route('ficha.storeRectifiedPhotos') }}" method="POST" class="flex flex-col bg-white px-2 sm:px-20"
         enctype="multipart/form-data">
         @csrf
         <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
@@ -68,7 +68,7 @@
             <div class="mt-8">
                 <div class="flow-root">
                     <div
-                        class="mt-6 grid gap-x-6 gap-y-10 grid-cols-1 {{ $numberPhotos == 3 ? 'lg:grid-cols-3' : 'sm:grid-cols-2' }} xl:gap-x-8 justify-items-center">
+                        class="mt-6 grid gap-x-6 gap-y-10 grid-cols-1 {{ $numberPhotos == 3 ? 'lg:grid-cols-3' : ($numberPhotos == 2 ? 'sm:grid-cols-2' : '') }} xl:gap-x-8 justify-items-center">
                         @foreach ($observedPhotos as $photo)
                             <div class="group relative flex flex-col items-center justify-center">
                                 <div
@@ -124,15 +124,6 @@
                         class="rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Rectificar
                         Fotos</button>
                 @endif
-                {{-- @if ($disabled || !$errors->isEmpty())
-                    <button type="button" wire:click="store"
-                        class="rounded-md border border-transparent px-6 py-3 text-base font-medium bg-indigo-500 text-gray-200 border-slate-200 shadow-none">Rectificar
-                        Fotos</button>
-                @else
-                    <button type="submit"
-                        class="rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">Rectificar
-                        Fotos</button>
-                @endif --}}
             </div>
         </div>
     </form>

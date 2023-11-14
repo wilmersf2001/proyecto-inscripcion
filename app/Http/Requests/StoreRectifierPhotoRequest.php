@@ -21,24 +21,14 @@ class StoreRectifierPhotoRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
+        $numberFiles = count(array_filter($this->file()));
+
+        return [
             'applicant_id' => 'required',
-            'number_photos' => 'required|integer',
-        ];
-
-        for ($i = 1; $i <= $this->number_photos; $i++) {
-            $rules["photo_{$i}"] = "required|mimes:jpeg|max:1024";
-        }
-
-        dd($rules);
-
-        return $rules;
-        /* return [
-            'applicant_id' => 'required',
-            'number_photos' => 'required|integer',
+            'number_photos' => 'required|integer|size:' . $numberFiles,
             'photo_perfil' => 'required_without_all:photo_anverso,photo_reverso|mimes:jpeg|max:1024',
             'photo_anverso' => 'required_without_all:photo_perfil,photo_reverso|mimes:jpeg|max:1024',
             'photo_reverso' => 'required_without_all:photo_perfil,photo_anverso|mimes:jpeg|max:1024',
-        ]; */
+        ];
     }
 }

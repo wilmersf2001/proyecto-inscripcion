@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\ValidatePaymentRequest;
 use App\Models\Banco;
 use App\Models\Modalidad;
 use App\Models\Postulante;
 use App\Models\Proceso;
-use Illuminate\Http\Request;
 use App\Services\ApiReniecService;
 
 class PayController extends Controller
@@ -57,6 +57,7 @@ class PayController extends Controller
 
     $applicant = $this->apiReniec->getApplicantDataByDni($numDocument);
     $applicant->modalidad_id = $request->modalityId;
+    $applicant->colegio_id = $bank->tipo_doc_depo == 1 ? null : ($typeSchool == 1 ? 15496 : 15497);
 
     return view('register-applicant', compact('applicant', 'bank', 'typeSchool'));
   }

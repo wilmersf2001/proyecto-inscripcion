@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use Illuminate\Support\Facades\Storage;
 use Livewire\WithFileUploads;
 use App\Models\Postulante;
 use Livewire\Component;

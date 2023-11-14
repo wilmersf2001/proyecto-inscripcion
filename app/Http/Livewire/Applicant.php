@@ -3,17 +3,15 @@
 namespace App\Http\Livewire;
 
 use App\Models\DistribucionVacante;
+use App\Services\FormDataService;
+use App\Services\LocationService;
 use App\Utils\UtilFunction;
 use Livewire\WithFileUploads;
-use App\Models\Genero;
-use App\Models\Modalidad;
 use App\Models\Postulante;
-use App\Models\Sede;
 use Livewire\Component;
 use App\Models\Departamento;
 use App\Models\Provincia;
 use App\Models\Distrito;
-use App\Models\TipoDireccion;
 use App\Http\Requests\View\StoreApplicantRequest;
 use App\Http\Requests\View\FirstStepApplicantRequest;
 use App\Http\Requests\View\StepTwoApplicantRequest;
@@ -21,13 +19,14 @@ use App\Http\Requests\View\StepThreeApplicantRequest;
 use App\Http\Requests\View\Message\ValidateApplicant;
 use App\Models\Banco;
 use App\Models\Colegio;
-use App\Models\Pais;
 
-use Illuminate\Support\Facades\Cache;
 
 class Applicant extends Component
 {
   use WithFileUploads;
+
+  protected $locationService;
+  protected $formDataService;
   public Postulante $applicant;
   public Banco $bank;
   public $departaments;
@@ -40,6 +39,7 @@ class Applicant extends Component
   public $selectedProvinceResideId;
   public $provincesOriginSchool;
   public $districtsOriginSchool;
+  public $selectedDepartamentOriginSchoolId;
   public $selectedProvinceOriginSchoolId;
   public $selectedDistrictOriginSchoolId;
   public $adressType;
@@ -49,17 +49,16 @@ class Applicant extends Component
   public $modalities;
   public $academicPrograms;
   public $searchSchoolName;
+  public $disable;
   public $typeSchool;
-  public int $currentStep = 1;
-  public int $minimumYear = 1940;
   public $profilePhoto;
   public $reverseDniPhoto;
   public $frontDniPhoto;
   public $formattedToday;
-  public bool $accordance = false;
-  public bool $showSchools = false;
-  public bool $alertAmountModality = false;
-  public $disable;
+  public $currentStep = 1;
+  public $minimumYear = 1940;
+  public $accordance = false;
+  public $showSchools = false;
   protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
   protected function rules()
@@ -73,27 +72,33 @@ class Applicant extends Component
     $this->validateOnly($propertyName);
   }
 
-   public function mount(Postulante $responseApiReniec, Banco $bank, $typeSchool)
+  public function mount(Postulante $responseApiReniec, Banco $bank, $typeSchool, LocationService $locationService, FormDataService $formDataService)
   {
     $this->applicant = $responseApiReniec;
     $this->bank = $bank;
-    $this->departaments = Departamento::all();
-    $this->provincesBirth = Provincia::all();
-    $this->districtsBirth = Distrito::all();
-    $this->provincesReside = Provincia::all();
-    $this->districtsReside = Distrito::all();
-    $this->provincesOriginSchool = Provincia::all();
-    $this->districtsOriginSchool = Distrito::all();
-    $this->adressType = TipoDireccion::all();
-    $this->generos = Genero::all();
-    $this->countries = Pais::all();
-    $this->sedes = Sede::getSedesEnabled();
-    $this->modalities = Modalidad::getModalidadesEnabled();
+    $this->locationService = $locationService;
+    $this->formDataService = $formDataService;
+    $this->departaments =  $this->locationService->getDepartments();
+    $this->provincesBirth = $this->locationService->getProvinces();
+    $this->districtsBirth = $this->locationService->getDistricts();
+    $this->provincesReside = $this->locationService->getProvinces();
+    $this->districtsReside = $this->locationService->getDistricts();
+    $this->provincesOriginSchool = $this->locationService->getProvinces();
+    $this->districtsOriginSchool = $this->locationService->getDistricts();
+    $this->countries = $this->locationService->getCountries();
+    $this->adressType = $this->formDataService->getAdressType();
+    $this->generos = $this->formDataService->getGeneros();
+    $this->sedes = $this->formDataService->getSedes();
+    $this->modalities = $this->formDataService->getModalities();
+    $this->academicPrograms = DistribucionVacante::getProgramasAcademicosByModalidad($this->applicant->modalidad_id);
     $this->formattedToday = UtilFunction::getDateToday();
     $this->typeSchool = $typeSchool;
-    $this->academicPrograms = DistribucionVacante::getProgramasAcademicosByModalidad($this->applicant->modalidad_id);
     $this->disable = $this->applicant->nombres != null ? 1 : 0;
     $this->minimumYear = UtilFunction::getMinimumYearByModalidad($this->applicant->modalidad_id);
+    $this->selectedDepartamentOriginSchoolId = $bank->tipo_doc_depo == 1 ? "" : 26;
+    $this->selectedProvinceOriginSchoolId = $bank->tipo_doc_depo == 1 ? "" : 197;
+    $this->selectedDistrictOriginSchoolId = $bank->tipo_doc_depo == 1 ? "" : 1868;
+    $this->searchSchoolName = $typeSchool == 1 ? "OTROS COLEGIOS NACIONALES" : "OTROS COLEGIOS PARTICULARES";
   }
 
   public function render()
