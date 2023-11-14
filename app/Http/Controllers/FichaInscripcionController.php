@@ -37,6 +37,10 @@ class FichaInscripcionController extends Controller
             return redirect()->route('ficha.startPdfQuery')->with('error', 'Postulante no encontrado o datos ingresados incorrectamente');
         }
 
+        if ($applicant->estado_postulante_id == 7) {
+            return redirect()->route('ficha.startPdfQuery')->with('error', 'Tus fotos ya han sido rectificadas, por favor vuelva a intentarlo más tarde');
+        }
+
         if ($applicant->estadoObservadoFichaInscripcion()) {
             $observedPhotos = UtilFunction::getPhotosObservedByDni($applicant->num_documento);
             return view('rectifier-photo-applicant', compact('applicant', 'observedPhotos'));
@@ -70,6 +74,10 @@ class FichaInscripcionController extends Controller
     public function storeRectifiedPhotos(StoreRectifierPhotoRequest $request)
     {
         $applicant = Postulante::find($request->applicant_id);
+        $applicant->update([
+            'estado_postulante_id' => 7,
+        ]);
+
         $this->uploadIfFileExists($request->file('photo_perfil'), $applicant->num_documento, Constants::RUTA_FOTO_CARNET_RECTIFICADO);
         $this->uploadIfFileExists($request->file('photo_anverso'), 'A-' . $applicant->num_documento, Constants::RUTA_DNI_ANVERSO_RECTIFICADO);
         $this->uploadIfFileExists($request->file('photo_reverso'), 'R-' . $applicant->num_documento, Constants::RUTA_DNI_REVERSO_RECTIFICADO);

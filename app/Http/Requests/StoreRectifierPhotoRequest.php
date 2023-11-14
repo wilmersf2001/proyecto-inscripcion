@@ -24,7 +24,7 @@ class StoreRectifierPhotoRequest extends FormRequest
         $numberFiles = count(array_filter($this->file()));
 
         return [
-            'applicant_id' => 'required',
+            'applicant_id' => 'required|integer',
             'number_photos' => 'required|integer|size:' . $numberFiles,
             'photo_perfil' => 'required_without_all:photo_anverso,photo_reverso|mimes:jpeg|max:1024',
             'photo_anverso' => 'required_without_all:photo_perfil,photo_reverso|mimes:jpeg|max:1024',

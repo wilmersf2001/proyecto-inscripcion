@@ -129,6 +129,6 @@
     </form>
 
     @if (session('alert'))
-        <x-alert-modal message="{{ session('alert') }}" />
+        <x-alert-errors message="{{ session('alert') }}" />
     @endif
 </div>

@@ -1,4 +1,4 @@
-<div>
+<div class="animate-fade-in">
     <form action="{{ route('ficha.storeRectifiedPhotos') }}" method="POST" class="flex flex-col bg-white px-2 sm:px-20"
         enctype="multipart/form-data">
         @csrf

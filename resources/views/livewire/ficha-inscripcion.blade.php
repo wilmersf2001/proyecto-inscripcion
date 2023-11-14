@@ -33,9 +33,9 @@
         </div>
     </form>
     @if (session('error'))
-        <x-alert-modal message="{{ session('error') }}" />
+        <x-alert-errors message="{{ session('error') }}" />
     @endif
     @if (session('success'))
-        <x-alert message="{{ session('success') }}" />
+        <x-alert-success title="Rectificación Existosa" message="{{ session('success') }}" />
     @endif
 </div>
