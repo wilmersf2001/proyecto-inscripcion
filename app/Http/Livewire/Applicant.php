@@ -19,7 +19,7 @@ use App\Http\Requests\View\StepThreeApplicantRequest;
 use App\Http\Requests\View\Message\ValidateApplicant;
 use App\Models\Banco;
 use App\Models\Colegio;
-
+use App\Models\Proceso;
 
 class Applicant extends Component
 {
@@ -55,10 +55,11 @@ class Applicant extends Component
   public $reverseDniPhoto;
   public $frontDniPhoto;
   public $formattedToday;
-  public $currentStep = 2;
+  public $currentStep = 1;
   public $minimumYear = 1940;
   public $accordance = false;
   public $showSchools = false;
+  public $numberProcess = 0;
   protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
   protected function rules()
@@ -98,6 +99,7 @@ class Applicant extends Component
     if ($this->bank->tipo_doc_depo == 9) {
       $this->LocationOutsideCountry(26);
     }
+    $this->numberProcess = Proceso::getProcessNumber();
     $this->searchSchoolName = $bank->tipo_doc_depo == 9 ? ($typeSchool == 1 ? "OTROS COLEGIOS NACIONALES" : "OTROS COLEGIOS PARTICULARES") : null;
   }
 
@@ -176,7 +178,11 @@ class Applicant extends Component
   public function nextStep()
   {
     if ($this->currentStep == 1) {
-      $this->validate(FirstStepApplicantRequest::FIRST_STEP_VALIDATE);
+      $rules = FirstStepApplicantRequest::FIRST_STEP_VALIDATE;
+      if ($this->bank->tipo_doc_depo == 9) {
+        $rules['applicant.pais_id'] = 'required|numeric';
+      }
+      $this->validate($rules);
     } elseif ($this->currentStep == 2) {
       $this->validate(StepTwoApplicantRequest::SETEP_TWO_VALIDATE);
     } elseif ($this->currentStep == 3) {

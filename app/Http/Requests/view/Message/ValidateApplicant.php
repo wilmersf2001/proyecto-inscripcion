@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests\View\Message;
 
-class ValidateApplicant{
-  public const MESSAGES_ERROR =[
+class ValidateApplicant
+{
+  public const MESSAGES_ERROR = [
     'applicant.nombres.required' => 'El campo nombres es obligatorio',
     'applicant.ap_paterno.required' => 'El campo apellido paterno es obligatorio',
     'applicant.ap_materno.required' => 'El campo apellido materno es obligatorio',
@@ -11,6 +12,8 @@ class ValidateApplicant{
     'applicant.fecha_nacimiento.date' => 'El campo fecha de nacimiento debe ser una fecha',
     'applicant.fecha_nacimiento.before' => 'La fecha de nacimiento es incoherente',
     'applicant.sexo_id.required' => 'El campo sexo es obligatorio',
+    'applicant.pais_id.required' => 'El campo país de procedencia es obligatorio',
+    'applicant.pais_id.numeric' => 'El campo país de procedencia debe ser un número',
     'applicant.distrito_id.required' => 'El campo distrito de nacimiento es obligatorio',
     'applicant.distrito_id.numeric' => 'El campo distrito de nacimiento debe ser un número',
     'applicant.distrito_id_direccion.required' => 'El campo distrito de residencia es obligatorio',

@@ -73,14 +73,14 @@
                         class="mt-6 grid gap-x-6 gap-y-10 grid-cols-1 {{ $numberPhotos == 3 ? 'lg:grid-cols-3' : ($numberPhotos == 2 ? 'sm:grid-cols-2' : '') }} xl:gap-x-8 justify-items-center">
                         @foreach ($observedPhotos as $photo)
                             <div class="group relative flex flex-col items-center justify-center">
-                                <div
-                                    class="relative aspect-h-1 aspect-w-1 w-40 overflow-hidden rounded-md bg-gray-200 lg:aspect-none lg:h-60">
+                                <div class="relative w-40 overflow-hidden rounded-md bg-gray-200 aspect-none lg:h-60">
                                     <div class="h-full w-full flex items-center">
                                         @if ($photo['indicator'] == 0)
                                             <img src="{{ asset($photo['url']) }}" alt=""
                                                 class="h-full w-full object-cover object-center lg:h-full lg:w-full">
                                         @else
-                                            <img src="{{ asset('recursos/dni-anverso.jpg') }}" alt="">
+                                            <img src="{{ asset('recursos/dni-anverso.jpg') }}" alt=""
+                                                class="object-cover object-center">
                                         @endif
                                     </div>
                                     <div class="absolute inset-0 flex items-center justify-center">

@@ -41,7 +41,7 @@ class StoreApplicantRequest extends FormRequest
             'applicant.colegio_id' => 'required|numeric',
             'applicant.anno_egreso' => 'required|numeric|digits:4',
             'applicant.modalidad_id' => 'required|numeric',
-            'applicant.pais_id' => 'nullable',
+            'applicant.pais_id' => 'required|numeric',
             'selectedProvinceOriginSchoolId' => 'required|numeric',
             'selectedDistrictOriginSchoolId' => 'required|numeric',
             'profilePhoto' => 'required|mimes:jpeg|max:1024',

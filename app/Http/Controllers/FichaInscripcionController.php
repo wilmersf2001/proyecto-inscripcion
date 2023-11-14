@@ -43,6 +43,7 @@ class FichaInscripcionController extends Controller
 
         if ($applicant->estadoObservadoFichaInscripcion()) {
             $observedPhotos = UtilFunction::getPhotosObservedByDni($applicant->num_documento);
+            if (!$observedPhotos) return redirect()->route('ficha.startPdfQuery');
             return view('rectifier-photo-applicant', compact('applicant', 'observedPhotos'));
         }
 

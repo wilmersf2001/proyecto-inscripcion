@@ -555,7 +555,7 @@
                             <li class="text-gray-400"><span class="text-gray-600">Conozco, acepto y me someto a las
                                     bases,
                                     condiciones y procedimientos establecidos en eI
-                                    Reglamento del Concurso de Admisión 2016-II de la Universidad Nacional
+                                    Reglamento del Concurso de Admisión {{ $numberProcess }} de la Universidad Nacional
                                     Pedro Ruiz Gallo.</span></li>
                             <li class="text-gray-400"><span class="text-gray-600">La información y fotografia
                                     registrada es
@@ -566,7 +566,7 @@
                             </li>
                             <li class="text-gray-400"><span class="text-gray-600">No tengo impedimento para participar
                                     en eI
-                                    Concurso de Admisión 2016-11.</span></li>
+                                    Concurso de Admisión {{ $numberProcess }}.</span></li>
                             <li class="text-gray-400"><span class="text-gray-600">De alcanzar una vacante, me
                                     comprometo a
                                     regularizar mi expediente en la fecha establecida en el
