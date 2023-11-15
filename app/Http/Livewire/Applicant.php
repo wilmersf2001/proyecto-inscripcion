@@ -55,7 +55,7 @@ class Applicant extends Component
   public $reverseDniPhoto;
   public $frontDniPhoto;
   public $formattedToday;
-  public $currentStep = 1;
+  public $currentStep = 2;
   public $minimumYear = 1940;
   public $accordance = false;
   public $showSchools = false;
@@ -95,10 +95,10 @@ class Applicant extends Component
     $this->typeSchool = $typeSchool;
     $this->disable = $this->applicant->nombres != null ? 1 : 0;
     $this->minimumYear = UtilFunction::getMinimumYearByModalidad($this->applicant->modalidad_id);
-    $this->selectedDepartamentOriginSchoolId = $bank->tipo_doc_depo == 1 ? "" : 26;
-    $this->selectedProvinceOriginSchoolId = $bank->tipo_doc_depo == 1 ? "" : 197;
-    $this->selectedDistrictOriginSchoolId = $bank->tipo_doc_depo == 1 ? "" : 1868;
-    $this->searchSchoolName = $typeSchool == 1 ? "OTROS COLEGIOS NACIONALES" : "OTROS COLEGIOS PARTICULARES";
+    if ($this->bank->tipo_doc_depo == 9) {
+      $this->LocationOutsideCountry(26);
+    }
+    $this->searchSchoolName = $bank->tipo_doc_depo == 9 ? ($typeSchool == 1 ? "OTROS COLEGIOS NACIONALES" : "OTROS COLEGIOS PARTICULARES") : null;
   }
 
   public function render()
@@ -154,6 +154,15 @@ class Applicant extends Component
       $this->districtsOriginSchool = Provincia::find($idlocation)->distritos()->get();
       $this->reset(['selectedDistrictOriginSchoolId']);
     }
+  }
+  public function LocationOutsideCountry(int $idlocation)
+  {
+    $this->selectedDepartamentOriginSchoolId = $idlocation;
+    $this->provincesOriginSchool = Departamento::find($idlocation)->provincias()->get();
+    $provinceOriginSchoolId = $this->provincesOriginSchool->first()->id;
+    $this->districtsOriginSchool = Provincia::find($provinceOriginSchoolId)->distritos()->get();
+    $this->selectedProvinceOriginSchoolId = $this->provincesOriginSchool->first()->id;
+    $this->selectedDistrictOriginSchoolId = $this->districtsOriginSchool->first()->id;
   }
 
   public function updateSchool(int $idSchool)

@@ -16,7 +16,7 @@
                         </svg>
                     </div>
                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Foto de Inscripción
+                        <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Inscripción
                             Observada
                         </h3>
                         <div class="mt-2">
@@ -31,7 +31,8 @@
             </div>
 
             <div class="mt-8 flex items-center gap-x-4">
-                <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">CARNET</h4>
+                <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">CONSIDERACIONES PARA FOTOGRAFÍA
+                </h4>
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
             <ul role="list"
@@ -42,11 +43,12 @@
                 </li>
                 <li class="flex gap-x-3">
                     <x-icons.check />
-                    La imagen que enfoque correctamente tu rostro y utiliza fondo blanco.
+                    Enfoca correctamente tu rostro (no utilizar lentes ni cualquier otro tipo de accesorios) y utiliza
+                    fondo blanco.
                 </li>
                 <li class="flex gap-x-3">
                     <x-icons.check />
-                    Ropa apropiada, evita estampados llamativos.
+                    Ropa apropiada, evita estampados llamativos y bividis.
                 </li>
                 <li class="flex gap-x-3">
                     <x-icons.check />
@@ -54,13 +56,13 @@
                 </li>
             </ul>
             <div class="mt-6 flex items-center gap-x-4">
-                <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">DNI</h4>
+                <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">CONSIDERACIONES PARA DNI</h4>
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
             <ul role="list" class="mt-6 grid grid-cols-1 gap-4 text-sm leading-6 text-gray-600">
                 <li class="flex gap-x-3">
                     <x-icons.check />
-                    Asegúrate de que la imagen del esté completamente legible y sin reflejos para evitar
+                    Asegúrate que la imagen esté completamente legible y sin reflejos para evitar
                     problemas al verificar la información.
                 </li>
             </ul>
