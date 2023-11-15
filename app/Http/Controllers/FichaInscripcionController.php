@@ -12,13 +12,14 @@ use App\Models\Postulante;
 use App\Models\Proceso;
 use App\Utils\Constants;
 
+
 class FichaInscripcionController extends Controller
 {
     protected function uploadIfFileExists($file, string $name, string $destination)
     {
         if ($file) {
             $filename = $name . '.' . $file->getClientOriginalExtension();
-            Storage::disk('public')->put($destination . $filename, file_get_contents($file));
+            Storage::disk(Constants::DISK_STORAGE)->put($destination . $filename, file_get_contents($file));
         }
     }
 
@@ -84,5 +85,10 @@ class FichaInscripcionController extends Controller
         $this->uploadIfFileExists($request->file('photo_reverso'), 'R-' . $applicant->num_documento, Constants::RUTA_DNI_REVERSO_RECTIFICADO);
 
         return redirect()->route('ficha.startPdfQuery')->with('success', 'Tus fotos han sido rectificadas y enviadas correctamente, por favor vuelva a intentarlo más tarde');
+    }
+
+    public function disenoPDF()
+    {
+        return PDF::loadView('welcome')->stream();
     }
 }

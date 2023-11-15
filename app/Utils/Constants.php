@@ -5,6 +5,7 @@ namespace App\Utils;
 class Constants
 {
   //RUTAS DE FOTOS
+  public const RUTA_FOTO_QR = 'temp/';
   public const RUTA_FOTO_CARNET_VALIDA = 'fotos-validas/foto-carnet/';
   public const RUTA_DNI_ANVERSO_VALIDA = 'fotos-validas/dni-anverso/';
   public const RUTA_DNI_REVERSO_VALIDA = 'fotos-validas/dni-reverso/';

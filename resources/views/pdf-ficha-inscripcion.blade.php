@@ -132,7 +132,7 @@
             <td class="table-item3">
                 <center>
                     @if ($pathImage)
-                        <img src={{ $pathImage }} alt="postulante" width="115" height="155">
+                        <img src="{{ public_path($pathImage) }}" alt="postulante" width="115" height="155">
                     @endif
                 </center>
             </td>

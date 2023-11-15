@@ -24,8 +24,8 @@ class  UtilFunction
       $requestApplicant['modalidad_id'],
     ]);
     $qrCode = QrCode::encoding('UTF-8')->generate($dataQr);
-    $svgFile = public_path('temp/' . $nameQr . '.svg');
-    file_put_contents($svgFile, $qrCode);
+    $filename = $nameQr . '.svg';
+    Storage::disk(Constants::DISK_STORAGE)->put(Constants::RUTA_FOTO_QR . $filename, $qrCode);
   }
 
   public static function getDateToday()
@@ -37,10 +37,10 @@ class  UtilFunction
 
   public static function getImagePathByDni($dni)
   {
-    $folderPath = public_path(Constants::RUTA_FOTO_CARNET_VALIDA);
-    $dniPath = $folderPath . '/' . $dni . '.jpg';
+    $urlPhotoValid = Constants::RUTA_FOTO_CARNET_VALIDA . $dni . '.jpg';
+    $dniPath = Storage::url($urlPhotoValid);
     $applicantStatus = Postulante::where('num_documento', $dni)->value('estado_postulante_id');
-    if (in_array($applicantStatus, Constants::ESTADOS_VALIDOS_POSTULANTE) && is_file($dniPath)) {
+    if (in_array($applicantStatus, Constants::ESTADOS_VALIDOS_POSTULANTE) && Storage::disk(Constants::DISK_STORAGE)->exists($urlPhotoValid)) {
       return $dniPath;
     }
     return 0;
