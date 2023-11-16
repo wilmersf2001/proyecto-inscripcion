@@ -56,7 +56,7 @@ class ApplicantController extends Controller
       'anno_egreso' => $request->anno_egreso,
       'fecha_inscripcion' => now(),
       'codigo' => $request->tipo_documento == 1 ? $request->num_documento : substr($request->num_documento, 1),
-      'estado_postulante_id' => '1',
+      'estado_postulante_id' => Constants::ESTADO_INSCRITO,
     ]);
 
     $this->uploadImage($request->file('profilePhoto'), $request->num_documento, Constants::RUTA_FOTO_CARNET_INSCRIPTO);

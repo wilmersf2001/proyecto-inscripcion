@@ -79,7 +79,7 @@
                                             <img src="{{ asset($photo['url']) }}" alt=""
                                                 class="h-full w-full object-cover object-center lg:h-full lg:w-full">
                                         @else
-                                            <img src="{{ asset('recursos/dni-anverso.jpg') }}" alt=""
+                                            <img src="{{ asset($photo['url']) }}" alt=""
                                                 class="object-cover object-center">
                                         @endif
                                     </div>

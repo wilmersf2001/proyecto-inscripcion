@@ -30,8 +30,6 @@ Route::get('/ficha-inscripcion', FichaInscripcionController::class)->name('ficha
 Route::post('/ficha-inscripcion', [FichaInscripcionController::class, "validatePdf"])->name('ficha.validatePdf');
 Route::post('/rectificar-foto', [FichaInscripcionController::class, "storeRectifiedPhotos"])->name('ficha.storeRectifiedPhotos');
 
-Route::get('/prueba', [FichaInscripcionController::class, "disenoPDF"])->name('ficha.startPdfQuery');
-
 Route::any('/{any}', function () {
 	return view('page-not-found');
 })->where('any', '.*');

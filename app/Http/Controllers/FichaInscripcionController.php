@@ -34,13 +34,19 @@ class FichaInscripcionController extends Controller
             ->where('num_voucher', $request->num_voucher)
             ->first();
 
-        if (!$applicant) {
+        if (!$applicant || $applicant->estado_postulante_id == Constants::ESTADO_INSCRIPCION_ANULADA) {
             return redirect()->route('ficha.startPdfQuery')->with('error', 'Postulante no encontrado o datos ingresados incorrectamente');
         }
 
-        if ($applicant->estado_postulante_id == 7) {
+        if ($applicant->estado_postulante_id == Constants::ESTADO_ENVIO_OBSERVADO) {
             return redirect()->route('ficha.startPdfQuery')->with('error', 'Tus fotos ya han sido rectificadas, por favor vuelva a intentarlo más tarde');
         }
+
+        if ($applicant->estado_postulante_id == Constants::ESTADO_CARNET_ENTREGADO) {
+            return redirect()->route('ficha.startPdfQuery')->with('success', 'Tu ficha de incripcion ya ha sido generada y tus archivos han sido validados');
+        }
+
+        if (!UtilFunction::photoCarnetExists($request->num_documento)) return redirect()->route('ficha.startPdfQuery');
 
         if ($applicant->estadoObservadoFichaInscripcion()) {
             $observedPhotos = UtilFunction::getPhotosObservedByDni($applicant->num_documento);

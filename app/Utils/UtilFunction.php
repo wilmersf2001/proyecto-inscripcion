@@ -46,6 +46,12 @@ class  UtilFunction
     return 0;
   }
 
+  public static function photoCarnetExists($dni)
+  {
+    $urlPhotoValid = Constants::RUTA_FOTO_CARNET_VALIDA . $dni . '.jpg';
+    return Storage::disk(Constants::DISK_STORAGE)->exists($urlPhotoValid) ? true : false;
+  }
+
   public static function dataQr($idApplicant)
   {
     $process = Proceso::getProcessNumber();
