@@ -35,4 +35,7 @@ class Constants
 
   // DISCO DE STORAGE
   public const DISK_STORAGE = 'public';
+
+  //EXTRANGERO
+  public const DISTRITO_OTROS_ID = 1868;
 }

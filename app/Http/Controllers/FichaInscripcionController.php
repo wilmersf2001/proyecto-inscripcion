@@ -58,6 +58,9 @@ class FichaInscripcionController extends Controller
             $today = UtilFunction::getDateToday();
             $pathImage = UtilFunction::getImagePathByDni($request->num_documento);
             $process = Proceso::getProcessNumber();
+            $lugarNacimiento = UtilFunction::getLocationByPostulante($applicant);
+            $lugarResidencia = UtilFunction::getLocationByDistrict($applicant->distritoRes);
+            $lugarColegio = UtilFunction::getLocationBySchoolUbigeo($applicant->colegio->ubigeo);
 
             $data = [
                 'postulante' => $applicant,
@@ -66,11 +69,14 @@ class FichaInscripcionController extends Controller
                 'modalidad' => $applicant->modalidad->descripcion,
                 'sede' => $applicant->sede->nombre,
                 'colegio' => $applicant->colegio->nombre,
-                'distritoNacimiento' => $applicant->distritoNac->nombre,
+                'lugarNacimiento' => $lugarNacimiento,
+                'lugarResidencia' => $lugarResidencia,
+                'lugarColegio' => $lugarColegio,
                 'process' => $process,
                 'today' => $today,
                 'pathImage' => $pathImage,
-                'tipoColegio' => $applicant->colegio->tipo == 1 ? 'Nacional' : 'Privado'
+                'tipoColegio' => $applicant->colegio->tipo == 1 ? 'Nacional' : 'Privado',
+                'laberBirth' => $applicant->tipo_documento == 1 ? 'Lugar de nacimiento' : 'País de procedencia',
             ];
         } else {
             return redirect()->route('ficha.startPdfQuery')->with('error', 'Ficha de inscripción se encuentra en proceso de validación, por favor vuelva a intentarlo más tarde');

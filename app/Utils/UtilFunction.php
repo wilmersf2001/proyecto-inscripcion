@@ -5,6 +5,7 @@ namespace App\Utils;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Postulante;
+use App\Models\Distrito;
 use App\Models\Proceso;
 use Carbon\Carbon;
 
@@ -108,5 +109,31 @@ class  UtilFunction
       }
     }
     return $photosObserved;
+  }
+
+  public static function getLocationByDistrict(Distrito $distric)
+  {
+    $distrito = $distric->nombre;
+    $provincia = $distric->provincia->nombre;
+    $departamento = $distric->provincia->departamento->nombre;
+    return $distrito . ' | ' . $provincia . ' | ' . $departamento . ' | PERÚ';
+  }
+  public static function getLocationBySchoolUbigeo(string $ubigeo)
+  {
+    if ($ubigeo == '000000') {
+      return 'OTROS PAISES';
+    }
+    $distrito = Distrito::where('ubigeo', $ubigeo)->first();
+    $provincia = $distrito->provincia->nombre;
+    $departamento = $distrito->provincia->departamento->nombre;
+    return $distrito->nombre . ' | ' . $provincia . ' | ' . $departamento . ' | PERÚ';
+  }
+
+  public static function getLocationByPostulante(Postulante $applicant)
+  {
+    if ($applicant->tipo_documento == 1) {
+      return self::getLocationByDistrict($applicant->distritoNac);
+    }
+    return $applicant->pais->nombre;
   }
 }

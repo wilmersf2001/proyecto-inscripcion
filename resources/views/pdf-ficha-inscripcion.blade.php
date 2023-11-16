@@ -18,28 +18,62 @@
             border-collapse: collapse;
         }
 
-        .container .logo_unprg {
+        td {
+            height: 5px;
+            padding: 0 15px;
+            vertical-align: top;
+        }
+
+        .azul {
+            background-color: #2974B5;
+        }
+
+        .celeste {
+            background-color: #7CD3E7;
+        }
+
+        .amarillo {
+            background-color: #FEC400;
+        }
+
+        .plomo {
+            background-color: #747474;
+        }
+
+        li {
+            font-size: 12px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+
+        .container .foto_perfil {
             width: 32%;
             height: 160px;
-            padding-top: 20px;
-            background-color: #003D5E;
-            /* background-color: #2974B5; */
+            padding: 10px 0;
+            background-color: #D8D9DA;
         }
 
         .container .encabezado {
             padding-top: 15px;
         }
 
+        .container .encabezado h3 {
+            margin-bottom: 10px;
+            font-size: 19px;
+        }
+
+        .container .logo_unprg {
+            width: 8%;
+            padding-top: 20px;
+        }
+
         .left-column {
             background-color: #f4f4f4;
         }
 
-        .container td {
-            padding: 0 15px;
-            vertical-align: top;
-        }
-
-        .container .left-column .info-contacto {
+        .left-column .info-contacto {
             margin-top: 40px;
         }
 
@@ -97,6 +131,7 @@
         .huella p {
             border-top: 1px solid black;
             position: absolute;
+            font-size: 10px;
             bottom: 0;
             left: 0;
             margin: 0;
@@ -104,33 +139,14 @@
             padding: 5px 8px;
         }
 
-        td {
-            height: 5px;
-        }
-
-        .azul {
-            background-color: #2974B5;
-        }
-
-        .celeste {
-            background-color: #7CD3E7;
-        }
-
-        .amarillo {
-            background-color: #FEC400;
-        }
-
-        .plomo {
-            background-color: #747474;
-        }
-
-        .container .footer {
+        .footer {
             padding-top: 40px;
             height: 50px;
+            vertical-align: bottom;
         }
 
-        .container .footer p {
-            font-size: 14px;
+        .footer p {
+            font-size: 12px;
         }
     </style>
 </head>
@@ -144,16 +160,19 @@
             <td class="plomo"></td>
         </tr>
         <tr>
-            <td class="logo_unprg" colspan="1" align="center">
-                <img src={{ public_path($pathImage) }} alt="logo_unprg" width="130" height="140">
+            <td class="foto_perfil" colspan="1" align="center">
+                <img src={{ public_path($pathImage) }} alt="logo_unprg" width="120" height="156">
             </td>
-            <td class="encabezado" colspan="3" align="center">
-                <h1>Universidad Nacional Pedro Ruiz Gallo</h1>
+            <td class="encabezado" colspan="2" align="center">
+                <h3>Universidad Nacional Pedro Ruiz Gallo</h3>
                 <div style="line-height: 1.5;">
-                    <p>CONSTANCIA DE INSCRIPCIÓN DEL
+                    <p>FICHA DE INSCRIPCIÓN DEL
                         POSTULANTE</p>
                     <p>EXAMEN DE ADMISIÓN {{ $process }}</p>
                 </div>
+            </td>
+            <td class="logo_unprg" colspan="1" align="center">
+                <img src={{ public_path('images/logo_color.png') }} alt="logo_unprg" width="70" height="auto">
             </td>
         </tr>
         <tr>
@@ -192,15 +211,15 @@
                         <li><b>DNI:</b> {{ $postulante->num_documento }}</li>
                         <li><b>N° Voucher:</b> {{ $postulante->num_voucher }}</li>
                         <li><b>Fecha de nacimiento:</b> {{ $postulante->fecha_nacimiento }}</li>
-                        <li><b>Lugar de nacimiento:</b> {{ $distritoNacimiento }}</li>
-                        <li><b>Lugar de residencia:</b> Lambayeque | Lambayeque | Chiclayo | Perú</li>
-                        <li><b>Telefono de apoderado:</b> {{ $postulante->telefono_ap }}</li>
+                        <li><b>{{ $laberBirth }}:</b> {{ $lugarNacimiento }}</li>
+                        <li><b>Lugar de residencia:</b> {{ $lugarResidencia }}</li>
+                        <li><b>Teléfono de apoderado:</b> {{ $postulante->telefono_ap }}</li>
                     </ul>
                 </div>
                 <div class="info-contacto">
                     <h5 class="items">INFORMACIÓN ACADÉMICA</h5>
                     <ul>
-                        <li><b>Ubicación de estudio:</b> 123-456-789</li>
+                        <li><b>Lugar de estudio:</b> {{ $lugarColegio }}</li>
                         <li><b>Colegio:</b> {{ $colegio }}</li>
                         <li><b>Tipo de colegio:</b> {{ $tipoColegio }}</li>
                         <li><b>Año de egreso:</b> {{ $postulante->anno_egreso }}</li>
@@ -239,12 +258,12 @@
             </td>
         </tr>
         <tr>
-            <td colspan="3" class="footer" style="padding-left: 50px">
+            <td colspan="2" class="footer" style="padding-left: 30px">
                 <p>Lambayeque, {{ $today }}.</p>
             </td>
-            <td colspan="1" class="footer" align="center" style="padding-right: 60px">
+            <td colspan="2" class="footer" align="center" style="padding-right: 60px">
                 <hr>
-                <P>Firma de Postulante</P>
+                <p>Firma de Postulante</p>
             </td>
         </tr>
     </table>

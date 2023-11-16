@@ -4,7 +4,6 @@ use App\Http\Controllers\ApplicantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PayController;
 use App\Http\Controllers\FichaInscripcionController;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +16,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 |
 */
 
-Route::get('/welcome', function () {
-	return view('welcome');
-});
-Route::get('/diseno-pdf', function () {
-	return PDF::loadView('welcome')->stream();
-});
 // Registro de postulante
 Route::get('/', PayController::class)->name('start');
 Route::post('/registro-postulante', [PayController::class, "validatePayment"])->name('pay.validatePayment');

@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use App\Models\Postulante;
 use App\Utils\UtilFunction;
 use Livewire\Component;
-use Carbon\Carbon;
 
 class SummaryTemplate extends Component
 {
