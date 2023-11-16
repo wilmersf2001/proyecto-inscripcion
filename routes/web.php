@@ -4,7 +4,7 @@ use App\Http\Controllers\ApplicantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PayController;
 use App\Http\Controllers\FichaInscripcionController;
-use App\Http\Controllers\PhotoController;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +19,9 @@ use App\Http\Controllers\PhotoController;
 
 Route::get('/welcome', function () {
 	return view('welcome');
+});
+Route::get('/diseno-pdf', function () {
+	return PDF::loadView('welcome')->stream();
 });
 // Registro de postulante
 Route::get('/', PayController::class)->name('start');

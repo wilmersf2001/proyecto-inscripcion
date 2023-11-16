@@ -62,7 +62,7 @@ class FichaInscripcionController extends Controller
             $data = [
                 'postulante' => $applicant,
                 'resultadoQr' => UtilFunction::dataQr($applicant->id),
-                'escuela' => $applicant->programaAcademico->nombre,
+                'programaAcademico' => $applicant->programaAcademico->nombre,
                 'modalidad' => $applicant->modalidad->descripcion,
                 'sede' => $applicant->sede->nombre,
                 'colegio' => $applicant->colegio->nombre,

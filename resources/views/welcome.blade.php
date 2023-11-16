@@ -8,142 +8,89 @@
     <title>Postulante</title>
     <style>
         * {
+            font-family: Arial, sans-serif;
+            margin: 0;
             padding: 0;
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
         }
 
-        .table-container {
+        .container {
             width: 100%;
             border-collapse: collapse;
-            /* background: #003D5E; */
         }
 
-        .logo-unprg {
-            background: #003D5E;
-            padding: 8px 5px;
+        .container .logo_unprg {
+            width: 32%;
+            height: 160px;
+            padding-top: 20px;
+            background-color: #003D5E;
+            /* background-color: #2974B5; */
         }
 
-        .table-item1 {
-            width: 50%;
-            border: 1px solid black;
+        .container .encabezado {
+            padding-top: 15px;
         }
 
-        .table-item2 {
-            width: 40%;
-            border: 1px solid black;
+        .left-column {
+            background-color: #f4f4f4;
         }
 
-        .table-item3 {
-            width: 10%;
-            border: 1px solid black;
+        .container td {
+            padding: 0 15px;
+            vertical-align: top;
         }
 
-        .titulo {
-            font-size: 30px;
-            line-height: 1.5;
-        }
-
-        .subtitulo {
-            font-size: 14px;
-            line-height: 1.5;
-            color: #7D7C7C;
-        }
-
-        /* .table-container {
-            width: 100%;
-            border-collapse: collapse;
-            box-sizing: border-box;
-        }
-
-        .table-item1 {
-            width: 20%;
-            padding: 20px;
-        }
-
-        .table-item2 {
-            width: 60%;
-            padding: 20px;
-        }
-
-        .table-item3 {
-            width: 20%;
-            border-left: 1px solid black;
-        }
-
-        h4 {
-            text-align: center;
-        }
-
-        .subtitulo {
-            text-align: center;
-            line-height: 1.5;
-        }
-
-        .table-header {
-            background-color: #9e9e9e;
-            color: black;
-            font-size: 14px;
-            text-align: center;
-            font-weight: bold;
-            padding: 5px;
-            border: 1px solid black;
-        }
-
-        .column-p {
-            display: inline-block;
-            width: 43%;
-            height: 5px;
-        }
-
-        .table-header-juramento {
-            background-color: #9e9e9e;
-            color: black;
-            font-size: 15.2px;
-            text-align: center;
-            font-weight: bold;
-            padding: 5px;
-            border: 1px solid black;
-        }
-
-        .table-header-info {
-            padding: 0 10px;
-            margin: 0;
-            font-size: 13px;
-        }
-
-        .table-header-info-juramento {
-            font-size: 14px;
-            border-right: 1px solid black;
-        }
-
-        .codigo-qr {
-            width: 30%;
-            height: 10%;
-            padding: 20px;
-
-        }
-
-        ul {
-            padding: 0 20px;
-
-        }
-
-        hr {
+        .container .left-column .info-contacto {
             margin-top: 40px;
-            width: 220px
         }
 
-        .codigo-qr {
-            border: 1px solid black;
+        .left-column .info-contacto ul {
+            list-style: none;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 14px;
+            background-color: #fff;
+            border-radius: 10px;
+        }
+
+        .left-column .info-contacto ul li {
+            margin: 10px 0;
+        }
+
+        .right-column .info-contacto ul {
+            list-style: none;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .right-column .info-contacto ul li {
+            margin-bottom: 12px;
+        }
+
+        .items {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            text-align: center;
+            color: #003D5E;
+            border-radius: 5px;
+        }
+
+        .declaracion {
+            border-radius: 10px;
+        }
+
+        .declaracion li {
+            padding: 5px 10px;
+            background-color: #ECF8F9;
+            border-radius: 10px;
         }
 
         .huella {
             position: relative;
-            width: 100px;
-            height: 120px;
+            width: 105px;
+            height: 130px;
             font-size: 10px;
-            margin: 15px auto;
+            margin: 25px auto;
             border: 1px solid black;
         }
 
@@ -155,146 +102,150 @@
             margin: 0;
             padding: 0;
             padding: 5px 8px;
-        } */
+        }
+
+        td {
+            height: 5px;
+        }
+
+        .azul {
+            background-color: #2974B5;
+        }
+
+        .celeste {
+            background-color: #7CD3E7;
+        }
+
+        .amarillo {
+            background-color: #FEC400;
+        }
+
+        .plomo {
+            background-color: #747474;
+        }
+
+        .container .footer {
+            padding-top: 40px;
+            height: 50px;
+        }
+
+        .container .footer p {
+            font-size: 14px;
+        }
     </style>
 </head>
 
 <body>
-    {{--  <table class="table-container">
+    <table class="container">
         <tr>
-            <td class="table-item1">
-                <img src={{ public_path('images/logo_ficha.png') }} alt="logo_unprg" width="95" height="120">
+            <td class="azul"></td>
+            <td class="celeste"></td>
+            <td class="amarillo"></td>
+            <td class="plomo"></td>
+        </tr>
+        <tr>
+            <td class="logo_unprg" colspan="1" align="center">
+                <img src={{ public_path('images/fotoprueba.jpg') }} alt="logo_unprg" width="130" height="140">
             </td>
-            <td class="table-item2">
-                <h4>UNIVERSIDAD NACIONAL PEDRO RUIZ GALLO DIRECCIÓN DE ADMISIÓN</h4>
-                <div class="subtitulo">EXAMEN DE ADMISIÓN <br> CONSTANCIA DE INSCRIPCIÓN DEL
-                    POSTULANTE
+            <td class="encabezado" colspan="3" align="center">
+                <h1>Universidad Nacional Pedro Ruiz Gallo</h1>
+                <div style="line-height: 1.5;">
+                    <p>CONSTANCIA DE INSCRIPCIÓN DEL
+                        POSTULANTE</p>
+                    <p>EXAMEN DE ADMISIÓN 2024-I</p>
                 </div>
             </td>
-            <td class="table-item3">
-                <center>
-                    <img src={{ public_path('images/609648650.jpg') }} alt="postulante" width="115" height="155">
-                </center>
-            </td>
         </tr>
         <tr>
-            <td colspan="3" class="table-header">DATOS POSTULANTE</td>
-        </tr>
-        <tr>
-            <td colspan="3" class="table-header-info">
-                <p class="column-p"><b>DNI:</b> </p>
-                <p class="column-p"><b>N° Voucher:</b> </p>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" class="table-header-info">
-                <p><b>Apellidos y Nombres:</b></p>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" class="table-header-info">
-                <p><b>Dirección:</b> </p>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" class="table-header-info">
-                <p class="column-p"><b>Teléfono postulante:</b> </p>
-                <p class="column-p"><b>Teléfono apoderado: </b>9836352</p>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" class="table-header-info">
-                <p><b>Fecha y lugar de nacimiento:</b> 12-14-1998, Lambayeque</p>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" class="table-header-info">
-                <p><b>Correo:</b> </p>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" class="table-header-info">
-                <p><b>Colegio:</b> </p>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" class="table-header-info">
-                <p class="column-p"><b>Tipo colegio:</b> </p>
-                <p class="column-p"><b>Año egreso:</b> </p>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" class="table-header">DATOS POSTULACIÓN</td>
-        </tr>
-        <tr>
-            <td colspan="3" class="table-header-info">
-                <p><b>Programa académico:</b> </p>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" class="table-header-info">
-                <p class="column-p"><b>Modalidad:</b> </p>
-                <p class="column-p"><b>Sede:</b> </p>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" class="table-header-juramento">DECLARO BAJO JURAMENTO QUE:</td>
-        </tr>
-        <tr>
-            <td colspan="2" class="table-header-info-juramento">
-                <ul>
-                    <li>Conozco, acepto y me someto a las bases, condiciones y procedimientos establecidos en el
-                        Reglamento del
-                        Concurso de Admisión , de la Universidad Nacional Pedro Ruiz Gallo.</li>
-                    <li>
-                        La información y fotografia registrada es AUTÉNTICA y que las imágenes de mi DNI enviados para
-                        mi
-                        inscripción como postulante al presente Concurso de Admisión, son copia fiel al original; en
-                        caso de faltar
-                        a la verdad, me someto a las sanciones correspondientes (Art.23 del Reglamento del presente
-                        Concurso de
-                        Admisión).
-                    </li>
-                    <li>
-                        No tengo impedimento para participar en el Concurso de Admisión .
-                    </li>
-                    <li>
-                        De alcanzar una vacante, me comprometo a regularizar mi expediente en la fecha establecida en el
-                        cronograma
-                        del presente Concurso de Admisión en caso contrario me someto a las sanciones correspondientes
-                        (Art.68 del
-                        Reglamento del presente Concurso de Admisión).
-                    </li>
-                    <li>
-                        He culminado el 5to año de Educación Secundaria antes del Concurso de Admisión
-                        .
-                    </li>
-                </ul>
-            </td>
-            <td colspan="1">
-                <center style="margin-top: 20px">
-                    <img src="data:image/png;charset=utf-8;base64,{{ base64_encode(QrCode::encoding('UTF-8')->generate('hola')) }}"
+            <td class="left-column">
+                <div class="info-contacto">
+                    <h5 class="items">INFORMACIÓN DE CONTACTO</h5>
+                    <ul>
+                        <li><b>Teléfono:</b> 123-456-789</li>
+                        <li><b>Correo:</b> ejemplo@gmail.com</li>
+                        <li><b>Dirección:</b> Ciudad, País</li>
+                    </ul>
+                </div>
+                <div class="info-contacto">
+                    <h5 class="items">DATOS DE POSTULACIÓN</h5>
+                    <ul>
+                        <li><b>Sede:</b> 123-456-789</li>
+                        <li><b>Modalidad:</b> ejemplo@gmail.com</li>
+                        <li><b>Programa Académico:</b> Ciudad, País</li>
+                    </ul>
+                </div>
+                <div class="info-contacto" align="center">
+                    <h5 class="items" style="margin-bottom: 10px">IDENTIFICACIÓN</h5>
+                    <img src="data:image/png;charset=utf-8;base64,{{ base64_encode(QrCode::encoding('UTF-8')->generate('asdasdasdasdasdasdasda')) }}"
                         alt="Código QR">
                     <div class="huella">
                         <p>INDICE DERECHO</p>
                     </div>
-                </center>
+                </div>
+            </td>
+            <td class="right-column" colspan="3">
+                <div class="info-contacto">
+                    <h5 class="items">DATOS PERSONALES</h5>
+                    <ul>
+                        <li><b>Nombres y Apellidos:</b> Wilmer Yoel Suclupe Farroñan</li>
+                        <li><b>DNI:</b> 75085359</li>
+                        <li><b>Fecha de nacimiento:</b> 19-01-2001</li>
+                        <li><b>Lugar de nacimiento:</b> Lambayeque | Lambayeque | Chiclayo | Perú</li>
+                        <li><b>Lugar de residencia:</b> Lambayeque | Lambayeque | Chiclayo | Perú</li>
+                        <li><b>Telefono de apoderado:</b> 964546726</li>
+                    </ul>
+                </div>
+                <div class="info-contacto">
+                    <h5 class="items">INFORMACIÓN ACADÉMICA</h5>
+                    <ul>
+                        <li><b>Ubicación de estudio:</b> 123-456-789</li>
+                        <li><b>Colegio:</b> ejemplo@gmail.com</li>
+                        <li><b>Tipo de colegio:</b> Ciudad, País</li>
+                        <li><b>Año de egreso:</b> 2020</li>
+                    </ul>
+                </div>
+                <div class="info-contacto">
+                    <h5 class="items">DECLARACIÓN JURADA</h5>
+                    <ul class="declaracion">
+                        <li>Conozco, acepto y me someto a las bases, condiciones y procedimientos establecidos en el
+                            Reglamento del
+                            Concurso de Admisión , de la Universidad Nacional Pedro Ruiz Gallo.</li>
+                        <li>La información y fotografia registrada es AUTÉNTICA y que las imágenes de mi DNI enviados
+                            para
+                            mi
+                            inscripción como postulante al presente Concurso de Admisión, son copia fiel al original; en
+                            caso de faltar
+                            a la verdad, me someto a las sanciones correspondientes (Art.23 del Reglamento del presente
+                            Concurso de
+                            Admisión).</li>
+                        <li>No tengo impedimento para participar en el Concurso de Admisión.</li>
+                        <li>
+                            De alcanzar una vacante, me comprometo a regularizar mi expediente en la fecha establecida
+                            en el
+                            cronograma
+                            del presente Concurso de Admisión en caso contrario me someto a las sanciones
+                            correspondientes
+                            (Art.68 del
+                            Reglamento del presente Concurso de Admisión).
+                        </li>
+                        <li>
+                            He culminado el 5to año de Educación Secundaria antes del Concurso de Admisión
+                            .
+                        </li>
+                    </ul>
+                </div>
             </td>
         </tr>
         <tr>
-            <td colspan="3" class="table-header-info">
-                <center>
-                    <hr>
-                    <P>FIRMA DE POSTULANTE</P>
-                </center>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" class="table-header-info">
+            <td colspan="3" class="footer" style="padding-left: 50px">
                 <p>Lambayeque, hoy.</p>
             </td>
+            <td colspan="1" class="footer" align="center" style="padding-right: 60px">
+                <hr>
+                <P>Firma de Postulante</P>
+            </td>
         </tr>
-    </table> --}}
+    </table>
 </body>
 
 </html>
