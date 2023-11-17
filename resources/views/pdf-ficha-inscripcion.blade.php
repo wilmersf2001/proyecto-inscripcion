@@ -17,7 +17,7 @@
             width: 100%;
             border-collapse: collapse;
             border: 1px solid #ccc;
-            padding: 8px 12px;
+            padding: 10px 14px;
         }
 
         td {
@@ -82,7 +82,7 @@
         .left-column .info-contacto ul {
             list-style: none;
             padding: 10px;
-            margin-top: 10px;
+            margin-top: 5px;
             font-size: 14px;
         }
 
