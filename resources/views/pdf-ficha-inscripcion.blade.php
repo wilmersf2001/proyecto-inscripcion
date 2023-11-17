@@ -16,6 +16,8 @@
         .container {
             width: 100%;
             border-collapse: collapse;
+            border: 1px solid #ccc;
+            padding: 8px 12px;
         }
 
         td {
@@ -52,7 +54,11 @@
             width: 32%;
             height: 160px;
             padding: 10px 0;
-            background-color: #D8D9DA;
+            background-color: #f4f4f4;
+        }
+
+        .container .foto_perfil img {
+            border: 2px solid #ccc;
         }
 
         .container .encabezado {
@@ -69,15 +75,30 @@
             padding-top: 20px;
         }
 
-        .left-column {
-            background-color: #f4f4f4;
-        }
-
         .left-column .info-contacto {
-            margin-top: 40px;
+            margin-top: 10px;
         }
 
         .left-column .info-contacto ul {
+            list-style: none;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .left-column .info-contacto ul li {
+            margin-bottom: 12px;
+        }
+
+        .right-column {
+            background-color: #f4f4f4;
+        }
+
+        .right-column .info-contacto {
+            margin-top: 10px;
+        }
+
+        .right-column .info-contacto ul {
             list-style: none;
             padding: 10px;
             margin-top: 10px;
@@ -86,19 +107,8 @@
             border-radius: 10px;
         }
 
-        .left-column .info-contacto ul li {
-            margin: 10px 0;
-        }
-
-        .right-column .info-contacto ul {
-            list-style: none;
-            padding: 10px;
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
         .right-column .info-contacto ul li {
-            margin-bottom: 12px;
+            margin: 10px 0;
         }
 
         .items {
@@ -143,6 +153,7 @@
             padding-top: 40px;
             height: 50px;
             vertical-align: bottom;
+            padding-bottom: 10px;
         }
 
         .footer p {
@@ -160,49 +171,23 @@
             <td class="plomo"></td>
         </tr>
         <tr>
-            <td class="foto_perfil" colspan="1" align="center">
-                <img src={{ public_path($pathImage) }} alt="logo_unprg" width="120" height="156">
+            <td class="logo_unprg" colspan="1" align="center">
+                <img src={{ public_path('images/logo_color.png') }} alt="logo_unprg" width="80" height="auto">
             </td>
             <td class="encabezado" colspan="2" align="center">
-                <h3>Universidad Nacional Pedro Ruiz Gallo</h3>
-                <div style="line-height: 1.5;">
+                <h2>Universidad Nacional Pedro Ruiz Gallo</h2>
+                <div style="line-height: 1.5; margin-top: 12px;">
                     <p>FICHA DE INSCRIPCIÓN DEL
                         POSTULANTE</p>
                     <p>EXAMEN DE ADMISIÓN {{ $process }}</p>
                 </div>
             </td>
-            <td class="logo_unprg" colspan="1" align="center">
-                <img src={{ public_path('images/logo_color.png') }} alt="logo_unprg" width="70" height="auto">
+            <td class="foto_perfil" colspan="1" align="center">
+                <img src={{ public_path($pathImage) }} alt="logo_unprg" width="118" height="154">
             </td>
         </tr>
         <tr>
-            <td class="left-column">
-                <div class="info-contacto">
-                    <h5 class="items">INFORMACIÓN DE CONTACTO</h5>
-                    <ul>
-                        <li><b>Teléfono:</b> {{ $postulante->telefono }}</li>
-                        <li><b>Correo:</b> {{ $postulante->correo }}</li>
-                        <li><b>Dirección:</b> {{ $postulante->direccion }}</li>
-                    </ul>
-                </div>
-                <div class="info-contacto">
-                    <h5 class="items">DATOS DE POSTULACIÓN</h5>
-                    <ul>
-                        <li><b>Sede:</b> {{ $sede }}</li>
-                        <li><b>Modalidad:</b> {{ $modalidad }}</li>
-                        <li><b>Programa Académico:</b> {{ $programaAcademico }}</li>
-                    </ul>
-                </div>
-                <div class="info-contacto" align="center">
-                    <h5 class="items" style="margin-bottom: 10px">IDENTIFICACIÓN</h5>
-                    <img src="data:image/png;charset=utf-8;base64,{{ base64_encode(QrCode::encoding('UTF-8')->generate($resultadoQr)) }}"
-                        alt="Código QR">
-                    <div class="huella">
-                        <p>INDICE DERECHO</p>
-                    </div>
-                </div>
-            </td>
-            <td class="right-column" colspan="3">
+            <td class="left-column" colspan="3">
                 <div class="info-contacto">
                     <h5 class="items">DATOS PERSONALES</h5>
                     <ul>
@@ -256,12 +241,38 @@
                     </ul>
                 </div>
             </td>
+            <td class="right-column">
+                <div class="info-contacto">
+                    <h5 class="items">INFORMACIÓN DE CONTACTO</h5>
+                    <ul>
+                        <li><b>Teléfono:</b> {{ $postulante->telefono }}</li>
+                        <li><b>Correo:</b> {{ $postulante->correo }}</li>
+                        <li><b>Dirección:</b> {{ $postulante->direccion }}</li>
+                    </ul>
+                </div>
+                <div class="info-contacto">
+                    <h5 class="items">DATOS DE POSTULACIÓN</h5>
+                    <ul>
+                        <li><b>Sede:</b> {{ $sede }}</li>
+                        <li><b>Modalidad:</b> {{ $modalidad }}</li>
+                        <li><b>Programa Académico:</b> {{ $programaAcademico }}</li>
+                    </ul>
+                </div>
+                <div class="info-contacto" align="center">
+                    <h5 class="items" style="margin-bottom: 20px">IDENTIFICACIÓN</h5>
+                    <img src="data:image/png;charset=utf-8;base64,{{ base64_encode(QrCode::encoding('UTF-8')->generate($resultadoQr)) }}"
+                        alt="Código QR">
+                    <div class="huella">
+                        <p>INDICE DERECHO</p>
+                    </div>
+                </div>
+            </td>
         </tr>
         <tr>
-            <td colspan="2" class="footer" style="padding-left: 30px">
+            <td colspan="3" class="footer" style="padding-left: 30px">
                 <p>Lambayeque, {{ $today }}.</p>
             </td>
-            <td colspan="2" class="footer" align="center" style="padding-right: 60px">
+            <td colspan="1" class="footer" align="center" style="padding-right: 60px">
                 <hr>
                 <p>Firma de Postulante</p>
             </td>
