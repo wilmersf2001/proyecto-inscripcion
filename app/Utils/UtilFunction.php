@@ -50,7 +50,14 @@ class  UtilFunction
   public static function photoCarnetExists($dni)
   {
     $urlPhotoValid = Constants::RUTA_FOTO_CARNET_VALIDA . $dni . '.jpg';
-    return Storage::disk(Constants::DISK_STORAGE)->exists($urlPhotoValid) ? true : false;
+    $urlDniAnversoValid = Constants::RUTA_DNI_ANVERSO_VALIDA . 'A-' . $dni . '.jpg';
+    $urlDniReversoValid = Constants::RUTA_DNI_REVERSO_VALIDA . 'R-' . $dni . '.jpg';
+
+    $existsPhoto = Storage::disk(Constants::DISK_STORAGE)->exists($urlPhotoValid);
+    $existsAnverso = Storage::disk(Constants::DISK_STORAGE)->exists($urlDniAnversoValid);
+    $existsReverso = Storage::disk(Constants::DISK_STORAGE)->exists($urlDniReversoValid);
+
+    return ($existsPhoto && $existsAnverso && $existsReverso) ? true : false;
   }
 
   public static function dataQr($idApplicant)

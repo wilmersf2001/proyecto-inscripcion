@@ -116,7 +116,8 @@ class Postulante extends Model
         $postulante->nombres = $data['nombres'];
         $postulante->ap_paterno = $data['apellidoPaterno'];
         $postulante->ap_materno = $data['apellidoMaterno'];
-        $postulante->num_documento = $data['numeroDocumento'];
+        /* $postulante->num_documento = $data['numeroDocumento']; */
+        $postulante->num_documento = $data['dni'];
         return $postulante;
     }
 }
