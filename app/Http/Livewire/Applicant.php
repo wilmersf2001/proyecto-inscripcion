@@ -25,8 +25,6 @@ class Applicant extends Component
 {
   use WithFileUploads;
 
-  protected $locationService;
-  protected $formDataService;
   public Postulante $applicant;
   public Banco $bank;
   public $departaments;
@@ -77,20 +75,18 @@ class Applicant extends Component
   {
     $this->applicant = $responseApiReniec;
     $this->bank = $bank;
-    $this->locationService = $locationService;
-    $this->formDataService = $formDataService;
-    $this->departaments =  $this->locationService->getDepartments();
-    $this->provincesBirth = $this->locationService->getProvinces();
-    $this->districtsBirth = $this->locationService->getDistricts();
-    $this->provincesReside = $this->locationService->getProvinces();
-    $this->districtsReside = $this->locationService->getDistricts();
-    $this->provincesOriginSchool = $this->locationService->getProvinces();
-    $this->districtsOriginSchool = $this->locationService->getDistricts();
-    $this->countries = $this->locationService->getCountries();
-    $this->adressType = $this->formDataService->getAdressType();
-    $this->generos = $this->formDataService->getGeneros();
-    $this->sedes = $this->formDataService->getSedes();
-    $this->modalities = $this->formDataService->getModalities();
+    $this->departaments =  $locationService->getDepartments();
+    $this->provincesBirth = $locationService->getProvinces();
+    $this->districtsBirth = $locationService->getDistricts();
+    $this->provincesReside = $locationService->getProvinces();
+    $this->districtsReside = $locationService->getDistricts();
+    $this->provincesOriginSchool = $locationService->getProvinces();
+    $this->districtsOriginSchool = $locationService->getDistricts();
+    $this->countries = $locationService->getCountries();
+    $this->adressType = $formDataService->getAdressType();
+    $this->generos = $formDataService->getGeneros();
+    $this->sedes = $formDataService->getSedes();
+    $this->modalities = $formDataService->getModalities();
     $this->academicPrograms = DistribucionVacante::getProgramasAcademicosByModalidad($this->applicant->modalidad_id);
     $this->formattedToday = UtilFunction::getDateToday();
     $this->typeSchool = $typeSchool;

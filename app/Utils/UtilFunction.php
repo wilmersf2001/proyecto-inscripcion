@@ -118,6 +118,7 @@ class  UtilFunction
     $departamento = $distric->provincia->departamento->nombre;
     return $distrito . ' | ' . $provincia . ' | ' . $departamento . ' | PERÚ';
   }
+
   public static function getLocationBySchoolUbigeo(string $ubigeo)
   {
     if ($ubigeo == '000000') {
