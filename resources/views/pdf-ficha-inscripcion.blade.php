@@ -22,7 +22,7 @@
 
         td {
             height: 5px;
-            padding: 0 15px;
+            padding: 0 10px;
             vertical-align: top;
         }
 
@@ -75,9 +75,9 @@
             padding-top: 20px;
         }
 
-        .left-column .info-contacto {
+        /* .left-column .info-contacto {
             margin-top: 10px;
-        }
+        } */
 
         .left-column .info-contacto ul {
             list-style: none;
@@ -95,7 +95,7 @@
         }
 
         .right-column .info-contacto {
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
         .right-column .info-contacto ul {
@@ -124,7 +124,7 @@
         }
 
         .declaracion li {
-            padding: 5px 10px;
+            padding: 2px 10px;
             background-color: #ECF8F9;
             border-radius: 10px;
         }
@@ -191,23 +191,25 @@
                 <div class="info-contacto">
                     <h5 class="items">DATOS PERSONALES</h5>
                     <ul>
+                        <li style="display: inline-block; margin-right:160px"><b>DNI:</b>
+                            {{ $postulante->num_documento }}</li>
+                        <li style="display: inline-block;"><b>Fecha de nacimiento:</b>
+                            {{ $postulante->fecha_nacimiento }}</li>
                         <li><b>Nombres y Apellidos:</b> {{ $postulante->nombres }} {{ $postulante->ap_paterno }}
                             {{ $postulante->ap_materno }}</li>
-                        <li><b>DNI:</b> {{ $postulante->num_documento }}</li>
-                        <li><b>N° Voucher:</b> {{ $postulante->num_voucher }}</li>
-                        <li><b>Fecha de nacimiento:</b> {{ $postulante->fecha_nacimiento }}</li>
-                        <li><b>{{ $laberBirth }}:</b> {{ $lugarNacimiento }}</li>
+                        <li><b>{{ $laberBirth }}:</b>{{ $lugarResidencia }} {{-- {{ $lugarNacimiento }} --}}</li>
                         <li><b>Lugar de residencia:</b> {{ $lugarResidencia }}</li>
-                        <li><b>Teléfono de apoderado:</b> {{ $postulante->telefono_ap }}</li>
+                        <li><b>Dirección:</b> {{ $postulante->direccion }}</li>
                     </ul>
                 </div>
                 <div class="info-contacto">
                     <h5 class="items">INFORMACIÓN ACADÉMICA</h5>
                     <ul>
-                        <li><b>Lugar de estudio:</b> {{ $lugarColegio }}</li>
+                        <li><b>Lugar de estudio:</b>{{ $lugarResidencia }} {{-- {{ $lugarColegio }} --}}</li>
                         <li><b>Colegio:</b> {{ $colegio }}</li>
-                        <li><b>Tipo de colegio:</b> {{ $tipoColegio }}</li>
-                        <li><b>Año de egreso:</b> {{ $postulante->anno_egreso }}</li>
+                        <li style="display: inline-block; margin-right:100px"><b>Tipo de colegio:</b>
+                            {{ $tipoColegio }}</li>
+                        <li style="display: inline-block;"><b>Año de egreso:</b> {{ $postulante->anno_egreso }}</li>
                     </ul>
                 </div>
                 <div class="info-contacto">
@@ -246,8 +248,8 @@
                     <h5 class="items">INFORMACIÓN DE CONTACTO</h5>
                     <ul>
                         <li><b>Teléfono:</b> {{ $postulante->telefono }}</li>
+                        <li><b>Teléfono de apoderado:</b> {{ $postulante->telefono_ap }}</li>
                         <li><b>Correo:</b> {{ $postulante->correo }}</li>
-                        <li><b>Dirección:</b> {{ $postulante->direccion }}</li>
                     </ul>
                 </div>
                 <div class="info-contacto">
@@ -256,6 +258,7 @@
                         <li><b>Sede:</b> {{ $sede }}</li>
                         <li><b>Modalidad:</b> {{ $modalidad }}</li>
                         <li><b>Programa Académico:</b> {{ $programaAcademico }}</li>
+                        <li><b>N° Voucher:</b> {{ $postulante->num_voucher }}</li>
                     </ul>
                 </div>
                 <div class="info-contacto" align="center">

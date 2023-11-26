@@ -89,7 +89,7 @@ class FichaInscripcionController extends Controller
     {
         $applicant = Postulante::find($request->applicant_id);
         $applicant->update([
-            'estado_postulante_id' => 7,
+            'estado_postulante_id' => Constants::ESTADO_ENVIO_OBSERVADO,
         ]);
 
         $this->uploadIfFileExists($request->file('photo_perfil'), $applicant->num_documento, Constants::RUTA_FOTO_CARNET_RECTIFICADO);
@@ -97,10 +97,5 @@ class FichaInscripcionController extends Controller
         $this->uploadIfFileExists($request->file('photo_reverso'), 'R-' . $applicant->num_documento, Constants::RUTA_DNI_REVERSO_RECTIFICADO);
 
         return redirect()->route('ficha.startPdfQuery')->with('success', 'Tus fotos han sido rectificadas y enviadas correctamente, por favor vuelva a intentarlo más tarde');
-    }
-
-    public function disenoPDF()
-    {
-        return PDF::loadView('welcome')->stream();
     }
 }

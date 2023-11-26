@@ -4,6 +4,8 @@ use App\Http\Controllers\ApplicantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PayController;
 use App\Http\Controllers\FichaInscripcionController;
+use App\Services\ApiSunatDevService;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,6 +17,16 @@ use App\Http\Controllers\FichaInscripcionController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/welcome', function () {
+	return view('welcome');
+});
+
+Route::post('/consultar-dni', function (Request $request, ApiSunatDevService $apiService) {
+	$dni = $request->input('dni');
+	$applicantData = $apiService->getApplicantDataByDni($dni);
+	return view('welcome', ['applicantData' => $applicantData]);
+});
 
 // Registro de postulante
 Route::get('/', PayController::class)->name('start');
