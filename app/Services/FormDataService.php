@@ -6,6 +6,7 @@ use App\Models\Genero;
 use App\Models\Modalidad;
 use App\Models\Sede;
 use App\Models\TipoDireccion;
+use App\Models\Universidad;
 use Illuminate\Support\Facades\Cache;
 
 class FormDataService
@@ -35,6 +36,13 @@ class FormDataService
   {
     return Cache::remember("modalities", 60, function () {
       return Modalidad::getModalidadesEnabled();
+    });
+  }
+
+  public function getUniversities()
+  {
+    return Cache::remember("universities", 60, function () {
+      return Universidad::all();
     });
   }
 }

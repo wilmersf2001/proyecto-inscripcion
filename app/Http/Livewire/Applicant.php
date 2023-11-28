@@ -20,6 +20,7 @@ use App\Http\Requests\View\Message\ValidateApplicant;
 use App\Models\Banco;
 use App\Models\Colegio;
 use App\Models\Proceso;
+use App\Utils\Constants;
 
 class Applicant extends Component
 {
@@ -46,6 +47,7 @@ class Applicant extends Component
   public $sedes;
   public $modalities;
   public $academicPrograms;
+  public $universities;
   public $searchSchoolName;
   public $disable;
   public $typeSchool;
@@ -94,6 +96,9 @@ class Applicant extends Component
     $this->minimumYear = UtilFunction::getMinimumYearByModalidad($this->applicant->modalidad_id);
     if ($this->bank->tipo_doc_depo == 9) {
       $this->LocationOutsideCountry(26);
+    }
+    if (in_array($this->applicant->modalidad_id, Constants::ESTADO_TITULADO_TRASLADO)) {
+      $this->universities = $formDataService->getUniversities();
     }
     $this->numberProcess = Proceso::getProcessNumber();
     $this->searchSchoolName = $bank->tipo_doc_depo == 9 ? ($typeSchool == 1 ? "OTROS COLEGIOS NACIONALES" : "OTROS COLEGIOS PARTICULARES") : null;

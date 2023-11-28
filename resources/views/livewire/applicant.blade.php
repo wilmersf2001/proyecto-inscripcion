@@ -434,13 +434,30 @@
 
                 <x-input-form span="Número de veces que postula a la UNPRG" name="num_veces_unprg"
                     model="applicant.num_veces_unprg" type="number" />
-
-
             </div>
 
             <div class="grid md:grid-cols-3 md:gap-6">
                 <x-input-form span="Número de veces que postula a otras universidades" name="num_veces_otro"
                     model="applicant.num_veces_otros" type="number" />
+
+                @if ($universities)
+                    <label class="block mb-10">
+                        <span
+                            class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                            Universidad de Procedencia
+                        </span>
+                        <select {{-- wire:model="selectedDistrictOriginSchoolId" --}}
+                            class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                            <option class="hidden">Seleccionar</option>
+                            @foreach ($universities as $university)
+                                <option value={{ $university->id }}>
+                                    {{ $university->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                        {{-- <x-input-error for="selectedDistrictOriginSchoolId" /> --}}
+                    </label>
+                @endif
             </div>
 
             <div class="flex w-full justify-end">
@@ -536,7 +553,7 @@
             @livewire('summary-template', ['applicant' => $applicant, 'tipo_documento' => $bank->tipo_doc_depo])
 
             <div
-                class="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
+                class="mx-auto mt-10 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
                 <div class="p-8 sm:p-10 lg:flex-auto">
                     <h3 class="text-2xl font-bold tracking-tight text-gray-900">DECLARACIÓN JURADA</h3>
                     <time datetime="2020-03-16" class="text-gray-500">{{ $formattedToday }}</time>
