@@ -3,7 +3,8 @@
     <x-step-by-step :currentStep="$currentStep" />
 
     @if ($currentStep < 3)
-        <div class="mx-auto max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none bg-gray-50 mb-16">
+        <div
+            class="mx-auto mb-8 max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none bg-gray-50 md:mb-14">
             <div class="p-4 lg:flex-auto">
                 <ul role="list" class="grid grid-cols-1 gap-4 text-xs leading-3 text-gray-600 sm:grid-cols-4 sm:gap-6">
                     <li class="flex gap-x-3">
@@ -370,7 +371,7 @@
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                             <option class="hidden">Seleccionar</option>
                             @php
-                                $maxYear = $applicant->modalidad_id != 10 ? date('Y') - 1 : date('Y');
+                                $maxYear = $applicant->modalidad_id != \App\Utils\Constants::MODALIDAD_QUINTO_SECUNDARIA ? date('Y') - 1 : date('Y');
                             @endphp
                             @for ($i = $minimumYear; $i <= $maxYear; $i++)
                                 <option value="{{ $i }}">{{ $i }}</option>
@@ -446,7 +447,7 @@
                             class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                             Universidad de Procedencia
                         </span>
-                        <select {{-- wire:model="selectedDistrictOriginSchoolId" --}}
+                        <select wire:model="applicant.universidad_id"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                             <option class="hidden">Seleccionar</option>
                             @foreach ($universities as $university)
@@ -455,7 +456,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        {{-- <x-input-error for="selectedDistrictOriginSchoolId" /> --}}
+                        <x-input-error for="applicant.universidad_id" />
                     </label>
                 @endif
             </div>

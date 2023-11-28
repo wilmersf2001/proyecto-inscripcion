@@ -9,7 +9,6 @@ use App\Models\Distrito;
 use App\Models\Proceso;
 use Carbon\Carbon;
 
-
 class  UtilFunction
 {
   public static function saveQr(array $requestApplicant)
@@ -77,7 +76,7 @@ class  UtilFunction
 
   public static function getMinimumYearByModalidad($idModalidad)
   {
-    $minimumYear = ($idModalidad == 3) ? date('Y') - 2 : (($idModalidad == 10) ? date('Y') : 1940);
+    $minimumYear = ($idModalidad == Constants::MODALIDAD_DOS_PRIMEROS_PUESTOS) ? date('Y') - 2 : (($idModalidad == Constants::MODALIDAD_QUINTO_SECUNDARIA) ? date('Y') : 1940);
     return $minimumYear;
   }
 

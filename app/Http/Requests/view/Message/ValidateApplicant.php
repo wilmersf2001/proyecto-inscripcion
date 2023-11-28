@@ -42,6 +42,8 @@ class ValidateApplicant
     'applicant.num_veces_otros.gte' => 'Este campo debe ser mayor o igual a 0',
     'applicant.colegio_id.required' => 'El campo colegio es obligatorio',
     'applicant.colegio_id.numeric' => 'El campo colegio debe ser un número',
+    'applicant.universidad_id.required' => 'El campo universidad es obligatorio',
+    'applicant.universidad_id.numeric' => 'El campo universidad debe ser un número',
     'applicant.pais_id.required_if' => 'El campo país es obligatorio',
     'applicant.postulante_anoEgreso.required' => 'El campo año de egreso es obligatorio',
     'applicant.postulante_anoEgreso.numeric' => 'El campo año de egreso debe ser un número',

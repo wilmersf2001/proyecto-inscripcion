@@ -149,6 +149,16 @@
                             {{ $applicant->num_veces_otros }}</dd>
                     </div>
                 </div>
+                @if ($university)
+                    <div class="border-t border-gray-200 pt-4">
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt class="text-sm font-medium leading-6 text-gray-900">Universidad de Procedencia
+                            </dt>
+                            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                {{ strtoupper($university) }}</dd>
+                        </div>
+                    </div>
+                @endif
             </dl>
         </li>
 
