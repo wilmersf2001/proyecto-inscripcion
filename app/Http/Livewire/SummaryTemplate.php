@@ -5,26 +5,31 @@ namespace App\Http\Livewire;
 use App\Models\Postulante;
 use App\Utils\UtilFunction;
 use Livewire\Component;
+use App\Utils\Constants;
 
 class SummaryTemplate extends Component
 {
   public Postulante $applicant;
-  public string $nameSexo;
+  public $nameSexo;
   public $formattedDateNac;
-  public string $distritNac;
-  public string $districtAddress;
-  public string $typeAddress;
-  public string $districtSchool;
-  public string $nameSchool;
-  public string $sede;
-  public string $programAcademic;
-  public string $modality;
+  public $distritNac;
+  public $districtAddress;
+  public $typeAddress;
+  public $districtSchool;
+  public $nameSchool;
+  public $sede;
+  public $programAcademic;
+  public $modality;
   public $tipo_documento;
+  public $university;
 
   public function mount(Postulante $applicant, int $tipo_documento)
   {
     $this->applicant = $applicant;
     $this->tipo_documento = $tipo_documento;
+    if (in_array($this->applicant->modalidad_id, Constants::ESTADO_TITULADO_TRASLADO)) {
+      $this->university = $this->applicant->universidad->nombre;
+    }
   }
   public function render()
   {

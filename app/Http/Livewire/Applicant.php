@@ -94,14 +94,14 @@ class Applicant extends Component
     $this->typeSchool = $typeSchool;
     $this->disable = $this->applicant->nombres != null ? 1 : 0;
     $this->minimumYear = UtilFunction::getMinimumYearByModalidad($this->applicant->modalidad_id);
-    if ($this->bank->tipo_doc_depo == 9) {
+    if ($this->bank->tipo_doc_depo == Constants::TIPO_DOCUMENTO_CARNET_EXTRANJERIA) {
+      $this->searchSchoolName = $typeSchool == 1 ? "OTROS COLEGIOS NACIONALES" : "OTROS COLEGIOS PARTICULARES";
       $this->LocationOutsideCountry(26);
     }
     if (in_array($this->applicant->modalidad_id, Constants::ESTADO_TITULADO_TRASLADO)) {
       $this->universities = $formDataService->getUniversities();
     }
     $this->numberProcess = Proceso::getProcessNumber();
-    $this->searchSchoolName = $bank->tipo_doc_depo == 9 ? ($typeSchool == 1 ? "OTROS COLEGIOS NACIONALES" : "OTROS COLEGIOS PARTICULARES") : null;
   }
 
   public function render()
@@ -180,12 +180,16 @@ class Applicant extends Component
   {
     if ($this->currentStep == 1) {
       $rules = FirstStepApplicantRequest::FIRST_STEP_VALIDATE;
-      if ($this->bank->tipo_doc_depo == 9) {
+      if ($this->bank->tipo_doc_depo == Constants::TIPO_DOCUMENTO_CARNET_EXTRANJERIA) {
         $rules['applicant.pais_id'] = 'required|numeric';
       }
       $this->validate($rules);
     } elseif ($this->currentStep == 2) {
-      $this->validate(StepTwoApplicantRequest::SETEP_TWO_VALIDATE);
+      $rules = StepTwoApplicantRequest::SETEP_TWO_VALIDATE;
+      if (in_array($this->applicant->modalidad_id, Constants::ESTADO_TITULADO_TRASLADO)) {
+        $rules['applicant.universidad_id'] = 'required|numeric';
+      }
+      $this->validate($rules);
     } elseif ($this->currentStep == 3) {
       $this->validate(StepThreeApplicantRequest::SETEP_TWO_VALIDATE);
     }

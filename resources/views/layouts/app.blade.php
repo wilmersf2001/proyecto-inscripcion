@@ -61,7 +61,7 @@
                     </div>
                 </section>
             @endif
-            <div class="w-full h-20 sm:w-full sm:h-20"></div>
+            <div class="w-full h-28 md:h-16"></div>
         </main>
         <x-footer />
     </div>
