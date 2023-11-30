@@ -38,6 +38,7 @@ class SummaryTemplate extends Component
     $this->sede = $this->applicant->sede->nombre;
     $this->programAcademic = $this->applicant->programaAcademico->nombre;
     $this->modality = $this->applicant->modalidad->descripcion;
+
     return view('livewire.summary-template');
   }
 }
