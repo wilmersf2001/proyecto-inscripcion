@@ -330,12 +330,7 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: San Martín de los Andes" />
 
-                    @if ((!$selectedDistrictOriginSchoolId || !$typeSchool) && $searchSchoolName != null && !$errors->any())
-                        <p class="absolute peer-invalid:visible text-red-600 text-xs animate-slide-in-left">
-                            seleccione el distrito de procedencia y tipo colegio</p>
-                    @endif
-
-                    @if (session()->has('null'))
+                    @if (session()->has('null') && !$errors->any())
                         <p class="absolute peer-invalid:visible text-red-600 text-xs animate-slide-in-left">
                             {{ session('null') }}</p>
                     @else
@@ -447,7 +442,7 @@
                             class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                             Universidad de Procedencia
                         </span>
-                        <select wire:model="applicant.universidad_id"
+                        <select name="universidad_id" wire:model="applicant.universidad_id"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                             <option class="hidden">Seleccionar</option>
                             @foreach ($universities as $university)

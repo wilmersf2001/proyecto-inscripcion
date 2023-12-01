@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ValidatePaymentRequest;
-use App\Services\ApiSunatDevService;
 use App\Models\Banco;
 use App\Models\Modalidad;
 use App\Models\Postulante;
@@ -21,13 +20,24 @@ class PayController extends Controller
     $this->apiReniec = $apiReniec;
   }
 
+  private function redirectToStartWithAlert($message)
+  {
+    return redirect()->route('start')->with('alert', $message);
+  }
+
+  private function postulantIsAlreadyRegistered($numDocument)
+  {
+    $postulante = Postulante::where('num_documento', $numDocument)->first();
+    return ($postulante && $postulante->estado_postulante_id != Constants::ESTADO_INSCRIPCION_ANULADA);
+  }
+
   public function __invoke()
   {
     $processNumber = Proceso::getProcessNumber();
     return view('validate-payment', compact('processNumber'));
   }
 
-  public function validatePayment(ValidatePaymentRequest $request, ApiSunatDevService $apiService)
+  public function validatePayment(ValidatePaymentRequest $request)
   {
     $numDocument = $request->numDocument;
     $typeSchool = $request->typeSchoolId;
@@ -39,16 +49,15 @@ class PayController extends Controller
       ->first();
 
     if (!$bank) {
-      return redirect()->route('start')->with('alert', 'Pago no encontrado, por favor verifique que los datos esten correctamentes ingresados');
+      return $this->redirectToStartWithAlert('Pago no encontrado, por favor verifique que los datos esten correctamentes ingresados');
     }
 
     if ($bank->estado == 1) {
-      return redirect()->route('start')->with('alert', 'Los datos del voucher ingresados ya fueron registrados');
+      return $this->redirectToStartWithAlert('Los datos del voucher ingresados ya fueron registrados');
     }
 
-    $postulante = Postulante::where('num_documento', $numDocument)->first();
-    if ($postulante && $postulante->estado_postulante_id != Constants::ESTADO_INSCRIPCION_ANULADA) {
-      return redirect()->route('start')->with('alert', 'El postulante ya se encuentra registrado en el proceso de admisión');
+    if ($this->postulantIsAlreadyRegistered($numDocument)) {
+      return $this->redirectToStartWithAlert('El postulante ya se encuentra registrado en el proceso de admisión');
     }
 
     $modality = Modalidad::find($request->modalityId);
@@ -57,8 +66,7 @@ class PayController extends Controller
       return redirect()->route('start')->with('alert', 'El monto del voucher no es suficiente para la modalidad seleccionada');
     }
 
-    /* $applicant = $this->apiReniec->getApplicantDataByDni($numDocument); */
-    $applicant = $apiService->getApplicantDataByDni($numDocument);
+    $applicant = $this->apiReniec->getApplicantDataByDni($numDocument);
     $applicant->modalidad_id = $request->modalityId;
     $applicant->colegio_id = $bank->tipo_doc_depo == 1 ? null : ($typeSchool == 1 ? 15496 : 15497);
 

@@ -1,5 +1,5 @@
 <div class="animate-fade-in">
-    <div class="px-4 sm:px-0 mb-8">
+    <div class="sm:px-0 mb-8">
         <h3 class="text-3xl font-semibold leading-7 text-gray-900">Resumen de la Información del Postulante</h3>
         <p class="mt-1 max-w-2xl text-base leading-6 text-gray-500">Datos proporcionados en el formulario | Verifique sus
             datos antes de enviar</p>

@@ -94,30 +94,57 @@ class Applicant extends Component
     $this->typeSchool = $typeSchool;
     $this->disable = $this->applicant->nombres != null ? 1 : 0;
     $this->minimumYear = UtilFunction::getMinimumYearByModalidad($this->applicant->modalidad_id);
+    $this->universities = UtilFunction::getUniversitiesByModality($this->applicant->modalidad_id, $this->typeSchool, $formDataService);
+    $this->numberProcess = Proceso::getProcessNumber();
     if ($this->bank->tipo_doc_depo == Constants::TIPO_DOCUMENTO_CARNET_EXTRANJERIA) {
       $this->searchSchoolName = $typeSchool == 1 ? "OTROS COLEGIOS NACIONALES" : "OTROS COLEGIOS PARTICULARES";
       $this->LocationOutsideCountry(26);
     }
-    if (in_array($this->applicant->modalidad_id, Constants::ESTADO_TITULADO_TRASLADO)) {
-      $this->universities = $formDataService->getUniversities();
-    }
-    $this->numberProcess = Proceso::getProcessNumber();
   }
 
   public function render()
   {
+    $this->searchSchools();
+
+    return view('livewire.applicant');
+  }
+
+  private function searchSchools()
+  {
     if ($this->selectedDistrictOriginSchoolId) {
       $ubigeoDistrito = Distrito::find($this->selectedDistrictOriginSchoolId)->ubigeo;
-      $this->schools = Colegio::where('nombre', 'like', '%' . $this->searchSchoolName . '%')
-        ->where('tipo', $this->typeSchool)
-        ->where('ubigeo', $ubigeoDistrito)
-        ->get();
 
-      if ($this->schools->isEmpty() && $this->typeSchool && $this->searchSchoolName != '') {
-        session()->flash('null', 'colegio no encontrado.');
+      $query = Colegio::where('nombre', 'like', '%' . $this->searchSchoolName . '%')
+        ->where('ubigeo', $ubigeoDistrito);
+
+      if (!$this->isModalidadTituladoTraslado()) {
+        $query->where('tipo', $this->typeSchool);
       }
+
+      $this->schools = $query->get();
+      $this->setFlashIfSchoolsNotFound();
+    } else {
+      $this->setFlashIfDistrictNotSelected();
     }
-    return view('livewire.applicant');
+  }
+
+  private function isModalidadTituladoTraslado()
+  {
+    return in_array($this->applicant->modalidad_id, Constants::ESTADO_TITULADO_TRASLADO);
+  }
+
+  private function setFlashIfSchoolsNotFound()
+  {
+    if ($this->schools->isEmpty() && $this->searchSchoolName != '') {
+      session()->flash('null', 'Colegio no encontrado.');
+    }
+  }
+
+  private function setFlashIfDistrictNotSelected()
+  {
+    if (!$this->selectedDistrictOriginSchoolId && $this->searchSchoolName != null) {
+      session()->flash('null', 'Seleccione el distrito de procedencia.');
+    }
   }
 
   public function changePlaceBirth(string $action, int $idlocation)

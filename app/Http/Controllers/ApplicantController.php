@@ -47,6 +47,7 @@ class ApplicantController extends Controller
       'telefono_ap' => $request->telefono_ap,
       'correo' => $request->correo,
       'colegio_id' => $request->colegio_id,
+      'universidad_id' => $request->filled('universidad_id') ? $request->universidad_id : null,
       'num_veces_otros' => $request->num_veces_otro,
       'sede_id' => $request->sede_id,
       'pais_id' => $request->tipo_documento == 1 ? 134 : $request->pais_id,
@@ -57,6 +58,7 @@ class ApplicantController extends Controller
       'fecha_inscripcion' => now(),
       'codigo' => $request->tipo_documento == 1 ? $request->num_documento : substr($request->num_documento, 1),
       'estado_postulante_id' => Constants::ESTADO_INSCRITO,
+      'ingreso' => null,
     ]);
 
     $this->uploadImage($request->file('profilePhoto'), $request->num_documento, Constants::RUTA_FOTO_CARNET_INSCRIPTO);

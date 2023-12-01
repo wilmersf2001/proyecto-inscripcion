@@ -7,6 +7,7 @@ use App\Models\Modalidad;
 use App\Models\Sede;
 use App\Models\TipoDireccion;
 use App\Models\Universidad;
+use App\Models\Colegio;
 use Illuminate\Support\Facades\Cache;
 
 class FormDataService
@@ -39,10 +40,17 @@ class FormDataService
     });
   }
 
-  public function getUniversities()
+  public function getPublicUniversities()
   {
-    return Cache::remember("universities", 60, function () {
-      return Universidad::all();
+    return Cache::remember("publicUniversities", 60, function () {
+      return Universidad::where('tipo', 1)->get();
+    });
+  }
+
+  public function getPrivateUniversities()
+  {
+    return Cache::remember("privateUniversities", 60, function () {
+      return Universidad::where('tipo', 2)->get();
     });
   }
 }

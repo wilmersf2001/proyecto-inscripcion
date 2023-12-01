@@ -46,40 +46,39 @@ class FichaInscripcionController extends Controller
             return redirect()->route('ficha.startPdfQuery')->with('success', 'Tu ficha de incripcion ya ha sido generada y tus archivos han sido validados');
         }
 
-        if (!UtilFunction::photoCarnetExists($request->num_documento)) return redirect()->route('ficha.startPdfQuery');
-
         if ($applicant->estadoObservadoFichaInscripcion()) {
             $observedPhotos = UtilFunction::getPhotosObservedByDni($applicant->num_documento);
             if (!$observedPhotos) return redirect()->route('ficha.startPdfQuery');
             return view('rectifier-photo-applicant', compact('applicant', 'observedPhotos'));
-        }
-
-        if ($applicant->estadoValidoFichaInscripcion()) {
-            $today = UtilFunction::getDateToday();
-            $pathImage = UtilFunction::getImagePathByDni($request->num_documento);
-            $process = Proceso::getProcessNumber();
-            $lugarNacimiento = UtilFunction::getLocationByPostulante($applicant);
-            $lugarResidencia = UtilFunction::getLocationByDistrict($applicant->distritoRes);
-            $lugarColegio = UtilFunction::getLocationBySchoolUbigeo($applicant->colegio->ubigeo);
-
-            $data = [
-                'postulante' => $applicant,
-                'resultadoQr' => UtilFunction::dataQr($applicant->id),
-                'programaAcademico' => $applicant->programaAcademico->nombre,
-                'modalidad' => $applicant->modalidad->descripcion,
-                'sede' => $applicant->sede->nombre,
-                'colegio' => $applicant->colegio->nombre,
-                'lugarNacimiento' => $lugarNacimiento,
-                'lugarResidencia' => $lugarResidencia,
-                'lugarColegio' => $lugarColegio,
-                'process' => $process,
-                'today' => $today,
-                'pathImage' => $pathImage,
-                'tipoColegio' => $applicant->colegio->tipo == 1 ? 'Nacional' : 'Privado',
-                'laberBirth' => $applicant->tipo_documento == 1 ? 'Lugar de nacimiento' : 'País de procedencia',
-            ];
         } else {
-            return redirect()->route('ficha.startPdfQuery')->with('error', 'Ficha de inscripción se encuentra en proceso de validación, por favor vuelva a intentarlo más tarde');
+            if ($applicant->estadoValidoFichaInscripcion()) {
+                if (!UtilFunction::photoCarnetExists($request->num_documento)) return redirect()->route('ficha.startPdfQuery');
+                $today = UtilFunction::getDateToday();
+                $pathImage = UtilFunction::getImagePathByDni($request->num_documento);
+                $process = Proceso::getProcessNumber();
+                $lugarNacimiento = UtilFunction::getLocationByPostulante($applicant);
+                $lugarResidencia = UtilFunction::getLocationByDistrict($applicant->distritoRes);
+                $lugarColegio = UtilFunction::getLocationBySchoolUbigeo($applicant->colegio->ubigeo);
+
+                $data = [
+                    'postulante' => $applicant,
+                    'resultadoQr' => UtilFunction::dataQr($applicant->id),
+                    'programaAcademico' => $applicant->programaAcademico->nombre,
+                    'modalidad' => $applicant->modalidad->descripcion,
+                    'sede' => $applicant->sede->nombre,
+                    'colegio' => $applicant->colegio->nombre,
+                    'lugarNacimiento' => $lugarNacimiento,
+                    'lugarResidencia' => $lugarResidencia,
+                    'lugarColegio' => $lugarColegio,
+                    'process' => $process,
+                    'today' => $today,
+                    'pathImage' => $pathImage,
+                    'tipoColegio' => $applicant->colegio->tipo == 1 ? 'Nacional' : 'Privado',
+                    'laberBirth' => $applicant->tipo_documento == 1 ? 'Lugar de nacimiento' : 'País de procedencia',
+                ];
+            } else {
+                return redirect()->route('ficha.startPdfQuery')->with('error', 'Ficha de inscripción se encuentra en proceso de validación, por favor vuelva a intentarlo más tarde');
+            }
         }
 
         return PDF::loadView('pdf-ficha-inscripcion', $data)->stream();

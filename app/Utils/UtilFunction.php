@@ -4,6 +4,7 @@ namespace App\Utils;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
+use App\Services\FormDataService;
 use App\Models\Postulante;
 use App\Models\Distrito;
 use App\Models\Proceso;
@@ -56,7 +57,7 @@ class  UtilFunction
     $existsAnverso = Storage::disk(Constants::DISK_STORAGE)->exists($urlDniAnversoValid);
     $existsReverso = Storage::disk(Constants::DISK_STORAGE)->exists($urlDniReversoValid);
 
-    return ($existsPhoto && $existsAnverso && $existsReverso) ? true : false;
+    return ($existsPhoto && $existsAnverso && $existsReverso);
   }
 
   public static function dataQr($idApplicant)
@@ -142,5 +143,13 @@ class  UtilFunction
       return self::getLocationByDistrict($applicant->distritoNac);
     }
     return $applicant->pais->nombre;
+  }
+
+  public static function getUniversitiesByModality(int $idModality, int $typeSchool, FormDataService $formDataService)
+  {
+    if (in_array($idModality, Constants::ESTADO_TITULADO_TRASLADO)) {
+      return $typeSchool == 1 ? $formDataService->getPublicUniversities() : $formDataService->getPrivateUniversities();
+    }
+    return null;
   }
 }

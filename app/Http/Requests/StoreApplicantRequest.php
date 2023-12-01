@@ -21,7 +21,7 @@ class StoreApplicantRequest extends FormRequest
    */
   public function rules(): array
   {
-    return [
+    $rules = [
       'num_documento' => 'required|numeric|regex:/^\d{8,9}$/',
       'tipo_documento' => 'required|numeric',
       'num_voucher' => 'required|numeric|digits:7',
@@ -48,7 +48,13 @@ class StoreApplicantRequest extends FormRequest
       'reverseDniPhoto' => 'required|mimes:jpeg|max:1024',
       'frontDniPhoto' => 'required|mimes:jpeg|max:1024',
       'accordance' => 'required|accepted',
-      'banco_id' => 'required|numeric|',
+      'banco_id' => 'required|numeric|'
     ];
+
+    if ($this->filled('universidad_id')) {
+      $rules['universidad_id'] = 'required|numeric';
+    }
+
+    return $rules;
   }
 }
