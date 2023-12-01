@@ -108,10 +108,13 @@
                             height="45" />
                         <p class="ml-4 text-2xl tracking-tight text-gray-600">Banco de la Nación</p>
                     </div>
-                    <p class="text-base font-semibold text-gray-600">Datos del voucher</p>
-                    <div class="overflow-hidden bg-white shadow-lg ring-1 ring-gray-900/5 p-2 mt-6">
-                        <img src="{{ asset('images/voucher_ejemplo.png') }}" alt="UNPRG" width="250"
-                            height="250" />
+                    <p class="text-base font-semibold text-gray-600 mb-6">Datos del voucher</p>
+
+                    <div class="overflow-hidden bg-white shadow-lg ring-1 ring-gray-900/5 py-2 px-2">
+                        <div class="zoom-container w-60 h-60">
+                            <div class="image-zoom w-full h-full cursor-pointer transition-transform duration-300 ease-out bg-cover"
+                                style="background-image: url('{{ asset('images/voucher_ejemplo.png') }}')"></div>
+                        </div>
                     </div>
 
                     <button type="submit"

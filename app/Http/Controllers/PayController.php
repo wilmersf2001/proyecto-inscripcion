@@ -62,8 +62,8 @@ class PayController extends Controller
 
     $modality = Modalidad::find($request->modalityId);
     $amount = ($typeSchool == 1) ? $modality->monto_nacional : $modality->monto_particular;
-    if ($amount > $bank->importe) {
-      return redirect()->route('start')->with('alert', 'El monto del voucher no es suficiente para la modalidad seleccionada');
+    if ($amount != $bank->importe) { //antes >
+      return redirect()->route('start')->with('alert', 'El monto del voucher no coincide para la modalidad seleccionada');
     }
 
     $applicant = $this->apiReniec->getApplicantDataByDni($numDocument);

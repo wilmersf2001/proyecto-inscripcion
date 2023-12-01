@@ -6,18 +6,18 @@ class Constants
 {
   //RUTAS DE FOTOS
   public const RUTA_FOTO_QR = 'temp/';
-  public const RUTA_FOTO_CARNET_VALIDA = 'archivos-validos/foto-carnet/';
-  public const RUTA_DNI_ANVERSO_VALIDA = 'archivos-validos/dni-anverso/';
-  public const RUTA_DNI_REVERSO_VALIDA = 'archivos-validos/dni-reverso/';
-  public const RUTA_FOTO_CARNET_INSCRIPTO = 'archivos-inscripcion/foto-carnet/';
-  public const RUTA_DNI_ANVERSO_INSCRIPTO = 'archivos-inscripcion/dni-anverso/';
-  public const RUTA_DNI_REVERSO_INSCRIPTO = 'archivos-inscripcion/dni-reverso/';
-  public const RUTA_FOTO_CARNET_OBSERVADO = 'archivos-observados/foto-carnet/';
-  public const RUTA_DNI_ANVERSO_OBSERVADO = 'archivos-observados/dni-anverso/';
-  public const RUTA_DNI_REVERSO_OBSERVADO = 'archivos-observados/dni-reverso/';
-  public const RUTA_FOTO_CARNET_RECTIFICADO = 'archivos-rectificados/foto-carnet/';
-  public const RUTA_DNI_ANVERSO_RECTIFICADO = 'archivos-rectificados/dni-anverso/';
-  public const RUTA_DNI_REVERSO_RECTIFICADO = 'archivos-rectificados/dni-reverso/';
+  public const RUTA_FOTO_CARNET_VALIDA = 'archivos_validos/foto_carnet/';
+  public const RUTA_DNI_ANVERSO_VALIDA = 'archivos_validos/dni_anverso/';
+  public const RUTA_DNI_REVERSO_VALIDA = 'archivos_validos/dni_reverso/';
+  public const RUTA_FOTO_CARNET_INSCRIPTO = 'archivos_inscripcion/foto_carnet/';
+  public const RUTA_DNI_ANVERSO_INSCRIPTO = 'archivos_inscripcion/dni_anverso/';
+  public const RUTA_DNI_REVERSO_INSCRIPTO = 'archivos_inscripcion/dni_reverso/';
+  public const RUTA_FOTO_CARNET_OBSERVADO = 'archivos_observados/foto_carnet/';
+  public const RUTA_DNI_ANVERSO_OBSERVADO = 'archivos_observados/dni_anverso/';
+  public const RUTA_DNI_REVERSO_OBSERVADO = 'archivos_observados/dni_reverso/';
+  public const RUTA_FOTO_CARNET_RECTIFICADO = 'archivos_rectificados/foto_carnet/';
+  public const RUTA_DNI_ANVERSO_RECTIFICADO = 'archivos_rectificados/dni_anverso/';
+  public const RUTA_DNI_REVERSO_RECTIFICADO = 'archivos_rectificados/dni_reverso/';
   public const RUTA_FOTOS_VALIDAS = [Constants::RUTA_FOTO_CARNET_VALIDA, Constants::RUTA_DNI_ANVERSO_VALIDA, Constants::RUTA_DNI_REVERSO_VALIDA];
   public const RUTA_FOTOS_OBSERVADAS = [Constants::RUTA_FOTO_CARNET_OBSERVADO, Constants::RUTA_DNI_ANVERSO_OBSERVADO, Constants::RUTA_DNI_REVERSO_OBSERVADO];
 
