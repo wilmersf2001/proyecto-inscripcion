@@ -21,7 +21,10 @@ class Postulante extends Model
         'fecha_nacimiento',
         'num_documento',
         'tipo_documento',
-        'talla',
+        'num_documento_apoderado',
+        'nombres_apoderado',
+        'ap_paterno_apoderado',
+        'ap_materno_apoderado',
         'num_voucher',
         'direccion',
         'correo',
@@ -116,7 +119,6 @@ class Postulante extends Model
         $postulante->nombres = $data['nombres'];
         $postulante->ap_paterno = $data['apellidoPaterno'];
         $postulante->ap_materno = $data['apellidoMaterno'];
-        /* $postulante->num_documento = $data['numeroDocumento']; */
         $postulante->num_documento = $data['dni'];
         return $postulante;
     }

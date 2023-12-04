@@ -1,10 +1,10 @@
-<div class="p-4 xl:p-10">
+<div class="p-4 xl:p-6">
 
     <x-step-by-step :currentStep="$currentStep" />
 
     @if ($currentStep < 3)
         <div
-            class="mx-auto mb-8 max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none bg-gray-50 md:mb-14">
+            class="mx-auto mb-8 max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none bg-gray-50 md:mb-10">
             <div class="p-4 lg:flex-auto">
                 <ul role="list" class="grid grid-cols-1 gap-4 text-xs leading-3 text-gray-600 sm:grid-cols-4 sm:gap-6">
                     <li class="flex gap-x-3">
@@ -46,8 +46,6 @@
             </div>
 
             <div class="grid md:grid-cols-3 md:gap-6">
-                <x-input-form span="Fecha de Nacimiento" name="fecha_nacimiento" model="applicant.fecha_nacimiento"
-                    type="date" />
                 <label class="block mb-10">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
@@ -64,7 +62,20 @@
                     </select>
                     <x-input-error for="applicant.sexo_id" />
                 </label>
+                <label class="block mb-10">
+                    <span
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                        Fecha de Nacimiento
+                    </span>
+                    <input type="date" name="fecha_nacimiento" wire:model.lazy="applicant.fecha_nacimiento"
+                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
+                    <x-input-error for="applicant.fecha_nacimiento" />
+                </label>
             </div>
+
+            @if ($isAgeMinor)
+                <x-form-apoderado />
+            @endif
 
             <div class="mb-8 mt-4 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Lugar de Nacimiento</h4>

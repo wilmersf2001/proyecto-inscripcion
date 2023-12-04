@@ -2,6 +2,12 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Requests\View\StoreApplicantRequest;
+use App\Http\Requests\View\FirstStepApplicantRequest;
+use App\Http\Requests\View\StepTwoApplicantRequest;
+use App\Http\Requests\View\StepThreeApplicantRequest;
+use App\Http\Requests\View\Message\ValidateApplicant;
+use App\Services\ApiReniecService;
 use App\Models\DistribucionVacante;
 use App\Services\FormDataService;
 use App\Services\LocationService;
@@ -12,11 +18,6 @@ use Livewire\Component;
 use App\Models\Departamento;
 use App\Models\Provincia;
 use App\Models\Distrito;
-use App\Http\Requests\View\StoreApplicantRequest;
-use App\Http\Requests\View\FirstStepApplicantRequest;
-use App\Http\Requests\View\StepTwoApplicantRequest;
-use App\Http\Requests\View\StepThreeApplicantRequest;
-use App\Http\Requests\View\Message\ValidateApplicant;
 use App\Models\Banco;
 use App\Models\Colegio;
 use App\Models\Proceso;
@@ -60,6 +61,7 @@ class Applicant extends Component
   public $accordance = false;
   public $showSchools = false;
   public $numberProcess = 0;
+  public $isAgeMinor = false;
   protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
   protected function rules()
@@ -105,8 +107,36 @@ class Applicant extends Component
   public function render()
   {
     $this->searchSchools();
+    if ($this->applicant->fecha_nacimiento && !$this->getErrorBag()->has('applicant.fecha_nacimiento')) {
+      $this->isAgeMinor = UtilFunction::isAgeMinor($this->applicant->fecha_nacimiento);
+      if (!$this->isAgeMinor) {
+        $this->applicant->num_documento_apoderado = null;
+        $this->resetDataApoderado();
+      }
+    }
 
     return view('livewire.applicant');
+  }
+
+  public function getApoderadoDataByDni(ApiReniecService $apiReniecService)
+  {
+    $this->validateOnly('applicant.num_documento_apoderado');
+    $apoderado = $apiReniecService->getApoderadoDataByDni($this->applicant->num_documento_apoderado);
+    if (count($apoderado) > 0) {
+      $this->applicant->nombres_apoderado = $apoderado['nombres'];
+      $this->applicant->ap_paterno_apoderado = $apoderado['apellidoPaterno'];
+      $this->applicant->ap_materno_apoderado = $apoderado['apellidoMaterno'];
+      $this->applicant->num_documento_apoderado = $apoderado['dni'];
+    } else {
+      $this->resetDataApoderado();
+    }
+  }
+
+  private function resetDataApoderado()
+  {
+    $this->applicant->nombres_apoderado = null;
+    $this->applicant->ap_paterno_apoderado = null;
+    $this->applicant->ap_materno_apoderado = null;
   }
 
   private function searchSchools()
@@ -209,6 +239,12 @@ class Applicant extends Component
       $rules = FirstStepApplicantRequest::FIRST_STEP_VALIDATE;
       if ($this->bank->tipo_doc_depo == Constants::TIPO_DOCUMENTO_CARNET_EXTRANJERIA) {
         $rules['applicant.pais_id'] = 'required|numeric';
+      }
+      if ($this->isAgeMinor) {
+        $rules['applicant.num_documento_apoderado'] = 'required|numeric|regex:/^\d{8,9}$/';
+        $rules['applicant.nombres_apoderado'] = 'required';
+        $rules['applicant.ap_paterno_apoderado'] = 'required';
+        $rules['applicant.ap_materno_apoderado'] = 'required';
       }
       $this->validate($rules);
     } elseif ($this->currentStep == 2) {

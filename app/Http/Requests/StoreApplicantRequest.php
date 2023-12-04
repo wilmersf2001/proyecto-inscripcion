@@ -54,6 +54,12 @@ class StoreApplicantRequest extends FormRequest
     if ($this->filled('universidad_id')) {
       $rules['universidad_id'] = 'required|numeric';
     }
+    if ($this->filled('nombres_apoderado') && $this->filled('ap_paterno_apoderado') && $this->filled('ap_materno_apoderado') && $this->filled('num_documento_apoderado')) {
+      $rules['num_documento_apoderado'] = 'required|numeric|regex:/^\d{8,9}$/';
+      $rules['nombres_apoderado'] = 'required';
+      $rules['ap_paterno_apoderado'] = 'required';
+      $rules['ap_materno_apoderado'] = 'required';
+    }
 
     return $rules;
   }

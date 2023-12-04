@@ -152,4 +152,12 @@ class  UtilFunction
     }
     return null;
   }
+
+  public static function isAgeMinor(string $date)
+  {
+    $dateNac = Carbon::create($date);
+    $today = Carbon::now();
+    $age = $dateNac->diffInYears($today);
+    return $age < 18;
+  }
 }
