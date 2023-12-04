@@ -37,11 +37,11 @@
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
             <div class="grid md:grid-cols-3 md:gap-6">
-                <x-input-form span="Nombres Completos" name="nombres" model="applicant.nombres"
+                <x-input.form span="Nombres Completos" name="nombres" model="applicant.nombres"
                     disable="{{ $disable }}" />
-                <x-input-form span="Apellido Paterno" name="ap_paterno" model="applicant.ap_paterno"
+                <x-input.form span="Apellido Paterno" name="ap_paterno" model="applicant.ap_paterno"
                     disable="{{ $disable }}" />
-                <x-input-form span="Apellido Materno" name="ap_materno" model="applicant.ap_materno"
+                <x-input.form span="Apellido Materno" name="ap_materno" model="applicant.ap_materno"
                     disable="{{ $disable }}" />
             </div>
 
@@ -60,7 +60,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <x-input-error for="applicant.sexo_id" />
+                    <x-input.error for="applicant.sexo_id" />
                 </label>
                 <label class="block mb-10">
                     <span
@@ -69,7 +69,7 @@
                     </span>
                     <input type="date" name="fecha_nacimiento" wire:model.lazy="applicant.fecha_nacimiento"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="applicant.fecha_nacimiento" />
+                    <x-input.error for="applicant.fecha_nacimiento" />
                 </label>
             </div>
 
@@ -133,7 +133,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <x-input-error for="applicant.distrito_nac_id" />
+                        <x-input.error for="applicant.distrito_nac_id" />
                     </label>
                 </div>
             @else
@@ -155,7 +155,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <x-input-error for="applicant.pais_id" />
+                        <x-input.error for="applicant.pais_id" />
                     </label>
                 </div>
             @endif
@@ -216,7 +216,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <x-input-error for="applicant.distrito_res_id" />
+                    <x-input.error for="applicant.distrito_res_id" />
                 </label>
             </div>
 
@@ -234,9 +234,9 @@
                             </option>
                         @endforeach
                     </select>
-                    <x-input-error for="applicant.tipo_direccion_id" />
+                    <x-input.error for="applicant.tipo_direccion_id" />
                 </label>
-                <x-input-form span="Dirección" name="direccion" model="applicant.direccion"
+                <x-input.form span="Dirección" name="direccion" model="applicant.direccion"
                     placeholder="Ejem: Calle Ficticia 123" />
             </div>
 
@@ -245,13 +245,13 @@
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
             <div class="grid md:grid-cols-3 md:gap-6">
-                <x-input-form span="Teléfono del Postulante" name="telefono" model="applicant.telefono"
+                <x-input.form span="Teléfono del Postulante" name="telefono" model="applicant.telefono"
                     placeholder="Ejem: 955123456" maxlength='9' />
 
-                <x-input-form span="Teléfono del Apoderado" name="telefono_ap" model="applicant.telefono_ap"
+                <x-input.form span="Teléfono del Apoderado" name="telefono_ap" model="applicant.telefono_ap"
                     placeholder="Ejem: 955123456" maxlength='9' />
 
-                <x-input-form span="Correo Electrónico" name="correo" model="applicant.correo" type="email"
+                <x-input.form span="Correo Electrónico" name="correo" model="applicant.correo" type="email"
                     placeholder="Ejem: postulante@gmail.com" />
             </div>
 
@@ -307,7 +307,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <x-input-error for="selectedProvinceOriginSchoolId" />
+                    <x-input.error for="selectedProvinceOriginSchoolId" />
                 </label>
 
                 <label class="block mb-10">
@@ -324,7 +324,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <x-input-error for="selectedDistrictOriginSchoolId" />
+                    <x-input.error for="selectedDistrictOriginSchoolId" />
                 </label>
             </div>
 
@@ -368,7 +368,7 @@
                             </ul>
                         @endif
                     @endif
-                    <x-input-error for="applicant.colegio_id" />
+                    <x-input.error for="applicant.colegio_id" />
                 </label>
 
                 <label class="block mb-10">
@@ -391,7 +391,7 @@
                         <input type="text" disabled placeholder="Seleccione el modalidad"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 block w-full rounded-md sm:text-sm disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" />
                     @endif
-                    <x-input-error for="applicant.anno_egreso" />
+                    <x-input.error for="applicant.anno_egreso" />
                 </label>
 
             </div>
@@ -418,7 +418,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <x-input-error for="applicant.sede_id" />
+                    <x-input.error for="applicant.sede_id" />
                 </label>
 
                 <label class="block mb-10">
@@ -440,15 +440,15 @@
                         <input type="text" disabled placeholder="Seleccione la modalidad"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 block w-full rounded-md sm:text-sm disabled:bg-slate-50 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none" />
                     @endif
-                    <x-input-error for="applicant.programa_academico_id" />
+                    <x-input.error for="applicant.programa_academico_id" />
                 </label>
 
-                <x-input-form span="Número de veces que postula a la UNPRG" name="num_veces_unprg"
+                <x-input.form span="Número de veces que postula a la UNPRG" name="num_veces_unprg"
                     model="applicant.num_veces_unprg" type="number" />
             </div>
 
             <div class="grid md:grid-cols-3 md:gap-6">
-                <x-input-form span="Número de veces que postula a otras universidades" name="num_veces_otro"
+                <x-input.form span="Número de veces que postula a otras universidades" name="num_veces_otro"
                     model="applicant.num_veces_otros" type="number" />
 
                 @if ($universities)
@@ -466,7 +466,7 @@
                                 </option>
                             @endforeach
                         </select>
-                        <x-input-error for="applicant.universidad_id" />
+                        <x-input.error for="applicant.universidad_id" />
                     </label>
                 @endif
             </div>
@@ -533,15 +533,15 @@
                 <div class="grid gap-x-8 gap-y-12 sm:grid-cols-1 sm:gap-y-16 xl:col-span-2">
                     <div>
                         <div class="grid md:grid-cols-1 md:gap-6">
-                            <x-input-file span="Foto Carnet Postulante" name="profilePhoto" model="profilePhoto"
+                            <x-input.file span="Foto Carnet Postulante" name="profilePhoto" model="profilePhoto"
                                 alt="FOTO CARNET" src="images/foto-carnet.jpg" click="$set('profilePhoto', null)" />
                         </div>
 
                         <div class="grid md:grid-cols-2 md:gap-6 mb-10">
-                            <x-input-file span="DNI Parte Anverso" name="frontDniPhoto" model="frontDniPhoto"
+                            <x-input.file span="DNI Parte Anverso" name="frontDniPhoto" model="frontDniPhoto"
                                 alt="DNI ANVERSO" src="images/dni-anverso.png" click="$set('frontDniPhoto', null)"
                                 size="140" />
-                            <x-input-file span="DNI Parte Reverso" name="reverseDniPhoto" model="reverseDniPhoto"
+                            <x-input.file span="DNI Parte Reverso" name="reverseDniPhoto" model="reverseDniPhoto"
                                 alt="DNI REVERSO" src="images/dni-reverso.png" click="$set('reverseDniPhoto', null)"
                                 size="140" />
                         </div>

@@ -30,7 +30,7 @@
                             </option>
                         @endforeach
                     </select>
-                    <x-input-error for="modalityId" />
+                    <x-input.error for="modalityId" />
                 </label>
                 <label class="block mb-6">
                     <span
@@ -43,7 +43,7 @@
                         <option value="1">Nacional</option>
                         <option value="2">Particular</option>
                     </select>
-                    <x-input-error for="typeSchoolId" />
+                    <x-input.error for="typeSchoolId" />
                 </label>
             </div>
 
@@ -63,7 +63,7 @@
                     <input type="text" name="numDocument" wire:model="numDocument" minlength="8" maxlength="9"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 75635..." />
-                    <x-input-error for="numDocument" />
+                    <x-input.error for="numDocument" />
                 </label>
                 <label class="block mb-6">
                     <span
@@ -73,7 +73,7 @@
                     <input type="text" name="voucherNumber" wire:model="voucherNumber" minlength="7" maxlength="7"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 1742..." />
-                    <x-input-error for="voucherNumber" />
+                    <x-input.error for="voucherNumber" />
                 </label>
             </div>
 
@@ -86,7 +86,7 @@
                     <input type="text" name="agencyNumber" wire:model="agencyNumber" minlength="4" maxlength="4"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
                         placeholder="Ejem: 0230" />
-                    <x-input-error for="agencyNumber" />
+                    <x-input.error for="agencyNumber" />
                 </label>
                 <label class="block mb-6">
                     <span
@@ -95,7 +95,7 @@
                     </span>
                     <input type="date" name="payDay" wire:model="payDay"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                    <x-input-error for="payDay" />
+                    <x-input.error for="payDay" />
                 </label>
             </div>
         </div>
@@ -132,6 +132,6 @@
     </form>
 
     @if (session('alert'))
-        <x-alert-errors message="{{ session('alert') }}" />
+        <x-alerts.error message="{{ session('alert') }}" />
     @endif
 </div>

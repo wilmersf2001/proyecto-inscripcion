@@ -18,7 +18,7 @@
                     </svg>
                 </button>
             </div>
-            <x-input-error for="applicant.num_documento_apoderado" />
+            <x-input.error for="applicant.num_documento_apoderado" />
 
             <div class="flex justify-center mt-6">
                 <div wire:loading wire:target="getApoderadoDataByDni">
@@ -33,7 +33,7 @@
                         </span>
                         <input type="text" name="nombres_apoderado" wire:model="applicant.nombres_apoderado"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                        <x-input-error for="applicant.nombres_apoderado" />
+                        <x-input.error for="applicant.nombres_apoderado" />
                     </label>
                     <label class="block mb-3">
                         <span
@@ -42,7 +42,7 @@
                         </span>
                         <input type="text" name="ap_paterno_apoderado" wire:model="applicant.ap_paterno_apoderado"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                        <x-input-error for="applicant.ap_paterno_apoderado" />
+                        <x-input.error for="applicant.ap_paterno_apoderado" />
                     </label>
                     <label class="block mb-3">
                         <span
@@ -51,7 +51,7 @@
                         </span>
                         <input type="text" name="ap_materno_apoderado" wire:model="applicant.ap_materno_apoderado"
                             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
-                        <x-input-error for="applicant.ap_materno_apoderado" />
+                        <x-input.error for="applicant.ap_materno_apoderado" />
                     </label>
                 </div>
             </div>

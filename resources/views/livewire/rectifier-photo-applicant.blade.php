@@ -104,7 +104,7 @@
                               hover:file:bg-blue-100
                             " />
                                     @if ($disabled)
-                                        <x-input-error for="photo.{{ $photo['name'] }}" />
+                                        <x-input.error for="photo.{{ $photo['name'] }}" />
                                     @endif
                                 </label>
                             </div>

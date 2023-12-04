@@ -1,4 +1,5 @@
 @props(['span', 'name', 'model', 'type' => 'text', 'placeholder' => '', 'maxlength' => 255, 'disable' => 0])
+
 <label class="block mb-10">
     <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
         {{ $span }}
@@ -13,5 +14,5 @@
             class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 block w-full rounded-md sm:text-sm read-only:bg-slate-50 read-only:text-slate-500 read-only:border-slate-200 read-only:shadow-none focus:outline-none" />
     @endif
 
-    <x-input-error for="{{ $model }}" />
+    <x-input.error for="{{ $model }}" />
 </label>
