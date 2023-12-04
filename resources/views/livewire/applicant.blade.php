@@ -1,29 +1,10 @@
-<div class="p-4 xl:p-6">
+<div class="p-4 xl:p-6 relative">
+    <div wire:offline>
+        You are now offline.
+    </div>
 
     <x-step-by-step :currentStep="$currentStep" />
 
-    @if ($currentStep < 3)
-        <div
-            class="mx-auto mb-8 max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none bg-gray-50 md:mb-10">
-            <div class="p-4 lg:flex-auto">
-                <ul role="list" class="grid grid-cols-1 gap-4 text-xs leading-3 text-gray-600 sm:grid-cols-4 sm:gap-6">
-                    <li class="flex gap-x-3">
-                        <p class="font-medium text-gray-900">Número de documento :</p> {{ $bank->num_doc_depo }}
-                    </li>
-                    <li class="flex gap-x-3">
-                        <p class="font-medium text-gray-900">Tipo de documento :</p>
-                        {{ $bank->tipo_doc_depo == 1 ? 'DNI' : 'Carnet de Extranjería' }}
-                    </li>
-                    <li class="flex gap-x-3">
-                        <p class="font-medium text-gray-900">Número de Voucher :</p> {{ $bank->num_documento }}
-                    </li>
-                    <li class="flex gap-x-3">
-                        <p class="font-medium text-gray-900">Importe :</p> S/. {{ $bank->importe }}
-                    </li>
-                </ul>
-            </div>
-        </div>
-    @endif
     <form action="{{ route('applicant.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="banco_id" value="{{ $bank->id }}">
@@ -32,19 +13,19 @@
         <input type="hidden" name="num_voucher" value="{{ $bank->num_documento }}">
         <input type="hidden" name="modalidad_id" value="{{ $applicant->modalidad_id }}">
         <div class="{{ $currentStep == 1 ? 'animate-slide-in-left' : 'hidden' }}">
+            <x-bank-information :bank="$bank" />
             <div class="my-8 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Datos Personales Postulante</h4>
                 <div class="h-px flex-auto bg-gray-100"></div>
             </div>
             <div class="grid md:grid-cols-3 md:gap-6">
                 <x-input.form span="Nombres Completos" name="nombres" model="applicant.nombres"
-                    disable="{{ $disable }}" />
+                    disable="{{ $disableInputApplicant }}" />
                 <x-input.form span="Apellido Paterno" name="ap_paterno" model="applicant.ap_paterno"
-                    disable="{{ $disable }}" />
+                    disable="{{ $disableInputApplicant }}" />
                 <x-input.form span="Apellido Materno" name="ap_materno" model="applicant.ap_materno"
-                    disable="{{ $disable }}" />
+                    disable="{{ $disableInputApplicant }}" />
             </div>
-
             <div class="grid md:grid-cols-3 md:gap-6">
                 <label class="block mb-10">
                     <span
@@ -74,7 +55,34 @@
             </div>
 
             @if ($isAgeMinor)
-                <x-form-apoderado />
+                <div class="rounded-3xl ring-1 ring-gray-200 mb-10 animate-fade-in">
+                    <div class="-mt-2 p-2 lg:mt-0 lg:w-full">
+                        <div class="rounded-2xl bg-gray-50 py-6 lg:py-8 px-8">
+                            <x-form-apoderado />
+
+                            <div class="flex justify-center mt-6">
+                                <div wire:loading wire:target="getApoderadoDataByDni">
+                                    <x-icons.loading />
+                                </div>
+                                <div class="w-full grid md:grid-cols-3 md:gap-6 animate-fade-in" wire:loading.remove
+                                    wire:target="getApoderadoDataByDni">
+                                    @if (isset($disableInputApoderado) || !$disableInputApoderado === null)
+                                        <x-input.form span="Nombres" name="nombres_apoderado"
+                                            model="applicant.nombres_apoderado" disable="{{ $disableInputApoderado }}"
+                                            margin="mb-4" />
+                                        <x-input.form span="Apellido Paterno" name="ap_paterno_apoderado"
+                                            model="applicant.ap_paterno_apoderado"
+                                            disable="{{ $disableInputApoderado }}" margin="mb-4" />
+                                        <x-input.form span="Apellido Materno" name="ap_materno_apoderado"
+                                            model="applicant.ap_materno_apoderado"
+                                            disable="{{ $disableInputApoderado }}" margin="mb-4" />
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             @endif
 
             <div class="mb-8 mt-4 flex items-center gap-x-4">
@@ -265,10 +273,11 @@
                     Siguiente
                 </button>
             </div>
+
         </div>
 
         <div class="{{ $currentStep == 2 ? 'animate-slide-in-right relative' : 'hidden' }}">
-
+            <x-bank-information :bank="$bank" />
             <div class="my-8 flex items-center gap-x-4">
                 <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Información Académica</h4>
                 <div class="h-px flex-auto bg-gray-100"></div>
@@ -563,49 +572,8 @@
         @if ($currentStep > 3)
             @livewire('summary-template', ['applicant' => $applicant, 'tipo_documento' => $bank->tipo_doc_depo])
 
-            <div
-                class="mx-auto mt-10 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
-                <div class="p-8 sm:p-10 lg:flex-auto">
-                    <h3 class="text-2xl font-bold tracking-tight text-gray-900">DECLARACIÓN JURADA</h3>
-                    <time datetime="2020-03-16" class="text-gray-500">{{ $formattedToday }}</time>
-                    <div class="relative flex mt-6">
-                        <div class="flex h-6 items-center">
-                            <input id="accordance" name="accordance" type="checkbox" wire:model="accordance"
-                                class="h-4 w-4 rounded text-indigo-600 focus:ring-indigo-600">
-                        </div>
-                        <div class="text-sm">
-                            <label for="accordance" class="font-medium text-gray-900 pl-2">Declaro bajo juramento
-                                que:</label>
-                        </div>
-                    </div>
-                    <div class="mt-4">
-                        <ul role="list" class="list-disc space-y-2 pl-4 text-sm">
-                            <li class="text-gray-400"><span class="text-gray-600">Conozco, acepto y me someto a las
-                                    bases,
-                                    condiciones y procedimientos establecidos en eI
-                                    Reglamento del Concurso de Admisión {{ $numberProcess }} de la Universidad Nacional
-                                    Pedro Ruiz Gallo.</span></li>
-                            <li class="text-gray-400"><span class="text-gray-600">La información y fotografia
-                                    registrada es
-                                    AUTÉNTICA y que las imágenes de mi DNI enviados para
-                                    mi inscripción como postulante al presente Concurso de Admisión,
-                                    son copia fiel al original, en caso de faltar a la verdad me someto a las sanciones
-                                    correspondientes (Art. 38 del Reglamento del presente Concurso de Admisión).</span>
-                            </li>
-                            <li class="text-gray-400"><span class="text-gray-600">No tengo impedimento para participar
-                                    en eI
-                                    Concurso de Admisión {{ $numberProcess }}.</span></li>
-                            <li class="text-gray-400"><span class="text-gray-600">De alcanzar una vacante, me
-                                    comprometo a
-                                    regularizar mi expediente en la fecha establecida en el
-                                    cronograma del presente Concurso de Admisión; en caso contrario
-                                    me someto a las sanciones correspondientes (Art.87 del Reglamento del presente
-                                    Concurso de
-                                    Admisión).</span></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <x-declaration-jurada :formattedToday="$formattedToday" :numberProcess="$numberProcess" />
+
             <div class="flex w-full justify-end">
                 <button type="button" wire:click="previousStep"
                     class="cursor-pointer mt-4 mr-4 text-gray-900 bg-white hover:bg-gray-100 shadow-md focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
@@ -620,8 +588,4 @@
             </div>
         @endif
     </form>
-
-    <div wire:offline>
-        You are now offline.
-    </div>
 </div>

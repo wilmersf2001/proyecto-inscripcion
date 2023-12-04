@@ -50,7 +50,6 @@ class Applicant extends Component
   public $academicPrograms;
   public $universities;
   public $searchSchoolName;
-  public $disable;
   public $typeSchool;
   public $profilePhoto;
   public $reverseDniPhoto;
@@ -62,6 +61,8 @@ class Applicant extends Component
   public $showSchools = false;
   public $numberProcess = 0;
   public $isAgeMinor = false;
+  public $disableInputApplicant = 0;
+  public $disableInputApoderado;
   protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
   protected function rules()
@@ -94,7 +95,7 @@ class Applicant extends Component
     $this->academicPrograms = DistribucionVacante::getProgramasAcademicosByModalidad($this->applicant->modalidad_id);
     $this->formattedToday = UtilFunction::getDateToday();
     $this->typeSchool = $typeSchool;
-    $this->disable = $this->applicant->nombres != null ? 1 : 0;
+    $this->disableInputApplicant = $this->applicant->nombres != null ? 1 : 0;
     $this->minimumYear = UtilFunction::getMinimumYearByModalidad($this->applicant->modalidad_id);
     $this->universities = UtilFunction::getUniversitiesByModality($this->applicant->modalidad_id, $this->typeSchool, $formDataService);
     $this->numberProcess = Proceso::getProcessNumber();
@@ -127,6 +128,10 @@ class Applicant extends Component
       $this->applicant->ap_paterno_apoderado = $apoderado['apellidoPaterno'];
       $this->applicant->ap_materno_apoderado = $apoderado['apellidoMaterno'];
       $this->applicant->num_documento_apoderado = $apoderado['dni'];
+      $this->disableInputApoderado = 1;
+      $this->resetErrorBag('applicant.nombres_apoderado');
+      $this->resetErrorBag('applicant.ap_paterno_apoderado');
+      $this->resetErrorBag('applicant.ap_materno_apoderado');
     } else {
       $this->resetDataApoderado();
     }
@@ -137,6 +142,7 @@ class Applicant extends Component
     $this->applicant->nombres_apoderado = null;
     $this->applicant->ap_paterno_apoderado = null;
     $this->applicant->ap_materno_apoderado = null;
+    $this->disableInputApoderado = 0;
   }
 
   private function searchSchools()

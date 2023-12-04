@@ -59,6 +59,7 @@ class FichaInscripcionController extends Controller
                 $lugarNacimiento = UtilFunction::getLocationByPostulante($applicant);
                 $lugarResidencia = UtilFunction::getLocationByDistrict($applicant->distritoRes);
                 $lugarColegio = UtilFunction::getLocationBySchoolUbigeo($applicant->colegio->ubigeo);
+                $isMinor = UtilFunction::isAgeMinor($applicant->fecha_nacimiento);
 
                 $data = [
                     'postulante' => $applicant,
@@ -75,6 +76,7 @@ class FichaInscripcionController extends Controller
                     'pathImage' => $pathImage,
                     'tipoColegio' => $applicant->colegio->tipo == 1 ? 'Nacional' : 'Privado',
                     'laberBirth' => $applicant->tipo_documento == 1 ? 'Lugar de nacimiento' : 'País de procedencia',
+                    'isMinor' => $isMinor,
                 ];
             } else {
                 return redirect()->route('ficha.startPdfQuery')->with('error', 'Ficha de inscripción se encuentra en proceso de validación, por favor vuelva a intentarlo más tarde');

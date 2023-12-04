@@ -1,4 +1,5 @@
 @props(['currentStep'])
+
 @if ($currentStep == 1)
     <ol class="flex items-center w-full mb-4 sm:mb-5 justify-center">
         <li
