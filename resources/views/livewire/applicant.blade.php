@@ -542,17 +542,20 @@
                 <div class="grid gap-x-8 gap-y-12 sm:grid-cols-1 sm:gap-y-16 xl:col-span-2">
                     <div>
                         <div class="grid md:grid-cols-1 md:gap-6">
-                            <x-input.file span="Foto Carnet Postulante" name="profilePhoto" model="profilePhoto"
-                                alt="FOTO CARNET" src="images/foto-carnet.jpg" click="$set('profilePhoto', null)" />
+                            <x-input.file span="Foto Carnet Postulante" model="profilePhoto"
+                                imageId="preview-profilePhoto" alt="FOTO CARNET" src="images/foto-carnet.jpg"
+                                click="$set('profilePhoto', null)" inputId="fileInput-profilePhoto" />
                         </div>
 
                         <div class="grid md:grid-cols-2 md:gap-6 mb-10">
-                            <x-input.file span="DNI Parte Anverso" name="frontDniPhoto" model="frontDniPhoto"
-                                alt="DNI ANVERSO" src="images/dni-anverso.png" click="$set('frontDniPhoto', null)"
-                                size="140" />
-                            <x-input.file span="DNI Parte Reverso" name="reverseDniPhoto" model="reverseDniPhoto"
-                                alt="DNI REVERSO" src="images/dni-reverso.png" click="$set('reverseDniPhoto', null)"
-                                size="140" />
+                            <x-input.file span="DNI Parte Anverso" model="frontDniPhoto"
+                                imageId="preview-frontDniPhoto" alt="DNI ANVERSO" src="images/dni-anverso.png"
+                                click="$set('frontDniPhoto', null)" inputId="fileInput-frontDniPhoto" w="w-56"
+                                h="h-40" />
+                            <x-input.file span="DNI Parte Reverso" model="reverseDniPhoto"
+                                imageId="preview-reverseDniPhoto" alt="DNI REVERSO" src="images/dni-reverso.png"
+                                click="$set('reverseDniPhoto', null)" inputId="fileInput-reverseDniPhoto" w="w-56"
+                                h="h-40" />
                         </div>
                         <div class="flex w-full justify-end">
                             <button type="button" wire:click="previousStep"
@@ -588,4 +591,24 @@
             </div>
         @endif
     </form>
+    <script>
+        function handleImagePreview(inputId, previewId) {
+            const fileInput = document.querySelector(`#${inputId}`);
+            const preview = document.querySelector(`#${previewId}`);
+
+            fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                const fileReader = new FileReader();
+
+                fileReader.readAsDataURL(file);
+                fileReader.addEventListener('load', (e) => {
+                    preview.setAttribute('src', e.target.result);
+                });
+            });
+        }
+
+        handleImagePreview('fileInput-profilePhoto', 'preview-profilePhoto');
+        handleImagePreview('fileInput-frontDniPhoto', 'preview-frontDniPhoto');
+        handleImagePreview('fileInput-reverseDniPhoto', 'preview-reverseDniPhoto');
+    </script>
 </div>

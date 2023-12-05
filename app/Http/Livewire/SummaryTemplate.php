@@ -22,6 +22,7 @@ class SummaryTemplate extends Component
   public $modality;
   public $tipo_documento;
   public $university;
+  public $isAgeMinor;
 
   public function mount(Postulante $applicant, int $tipo_documento)
   {
@@ -30,6 +31,7 @@ class SummaryTemplate extends Component
     if (in_array($this->applicant->modalidad_id, Constants::ESTADO_TITULADO_TRASLADO)) {
       $this->university = $this->applicant->universidad->nombre;
     }
+    $this->isAgeMinor = UtilFunction::isAgeMinor($this->applicant->fecha_nacimiento);
   }
   public function render()
   {

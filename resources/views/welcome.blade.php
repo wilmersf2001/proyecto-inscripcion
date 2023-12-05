@@ -14,25 +14,9 @@
     </div>
     <input type="file" id="fileInput">
 
-    <div class="shrink-0 mb-5">
-        <img src="{{ asset('images/foto-carnet.jpg') }}" id="preview1" />
-    </div>
-    <input type="file" id="fileInput1">
-
-    <div class="shrink-0 mb-5">
-        <img src="{{ asset('images/foto-carnet.jpg') }}" id="preview2" />
-    </div>
-    <input type="file" id="fileInput2">
-
     <script>
         const fileInput = document.querySelector('#fileInput');
         const preview = document.querySelector('#preview');
-
-        const fileInput1 = document.querySelector('#fileInput1');
-        const preview1 = document.querySelector('#preview1');
-
-        const fileInput2 = document.querySelector('#fileInput2');
-        const preview2 = document.querySelector('#preview2');
 
 
         fileInput.addEventListener('change', (e) => {

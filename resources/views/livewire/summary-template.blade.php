@@ -29,20 +29,32 @@
                 </div>
                 <div class="border-t border-gray-200 pt-4">
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                        <dt class="text-sm font-medium leading-6 text-gray-900">Fecha de Nacimiento</dt>
-                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
-                            {{ strtoupper($formattedDateNac) }}
-                        </dd>
-                    </div>
-                </div>
-                <div class="border-t border-gray-200 pt-4">
-                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                         <dt class="text-sm font-medium leading-6 text-gray-900">Sexo</dt>
                         <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
                             {{ strtoupper($nameSexo) }}
                         </dd>
                     </div>
                 </div>
+                <div class="border-t border-gray-200 pt-4">
+                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                        <dt class="text-sm font-medium leading-6 text-gray-900">Fecha de Nacimiento</dt>
+                        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                            {{ strtoupper($formattedDateNac) }}
+                        </dd>
+                    </div>
+                </div>
+                @if ($isAgeMinor)
+                    <div class="border-t border-gray-200 pt-4">
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt class="text-sm font-medium leading-6 text-gray-900">Apoderado</dt>
+                            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+                                {{ strtoupper($applicant->nombres_apoderado) }}
+                                {{ strtoupper($applicant->ap_paterno_apoderado) }}
+                                {{ strtoupper($applicant->ap_materno_apoderado) }}
+                            </dd>
+                        </div>
+                    </div>
+                @endif
             </dl>
         </li>
 

@@ -260,7 +260,7 @@ class Applicant extends Component
       }
       $this->validate($rules);
     } elseif ($this->currentStep == 3) {
-      $this->validate(StepThreeApplicantRequest::SETEP_TWO_VALIDATE);
+      $this->validate(StepThreeApplicantRequest::SETEP_THREE_VALIDATE);
     }
     $this->currentStep++;
   }
