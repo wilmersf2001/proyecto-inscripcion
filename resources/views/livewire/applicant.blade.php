@@ -85,7 +85,6 @@
                         </div>
                     </div>
                 </div>
-
             @endif
 
             <div class="mt-4 mb-7 flex items-center gap-x-4 bg-sky-200 px-4 py-2 rounded-full">
