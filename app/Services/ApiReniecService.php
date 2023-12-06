@@ -54,4 +54,23 @@ class ApiReniecService
       return [];
     }
   }
+  public function getFamiliarDataByDni(string $dni)
+  {
+    try {
+      $client = new Client();
+      $response = $client->get("https://dniruc.apisperu.com/api/v1/dni/{$dni}?token={$this->token}");
+      $statusCode = $response->getStatusCode();
+
+      if ($statusCode === 200) {
+        $data = $response->getBody()->getContents();
+        $response = json_decode($data, true);
+        if (key_exists('message', $response)) return [];
+        return $response;
+      } else {
+        return [];
+      }
+    } catch (RequestException $e) {
+      return [];
+    }
+  }
 }
