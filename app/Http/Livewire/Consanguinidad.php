@@ -7,9 +7,9 @@ use App\Services\ApiReniecService;
 use App\Http\Requests\View\StoreApplicantRequest;
 use App\Http\Requests\View\Message\ValidateApplicant;
 
-class Consanguinidad extends Component
-{
+class Consanguinidad extends Component {
     public $showModal = false;
+    public $familiares = [];
     public $consanguinidad = [
         'num_documento_familiar' => null,
         'nombres_familiar' => null,
@@ -22,18 +22,15 @@ class Consanguinidad extends Component
     ];
 
 
-    public function toggleModal()
-    {
+    public function toggleModal() {
         $this->showModal = !$this->showModal;
     }
 
-    public function getFamiliarDataByDni(ApiReniecService $apiReniecService)
-    {
-        $this->validate(); // Validate all rules
-
+    public function getFamiliarDataByDni(ApiReniecService $apiReniecService) {
+        $this->validate();
         $familiar = $apiReniecService->getFamiliarDataByDni($this->consanguinidad['num_documento_familiar']);
 
-        if (count($familiar) > 0) {
+        if(count($familiar) > 0) {
             $this->consanguinidad['nombres_familiar'] = $familiar['nombres'];
             $this->consanguinidad['ap_paterno_familiar'] = $familiar['apellidoPaterno'];
             $this->consanguinidad['ap_materno_familiar'] = $familiar['apellidoMaterno'];
@@ -43,20 +40,31 @@ class Consanguinidad extends Component
         }
     }
 
-    private function resetDataFamiliar()
-    {
+    private function resetDataFamiliar() {
         $this->consanguinidad['nombres_familiar'] = null;
         $this->consanguinidad['ap_paterno_familiar'] = null;
         $this->consanguinidad['ap_materno_familiar'] = null;
     }
 
-    public function datosConsanguinidad()
-    {
+
+    public function agregarFamiliar() {
+
+        $this->validate();
+        $this->familiares[] = [
+            'nombres' => $this->consanguinidad['nombres_familiar'],
+            'ap_paterno' => $this->consanguinidad['ap_paterno_familiar'],
+            'ap_materno' => $this->consanguinidad['ap_materno_familiar'],
+            'categoria' => $this->consanguinidad['categoria'],
+            'dni' => $this->consanguinidad['num_documento_familiar'],
+        ];
+        $this->resetDataFamiliar();
+    }
+
+    public function datosConsanguinidad() {
         return view('consanguinidad.datosConsanguinidad');
     }
 
-    public function render()
-    {
+    public function render() {
         return view('livewire.consanguinidad');
     }
 }

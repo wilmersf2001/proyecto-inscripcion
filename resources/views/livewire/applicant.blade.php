@@ -1,7 +1,7 @@
 <div class="p-4 xl:p-6">
 
     <x-step-by-step :currentStep="$currentStep" />
-    <!-- <div class="flex h-6 items-center">
+   <!--  <div class="flex h-6 items-center">
         <input id="accordance" name="accordance" type="checkbox" wire:model="accordance"
             class="h-4 w-4 rounded text-indigo-600 focus:ring-indigo-600">
     </div>
@@ -571,7 +571,6 @@
 
     @if ($currentStep > 3)
     @livewire('summary-template', ['applicant' => $applicant, 'tipo_documento' => $bank->tipo_doc_depo])
-
     <div class="mx-auto mt-10 max-w-2xl rounded-3xl ring-1 ring-gray-200 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
         <div class="p-8 sm:p-10 lg:flex-auto">
             <h3 class="text-2xl font-bold tracking-tight text-gray-900">DECLARACIÓN JURADA</h3>
@@ -585,15 +584,13 @@
                     <label for="accordance" class="font-medium text-gray-900 pl-2">Declaro bajo juramento
                         que:</label>
                 </div>
-
-                @if($accordance)
-                  <p>
-                      ¿tienes familiares en el proceso de admision?
-                  </p>
-                     @livewire('consanguinidad')
-                @endif
-
             </div>
+            @if($accordance)
+            <p>
+                ¿Tienes algún familiar que esté trabajando en el proceso de admision?
+            </p>
+            @livewire('consanguinidad')
+            @endif
             <div class="mt-4">
                 <ul role="list" class="list-disc space-y-2 pl-4 text-sm">
                     <li class="text-gray-400"><span class="text-gray-600">Conozco, acepto y me someto a las
@@ -628,7 +625,6 @@
             Atrás
         </button>
         @if ($accordance)
-
         <button type="submit"
             class="cursor-pointer mt-4 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center animate-slide-in-down">
             Finalizar y Enviar
@@ -637,7 +633,6 @@
     </div>
     @endif
 </form>
-
 <div wire:offline>
     You are now offline.
 </div>

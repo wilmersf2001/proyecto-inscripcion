@@ -1,31 +1,29 @@
 <div>
     <a wire:click="$set('showModal', true)"
         class="cursor-pointer inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto">SI</a>
-
     <a wire:click="$set('showModal', false)"
         class="cursor-pointer inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto">NO</a>
-
     @if ($showModal)
-
-    <div class="rounded-3xl ring-1 ring-gray-200 mb-10 animate-fade-in">
+    <div class="rounded-5xl ring-1 ring-gray-200 mb-10 animate-fade-in">
         <div class="-mt-2 p-2 lg:mt-0 lg:w-full">
             <div class="rounded-2xl bg-gray-50 py-6 lg:py-8 px-8">
                 <h2 class="text-base font-semibold leading-7 text-gray-900">Datos Familiares
                 </h2>
                 <label class="block mb-10">
-                            <span
-                                class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                                Categoria
-                            </span>
-                            <select
-                                class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                                <option class="hidden">Seleccionar</option>
-                                <option>1°grado de consanguinidad</option>
-                                <option>2°grado de consanguinidad</option>
-                                <option>3°grado de consanguinidad</option>
-                                <option>4°grado de consanguinidad</option>
-                            </select>
-                        </label>
+                    <span
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                        Categoria
+
+                    </span>
+                    <select wire:model="consanguinidad.categoria"
+                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option class="hidden">Seleccionar</option>
+                        <option>1°grado de consanguinidad</option>
+                        <option>2°grado de consanguinidad</option>
+                        <option>3°grado de consanguinidad</option>
+                        <option>4°grado de consanguinidad</option>
+                    </select>
+                </label>
                 <div class="relative">
                     <input type="search" name="num_documento_familiar"
                         wire:model="consanguinidad.num_documento_familiar"
@@ -41,9 +39,7 @@
                     </button>
                 </div>
                 <div class="flex justify-center mt-6">
-
                     <div class="w-full grid md:grid-cols-3 md:gap-6 animate-fade-in" wire:loading.remove>
-
                         <label class="block mb-3">
                             <span
                                 class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
@@ -72,9 +68,9 @@
                                 wire:model="consanguinidad.ap_materno_familiar"
                                 class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                         </label>
-                        <div class="flex justify-center w-full">
-                            <button type="button"
-                                class="cursor-pointer mt-4 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        <div class="flex justify-center md:col-span-3">
+                            <button type="button" wire:click="agregarFamiliar"
+                                class="cursor-pointer mt-0 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                 Agregar
                             </button>
                         </div>
@@ -82,30 +78,42 @@
                 </div>
             </div>
         </div>
-    </div>
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 animate-fade-in">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        DNI
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Nombre
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Apellidos
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Categoría
+                    </th>
+                </tr>
+            </thead>
 
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 animate-fade-in">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-            <tr>
-                <th scope="col" class="px-6 py-3">
-                    Nombre
-                </th>
-                <th scope="col" class="px-6 py-3 text-center">
-                    Apellidos
-                </th>
-                <th scope="col" class="px-6 py-3 text-center">
-                    Categoría
-                </th>
-            </tr>
-        </thead>
-    </table>
-    <div class="flex justify-end w-full">
-        <button type="button"
-            class="cursor-pointer mt-4 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-            Guardar
-        </button>
-    </div>
+            <tbody>
+                @foreach($familiares as $familiar)
+                <tr>
+                    <td class="text-center">{{ $familiar['dni'] }}</td>
+                    <td class="text-center">{{ $familiar['nombres'] }}</td>
+                    <td class="text-center">{{ $familiar['ap_paterno'] }} {{ $familiar['ap_materno'] }}</td>
+                    <td class="text-center">{{ $familiar['categoria'] }}</td>
+                </tr>
+                @endforeach
+            </tbody>
 
-</div>
-@endif
+        </table>
+        <div class="flex justify-end w-full">
+            <button type="button"
+                class="cursor-pointer mt-4 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                Guardar
+            </button>
+        </div>
+    </div>
+    @endif
 </div>
