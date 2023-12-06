@@ -4,17 +4,17 @@
     <div class="p-4 lg:flex-auto">
         <ul role="list" class="grid grid-cols-1 gap-4 text-xs leading-3 text-gray-600 sm:grid-cols-4 sm:gap-6">
             <li class="flex gap-x-3">
-                <p class="font-medium text-gray-900">Número de documento :</p> {{ $bank->num_doc_depo }}
+                <p class="font-medium text-gray-800">Número de documento :</p> {{ $bank->num_doc_depo }}
             </li>
             <li class="flex gap-x-3">
-                <p class="font-medium text-gray-900">Tipo de documento :</p>
+                <p class="font-medium text-gray-800">Tipo de documento :</p>
                 {{ $bank->tipo_doc_depo == 1 ? 'DNI' : 'Carnet de Extranjería' }}
             </li>
             <li class="flex gap-x-3">
-                <p class="font-medium text-gray-900">Número de Voucher :</p> {{ $bank->num_documento }}
+                <p class="font-medium text-gray-800">Número de Voucher :</p> {{ $bank->num_documento }}
             </li>
             <li class="flex gap-x-3">
-                <p class="font-medium text-gray-900">Importe :</p> S/. {{ $bank->importe }}
+                <p class="font-medium text-gray-800">Importe :</p> S/.{{ $bank->importe }}
             </li>
         </ul>
     </div>

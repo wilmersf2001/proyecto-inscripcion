@@ -5,7 +5,7 @@
 <div class="relative">
     <input type="search" name="num_documento_apoderado" wire:model="applicant.num_documento_apoderado"
         class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-gray-300 border focus:outline-none focus:border-sky-500 focus:ring-sky-500 rounded-md sm:text-sm focus:ring-1"
-        placeholder="Ingrese DNI del apoderado" required>
+        placeholder="Ingrese el numero de documento de identidad del apoderado" required>
     <button type="button" wire:click="getApoderadoDataByDni()"
         class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800">
         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">

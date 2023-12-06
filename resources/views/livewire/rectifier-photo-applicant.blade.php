@@ -116,7 +116,7 @@
         </div>
 
         <div class="border-t border-gray-200 px-4 py-6 sm:px-20">
-            <div class="mt-6 flex justify-end">
+            <div class="flex justify-end">
                 @if (!$errors->isEmpty())
                     <button type="button" wire:click="store"
                         class="rounded-md border border-transparent px-6 py-3 text-base font-medium bg-indigo-500 text-gray-200 border-slate-200 shadow-none">Rectificar

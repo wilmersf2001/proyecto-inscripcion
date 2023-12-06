@@ -284,7 +284,7 @@
 
             <td colspan="1" class="footer" align="center" style="padding-right: 60px">
                 <hr>
-                <p>Firma {{ $isMinor ? 'Apoderado' : 'Postulante' }}</p>
+                <p>Firma Postulante</p>
             </td>
         </tr>
     </table>

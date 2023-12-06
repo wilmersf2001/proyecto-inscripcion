@@ -9,7 +9,7 @@
                 para verificar el pago.</p>
 
             <div class="mt-8 flex items-center gap-x-4 mb-5">
-                <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">Información
+                <h4 class="flex-none text-base font-semibold leading-6 text-indigo-600">Información
                     de Postulación
                 </h4>
                 <div class="h-px flex-auto bg-gray-100"></div>
@@ -18,7 +18,7 @@
             <div class="grid md:grid-cols-2 md:gap-6">
                 <label class="block mb-6">
                     <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-gray-900 mr-2">
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-gray-900 mr-2">
                         Modalidad
                     </span>
                     <select name="modalityId" wire:model="modalityId"
@@ -34,7 +34,7 @@
                 </label>
                 <label class="block mb-6">
                     <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-gray-900 mr-2">
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-gray-900 mr-2">
                         Tipo de colegio de procedencia
                     </span>
                     <select name="typeSchoolId" wire:model="typeSchoolId"
@@ -48,7 +48,7 @@
             </div>
 
             <div class="mt-2 flex items-center gap-x-4 mb-5">
-                <h4 class="flex-none text-sm font-semibold leading-6 text-indigo-600">Información
+                <h4 class="flex-none text-base font-semibold leading-6 text-indigo-600">Información
                     de Pago
                 </h4>
                 <div class="h-px flex-auto bg-gray-100"></div>
@@ -57,7 +57,7 @@
             <div class="grid md:grid-cols-2 md:gap-6">
                 <label class="block mb-6">
                     <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-900">
                         Número de documento
                     </span>
                     <input type="text" name="numDocument" wire:model="numDocument" minlength="8" maxlength="9"
@@ -67,7 +67,7 @@
                 </label>
                 <label class="block mb-6">
                     <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-gray-900 mr-2">
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-gray-900 mr-2">
                         Número de voucher
                     </span>
                     <input type="text" name="voucherNumber" wire:model="voucherNumber" minlength="7" maxlength="7"
@@ -80,7 +80,7 @@
             <div class="grid md:grid-cols-2 md:gap-6">
                 <label class="block mb-6">
                     <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-900">
                         Número de agencia
                     </span>
                     <input type="text" name="agencyNumber" wire:model="agencyNumber" minlength="4" maxlength="4"
@@ -90,7 +90,7 @@
                 </label>
                 <label class="block mb-6">
                     <span
-                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-xs font-medium text-slate-900">
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-slate-900">
                         Fecha del pago
                     </span>
                     <input type="date" name="payDay" wire:model="payDay"

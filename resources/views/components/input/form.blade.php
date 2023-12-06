@@ -6,11 +6,11 @@
     'placeholder' => '',
     'maxlength' => 255,
     'disable' => 0,
-    'margin' => 'mb-10',
+    'margin' => 'mb-8',
 ])
 
 <label class="block {{ $margin }}">
-    <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+    <span class="block mb-2 text-sm font-medium text-gray-900">
         {{ $span }}
     </span>
     @if ($disable == 0)

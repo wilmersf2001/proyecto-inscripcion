@@ -7,8 +7,8 @@
 
     <ul role="list" class="grid gap-x-16 gap-y-8 sm:grid-cols-2 sm:gap-y-12 xl:col-span-2">
         <li class="rounded-2xl ring-1 ring-gray-200">
-            <div class="flex items-center gap-x-4 rounded-tl-2xl rounded-tr-2xl py-2 px-4 bg-blue-600">
-                <h4 class="flex-none text-sm font-bold leading-6 text-white"> DATOS PERSONALES</h4>
+            <div class="flex items-center gap-x-4 rounded-tl-2xl rounded-tr-2xl py-2 px-4 bg-sky-200">
+                <h4 class="flex-none text-sm font-semibold leading-6 text-sky-900"> DATOS PERSONALES</h4>
             </div>
             <dl class="grid grid-cols-1 gap-x-6 gap-y-4 py-4 px-6">
                 <div class="pt-2">
@@ -59,8 +59,9 @@
         </li>
 
         <li class="rounded-2xl ring-1 ring-gray-200">
-            <div class="flex items-center gap-x-4 rounded-tl-2xl rounded-tr-2xl py-2 px-4 bg-blue-600">
-                <h4 class="flex-none text-sm font-semibold leading-6 text-white"> LUGAR DE NACIMIENTO Y RESIDENCIA</h4>
+            <div class="flex items-center gap-x-4 rounded-tl-2xl rounded-tr-2xl py-2 px-4 bg-sky-200">
+                <h4 class="flex-none text-sm font-semibold leading-6 text-sky-900"> LUGAR DE NACIMIENTO Y RESIDENCIA
+                </h4>
             </div>
             <dl class="grid grid-cols-1 gap-x-6 gap-y-4 py-4 px-6">
                 <div class="pt-2">
@@ -106,8 +107,8 @@
         </li>
 
         <li class="rounded-2xl ring-1 ring-gray-200">
-            <div class="flex items-center gap-x-4 rounded-tl-2xl rounded-tr-2xl py-2 px-4 bg-blue-600">
-                <h4 class="flex-none text-sm font-semibold leading-6 text-white"> DATOS DE CONTACTO </h4>
+            <div class="flex items-center gap-x-4 rounded-tl-2xl rounded-tr-2xl py-2 px-4 bg-sky-200">
+                <h4 class="flex-none text-sm font-semibold leading-6 text-sky-900"> DATOS DE CONTACTO </h4>
             </div>
             <dl class="grid grid-cols-1 gap-x-6 gap-y-4 py-4 px-6">
                 <div class="pt-2">
@@ -135,8 +136,8 @@
         </li>
 
         <li class="rounded-2xl ring-1 ring-gray-200">
-            <div class="flex items-center gap-x-4 rounded-tl-2xl rounded-tr-2xl py-2 px-4 bg-blue-600">
-                <h4 class="flex-none text-sm font-semibold leading-6 text-white"> INFORMACIÓN ACADÉMICA </h4>
+            <div class="flex items-center gap-x-4 rounded-tl-2xl rounded-tr-2xl py-2 px-4 bg-sky-200">
+                <h4 class="flex-none text-sm font-semibold leading-6 text-sky-900"> INFORMACIÓN ACADÉMICA </h4>
             </div>
             <dl class="grid grid-cols-1 gap-x-6 gap-y-4 py-4 px-6">
                 <div class="pt-2">
@@ -175,8 +176,8 @@
         </li>
 
         <li class="rounded-2xl ring-1 ring-gray-200">
-            <div class="flex items-center gap-x-4 rounded-tl-2xl rounded-tr-2xl py-2 px-4 bg-blue-600">
-                <h4 class="flex-none text-sm font-semibold leading-6 text-white"> INFORMACIÓN DE POSTULACIÓN</h4>
+            <div class="flex items-center gap-x-4 rounded-tl-2xl rounded-tr-2xl py-2 px-4 bg-sky-200">
+                <h4 class="flex-none text-sm font-semibold leading-6 text-sky-900"> INFORMACIÓN DE POSTULACIÓN</h4>
             </div>
             <dl class="grid grid-cols-1 gap-x-6 gap-y-4 py-4 px-6">
                 <div class="pt-2">

@@ -23,7 +23,7 @@
 @elseif($currentStep == 2)
     <ol class="flex items-center w-full mb-4 sm:mb-5 justify-center">
         <li
-            class="flex w-full items-center text-green-600 after:content-[''] after:w-full after:h-1 after:border-b after:border-green-100 after:border-4 after:inline-block">
+            class="flex w-full items-center text-green-600  after:content-[''] after:w-full after:h-1 after:border-b after:border-green-100 after:border-4 after:inline-block">
             <div class="flex items-center justify-center w-10 h-10 bg-green-100 rounded-full lg:h-12 lg:w-12">
                 <x-icons.check />
             </div>

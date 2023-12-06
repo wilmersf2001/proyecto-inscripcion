@@ -16,23 +16,17 @@
                         </svg>
                     </div>
                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                        <h3 class="text-xl font-semibold leading-6 text-blue-950" id="modal-title">IMPORTANTE</h3>
+                        <h3 class="text-xl font-semibold leading-6 text-red-600" id="modal-title">IMPORTANTE</h3>
                         <div class="my-4">
-                            <p class="text-base text-gray-800">En las próximas horas se estará enviando a su correo
-                                electronico la constancia de inscripción al proceso de Admisión 2024-I
-                                La cual debera imprimir y canjearla por su carné de postulante en la Oficina General de
-                                Sistemas
-                                Informaticos y Administrativos.</p>
-                        </div>
-                        <div class="flex items-center p-4 text-sm text-gray-800 rounded-lg bg-gray-50" role="alert">
-                            <div>
-                                <span class="font-medium text-red-500">RECUERDA!</span> El proceso de postulación para el
-                                examen de admisión no ha finalizado
-                                completamente, luego
-                                de la inscripcion vía web, se validarán los archivos adjuntados para posteriormente generar
-                                su ficha de inscripción.
-                                Por favor, espere la confirmación de sus archivos de inscripción en su correo electrónico.
-                            </div>
+                            <p class="text-base text-gray-800">En las próximas horas se estará validando su inscripción, de
+                                encontrarse conforme se remitirá a su correo
+                                electrónico la <b>constancia de inscripción</b> al proceso de Admisión 2024-I (o descargarla
+                                <a href="http://127.0.0.1:8000/ficha-inscripcion" target="_blank"
+                                    class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">aquí</a>),
+                                <b>la cual deberá imprimir y canjearla por su carné de postulante</b> en la Oficina de
+                                Tecnología
+                                de la Información - Campus Universitario.
+                            </p>
                         </div>
                     </div>
                 </div>
