@@ -69,10 +69,7 @@
 
             <div class="rounded-3xl ring-1 ring-gray-200 mb-10 animate-fade-in mt-6">
                 <div class="-mt-2 p-2 lg:mt-0 lg:w-full">
-                    <div class="rounded-2xl bg-gray-50 py-6 lg:py-8 px-8">
-
-
-
+                    <div class="rounded-2xl bg-gray-50 py-4">
                         <div class="flow-root">
                             <div
                                 class="mt-6 grid gap-x-6 gap-y-10 grid-cols-1 {{ $numberPhotos == 3 ? 'lg:grid-cols-3' : ($numberPhotos == 2 ? 'sm:grid-cols-2' : '') }} xl:gap-x-8 justify-items-center">
@@ -80,7 +77,7 @@
                                     <div class="group relative flex flex-col items-center justify-center">
                                         <div class="flex items-end">
                                             <div
-                                                class="relative w-16 overflow-hidden rounded-md bg-gray-200 aspect-none lg:h-28 mr-2">
+                                                class="relative w-32 overflow-hidden rounded-md bg-gray-200 aspect-none lg:h-48 mr-2">
                                                 <div class="h-full w-full flex items-center">
                                                     @if ($photo['indicator'] == 0)
                                                         <img src="{{ asset($photo['url']) }}" alt=""
