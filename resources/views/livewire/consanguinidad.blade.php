@@ -16,18 +16,36 @@
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         Categoria
                     </span>
-                    <select wire:model="categoria"
+                    <select wire:model="categoria" wire:change="actualizarSubcategorias"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                        <option class="hidden">Seleccionar</option>
-                        <option>1° Grado de Consanguinidad</option>
-                        <option>2° Grado de Consanguinidad</option>
-                        <option>3° Grado de Consanguinidad</option>
-                        <option>4° Grado de Consanguinidad</option>
+                        <option value="" class="hidden">Seleccionar</option>
+                        @foreach ($categoria_parentescos as $categoria)
+                        <option value={{ $categoria->id }}>
+                            {{ $categoria->nombre }}
+                        </option>
+                        @endforeach
                     </select>
+
                     <x-input.error for="categoria" />
                 </label>
-                @if(in_array($categoria, ['2° Grado de Consanguinidad', '3° Grado de Consanguinidad', '4° Grado de Consanguinidad']))
-                @else
+                <label class="block mb-10">
+                    <span
+                        class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                        Tipo de parentesco
+                    </span>
+                    <select wire:model="subcategoria"
+                        class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
+                        <option value="" class="hidden">Seleccionar</option>
+                        @foreach ($subcategorias as $subcat)
+                        <option value="{{ $subcat->id }}">
+                            {{ $subcat->parentesco }}
+                        </option>
+                        @endforeach
+                    </select>
+
+                    <x-input.error for="subcategoria" />
+                </label>
+
                 <label class="block mb-2">
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
@@ -37,7 +55,7 @@
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                     <x-input.error for="dniFamiliar" />
                 </label>
-                @endif
+
                 <div class="flex justify-center mt-6">
                     <div class="w-full grid md:grid-cols-3 md:gap-6 animate-fade-in">
 
@@ -93,16 +111,22 @@
                     <th scope="col" class="px-6 py-3 text-center">
                         Categoría
                     </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Parentesco
+                    </th>
                 </tr>
             </thead>
-            @foreach ($familiares as $familiar)
-            <tr>
-                <td class="px-6 py-4 text-center">{{ $familiar['dni'] }}</td>
-                <td class="px-6 py-4 text-center">{{ $familiar['nombres'] }}</td>
-                <td class="px-6 py-4 text-center">{{ $familiar['ap_paterno'] }} {{ $familiar['ap_materno'] }}</td>
-                <td class="px-6 py-4 text-center">{{ $familiar['categoria'] }}</td>
-            </tr>
-            @endforeach
+            <tbody>
+                @foreach ($familiares as $familiar)
+                <tr>
+                    <td class="px-6 py-4 text-center">{{ $familiar['dni'] }}</td>
+                    <td class="px-6 py-4 text-center">{{ $familiar['nombres'] }}</td>
+                    <td class="px-6 py-4 text-center">{{ $familiar['ap_paterno'] }} {{ $familiar['ap_materno'] }}</td>
+                    <td class="px-6 py-4 text-center">{{ $familiar['categoria'] }}</td>
+                    <td class="px-6 py-4 text-center">{{ $familiar['parentesco'] }}</td>
+                </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
     @endif

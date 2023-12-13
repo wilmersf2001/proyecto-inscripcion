@@ -2,33 +2,78 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\CategoriaParentescos;
+use App\Models\Consanguinidad1;
 use Livewire\Component;
 use App\Http\Requests\View\Message\ValidateApplicant;
 
-class Consanguinidad extends Component {
+class Consanguinidad extends Component
+{
     public $showModal = false;
-    public $categoria;
     public $dniFamiliar;
     public $nombresFamiliar;
     public $apPaternoFamiliar;
     public $apMaternoFamiliar;
     public $familiares = [];
-    protected $rules = [
-        'categoria' => 'required',
-        'nombresFamiliar' => 'required',
-        'apPaternoFamiliar' => 'required',
-        'apMaternoFamiliar' => 'required',
-    ];
+    public $categoria_parentescos;
+    public $categoria;
+    public $subcategoria;
+    public $subcategorias = [];
 
     protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
-    public function toggleModal() {
-        $this->showModal = !$this->showModal;
+    public function mount()
+    {
+
+        $this->categoria_parentescos = CategoriaParentescos::all();
+        $this->subcategorias = Consanguinidad1::all();
+    }
+
+    public function actualizarSubcategorias()
+    {
+        if ($this->categoria) {
+            $this->subcategorias = Consanguinidad1::where('categoria_parentesco_id', $this->categoria)->get();
+        } else {
+            $this->subcategorias = [];
+        }
+    }
+    public function agregarFamiliar()
+    {
+        $rules = [
+            'nombresFamiliar' => 'required',
+            'apPaternoFamiliar' => 'required',
+            'apMaternoFamiliar' => 'required',
+            'categoria' => 'required',
+            'subcategoria' =>'required',
+        ];
+        if (!in_array($this->categoria, [2, 3, 4])) {
+            $rules['dniFamiliar'] = 'required';
+        }
+
+        $this->validate($rules);
+
+        $familiar = [
+            'dni' => $this->dniFamiliar,
+            'nombres' => $this->nombresFamiliar,
+            'ap_paterno' => $this->apPaternoFamiliar,
+            'ap_materno' => $this->apMaternoFamiliar,
+            'categoria' => CategoriaParentescos::find($this->categoria)->nombre,
+            'parentesco' => Consanguinidad1::find($this->subcategoria)->parentesco,
+        ];
+
+        $this->familiares[] = $familiar;
         $this->resetForm();
     }
 
-    public function resetForm() {
+    public function toggleModal()
+    {
+        $this->showModal = !$this->showModal;
+        $this->resetForm();
+    }
+    public function resetForm()
+    {
         $this->categoria = null;
+        $this->subcategoria= null;
         $this->dniFamiliar = null;
         $this->nombresFamiliar = null;
         $this->apPaternoFamiliar = null;
@@ -36,27 +81,18 @@ class Consanguinidad extends Component {
         $this->resetValidation();
     }
 
-    public function agregarFamiliar() {
-        if($this->categoria == '2° Grado de Consanguinidad' || $this->categoria == '3° Grado de Consanguinidad' || $this->categoria == '4° Grado de Consanguinidad') {
-            $this->rules['dniFamiliar'] = '';
-        } else {
-            $this->rules['dniFamiliar'] = 'required|max:8';
-        }
-        $this->validate($this->rules);
-        $familiar = [
-            'nombres' => $this->nombresFamiliar,
-            'ap_paterno' => $this->apPaternoFamiliar,
-            'ap_materno' => $this->apMaternoFamiliar,
-            'categoria' => $this->categoria,
-            'dni' => ($this->categoria != '2° Grado de Consanguinidad' && $this->categoria != '3° Grado de Consanguinidad' && $this->categoria != '4° Grado de Consanguinidad') ? $this->dniFamiliar : null,
-        ];
 
-        $this->familiares[] = $familiar;
-        $this->resetForm();
-    }
-
-    public function render() {
-        return view('livewire.consanguinidad');
+    public function render()
+    {
+       return view('livewire.consanguinidad');
     }
 }
+
+
+
+
+
+
+
+
 
