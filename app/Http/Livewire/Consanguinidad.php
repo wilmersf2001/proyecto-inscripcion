@@ -45,43 +45,37 @@ class Consanguinidad extends Component
             'apPaternoFamiliar' => 'required',
             'apMaternoFamiliar' => 'required',
             'categoria' => 'required',
-            'subcategoria' =>'required',
+            'subcategoria' => 'required',
         ];
+    
         if (!in_array($this->categoria, [2, 3, 4])) {
             $rules['dniFamiliar'] = 'required|numeric|digits:8';
         }
+    
         $this->validate($rules);
-
-         /* DatosFamiliares::create([
+    
+        $nombreCategoria = CategoriaParentescos::find($this->categoria)->nombre;
+        $this->familiar = DatosFamiliares::create([
             'dni_familiar' => $this->dniFamiliar,
             'nombres' => $this->nombresFamiliar,
             'apellidos' => $this->apPaternoFamiliar . ' ' . $this->apMaternoFamiliar,
-            'datos_categoria_id' => $this->categoria ?? 1,
-        ]);
-           $this->familiares = DatosFamiliares::all()->toArray(); */
-
-           $this->familiar = DatosFamiliares::create([
-            'dni_familiar' => $this->dniFamiliar,
-            'nombres' => $this->nombresFamiliar,
-            'apellidos' => $this->apPaternoFamiliar . ' ' . $this->apMaternoFamiliar,
-            /* 'datos_categoria_id' => CategoriaParentescos::find($this->categoria)->nombre, */
             'datos_categoria_id' => $this->categoria,
             'parentesco' => Consanguinidad1::find($this->subcategoria)->parentesco,
+           
         ]);
-
-           $this->familiares[] = [
+        $this->familiares[] = [
             'dni' => $this->dniFamiliar,
             'nombres' => $this->nombresFamiliar,
             'ap_paterno' => $this->apPaternoFamiliar,
             'ap_materno' => $this->apMaternoFamiliar,
-            /* 'categoria' => CategoriaParentescos::find($this->categoria)->nombre, */
-            'categoria' => $this->categoria,
+            'categoria' => $nombreCategoria, 
             'parentesco' => Consanguinidad1::find($this->subcategoria)->parentesco,
         ];
-
-       /*  $this->familiares[] = $familiar; */
+    
         $this->resetForm();
     }
+    
+    
     public function finalizar()
 {
     if (!empty($this->familiares)) {

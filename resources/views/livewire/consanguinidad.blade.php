@@ -115,6 +115,9 @@
                     <th scope="col" class="px-6 py-3 text-center">
                         Parentesco
                     </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Acción
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -125,6 +128,8 @@
                     <td class="px-6 py-4 text-center">{{ $familiar['ap_paterno'] }} {{ $familiar['ap_materno'] }}</td>
                     <td class="px-6 py-4 text-center">{{ $familiar['categoria'] }}</td>
                     <td class="px-6 py-4 text-center">{{ $familiar['parentesco'] }}</td>
+                    <td class="px-6 py-4 text-center">editar</td>
+                
                 </tr>
                 @endforeach
             </tbody>
