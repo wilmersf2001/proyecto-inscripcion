@@ -586,10 +586,10 @@
                 </div>
             </div>
             @if($accordance)
-            <p>
-                ¿Tienes algún familiar que esté trabajando en el proceso de admision?
-            </p>
-            @livewire('consanguinidad')
+            <li class="text-gray-400"><span class="text-gray-600">
+                    ¿Tienes algún familiar que esté trabajando en el proceso de admision?
+                </span></li>
+                @livewire('consanguinidad')
             @endif
             <div class="mt-4">
                 <ul role="list" class="list-disc space-y-2 pl-4 text-sm">

@@ -14,8 +14,13 @@ class DatosFamiliares extends Model
 
     protected $fillable = [
         'dni_familiar',
-        /* 'nombres',
-        'apellidos', */
+        'nombres',
+        'apellidos',
+       /*  'datos_categoria_id',
+ */
 
     ];
+   /*  public function CategoriaParentescos(){
+        return $this->belongsTo(CategoriaParentescos::class, 'datos_Categoria_id');
+    } */
 }

@@ -62,6 +62,8 @@ class Applicant extends Component
   public $showSchools = false;
   public $numberProcess = 0;
   public $isAgeMinor = false;
+
+  public $finalizarinscripcion=false;
   protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
   protected function rules()

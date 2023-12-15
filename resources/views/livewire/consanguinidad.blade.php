@@ -56,6 +56,7 @@
                     <x-input.error for="dniFamiliar" />
                 </label>
 
+
                 <div class="flex justify-center mt-6">
                     <div class="w-full grid md:grid-cols-3 md:gap-6 animate-fade-in">
 
