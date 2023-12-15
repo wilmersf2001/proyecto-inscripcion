@@ -16,8 +16,8 @@ class DatosFamiliares extends Model
         'dni_familiar',
         'nombres',
         'apellidos',
-       /*  'datos_categoria_id',
- */
+        'datos_categoria_id',
+
 
     ];
    /*  public function CategoriaParentescos(){

@@ -60,27 +60,28 @@ class Consanguinidad extends Component
         ]);
            $this->familiares = DatosFamiliares::all()->toArray(); */
 
-           $familiar = DatosFamiliares::create([
+           $this->familiar = DatosFamiliares::create([
             'dni_familiar' => $this->dniFamiliar,
             'nombres' => $this->nombresFamiliar,
             'apellidos' => $this->apPaternoFamiliar . ' ' . $this->apMaternoFamiliar,
-            'datos_categoria_id' => CategoriaParentescos::find($this->categoria)->nombre,
+            /* 'datos_categoria_id' => CategoriaParentescos::find($this->categoria)->nombre, */
+            'datos_categoria_id' => $this->categoria,
             'parentesco' => Consanguinidad1::find($this->subcategoria)->parentesco,
         ]);
 
-           $familiar = [
+           $this->familiares[] = [
             'dni' => $this->dniFamiliar,
             'nombres' => $this->nombresFamiliar,
             'ap_paterno' => $this->apPaternoFamiliar,
             'ap_materno' => $this->apMaternoFamiliar,
-            'categoria' => CategoriaParentescos::find($this->categoria)->nombre,
+            /* 'categoria' => CategoriaParentescos::find($this->categoria)->nombre, */
+            'categoria' => $this->categoria,
             'parentesco' => Consanguinidad1::find($this->subcategoria)->parentesco,
         ];
 
-        $this->familiares[] = $familiar;
+       /*  $this->familiares[] = $familiar; */
         $this->resetForm();
     }
-
     public function finalizar()
 {
     if (!empty($this->familiares)) {
@@ -96,10 +97,7 @@ class Consanguinidad extends Component
         }
         $this->familiares = [];
     }
-
-
 }
-
 
 
     public function toggleModal()
