@@ -19,8 +19,13 @@ class DatosFamiliares extends Model
         'datos_categoria_id',
 
 
+     
     ];
    /*  public function CategoriaParentescos(){
         return $this->belongsTo(CategoriaParentescos::class, 'datos_Categoria_id');
     } */
 }
+
+
+
+

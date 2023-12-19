@@ -11,6 +11,10 @@ use App\Http\Requests\View\Message\ValidateApplicant;
 class Consanguinidad extends Component
 {
     public $showModal = false;
+
+    public $familiarIndex;
+    public $nuevoNombre;
+
     public $dniFamiliar;
     public $nombresFamiliar;
     public $apPaternoFamiliar;
@@ -47,13 +51,13 @@ class Consanguinidad extends Component
             'categoria' => 'required',
             'subcategoria' => 'required',
         ];
-    
+
         if (!in_array($this->categoria, [2, 3, 4])) {
             $rules['dniFamiliar'] = 'required|numeric|digits:8';
         }
-    
+
         $this->validate($rules);
-    
+
         $nombreCategoria = CategoriaParentescos::find($this->categoria)->nombre;
         $this->familiar = DatosFamiliares::create([
             'dni_familiar' => $this->dniFamiliar,
@@ -61,38 +65,56 @@ class Consanguinidad extends Component
             'apellidos' => $this->apPaternoFamiliar . ' ' . $this->apMaternoFamiliar,
             'datos_categoria_id' => $this->categoria,
             'parentesco' => Consanguinidad1::find($this->subcategoria)->parentesco,
-           
+
         ]);
         $this->familiares[] = [
+
+            'id' => $this->familiar->id,
             'dni' => $this->dniFamiliar,
             'nombres' => $this->nombresFamiliar,
             'ap_paterno' => $this->apPaternoFamiliar,
             'ap_materno' => $this->apMaternoFamiliar,
-            'categoria' => $nombreCategoria, 
+            'categoria' => $nombreCategoria,
             'parentesco' => Consanguinidad1::find($this->subcategoria)->parentesco,
         ];
-    
+
         $this->resetForm();
     }
-    
-    
-    public function finalizar()
-{
-    if (!empty($this->familiares)) {
 
-        foreach ($this->familiares as $familiar) {
-           DatosFamiliares::create([
-                'dni_familiar' => $familiar['dni'],
-                'nombres' => $familiar['nombres'],
-                'apellidos' => $this->apPaternoFamiliar . ' ' . $this->apMaternoFamiliar,
-                'datos_categoria_id' => $familiar['categoria'],
-                'parentesco' => $familiar['parentesco'],
-            ]);
-        }
-        $this->familiares = [];
+
+    public function editarFamiliar($index)
+    {
+        $this->familiarIndex = $index;
+        $this->nuevoNombre = $this->familiares[$index]['nombres'];
+        $this->nuevodni = $this->familiares[$index]['dni'];
+        $this->nuevoApellidos = $this->familiares[$index]['ap_paterno'] . ' ' . $this->familiares[$index]['ap_materno'];
+        $this->nuevaCategoria = $this->familiares[$index]['categoria'];
     }
-}
 
+    public function guardarFamiliar($index)
+    {
+
+        $this->familiares[$index]['nombres'] = $this->nuevoNombre;
+        $this->familiares[$index]['dni'] = $this->nuevodni;
+        $apellidosSeparados = explode(' ', $this->nuevoApellidos);
+        $this->familiares[$index]['ap_paterno'] = $apellidosSeparados[0];
+        $this->familiares[$index]['ap_materno'] = $apellidosSeparados[1] ?? '';
+        $this->familiares[$index]['categoria'] = $this->nuevaCategoria;
+
+
+        $familiar = DatosFamiliares::find($this->familiares[$index]['id']);
+        $familiar->nombres = $this->nuevoNombre;
+        $familiar->dni_familiar = $this->nuevodni;
+        $familiar->apellidos = $this->nuevoApellidos;
+        $familiar->datos_categoria_id = $this->nuevaCategoria;
+       
+        $familiar->save();
+
+
+        $this->resetForm();
+
+        $this->familiarIndex = null;
+    }
 
     public function toggleModal()
     {
@@ -102,7 +124,7 @@ class Consanguinidad extends Component
     public function resetForm()
     {
         $this->categoria = null;
-        $this->subcategoria= null;
+        $this->subcategoria = null;
         $this->dniFamiliar = null;
         $this->nombresFamiliar = null;
         $this->apPaternoFamiliar = null;
@@ -110,12 +132,12 @@ class Consanguinidad extends Component
         $this->resetValidation();
     }
 
-
     public function render()
     {
-       return view('livewire.consanguinidad');
+        return view('livewire.consanguinidad');
     }
 }
+
 
 
 

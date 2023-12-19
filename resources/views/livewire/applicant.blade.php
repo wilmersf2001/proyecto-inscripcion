@@ -1,5 +1,4 @@
 <div class="p-4 xl:p-6">
-
     <x-step-by-step :currentStep="$currentStep" />
     <div class="flex h-6 items-center">
         <input id="accordance" name="accordance" type="checkbox" wire:model="accordance"

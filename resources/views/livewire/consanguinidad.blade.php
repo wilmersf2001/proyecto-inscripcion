@@ -121,15 +121,48 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($familiares as $familiar)
+                @foreach ($familiares as $index => $familiar)
                 <tr>
-                    <td class="px-6 py-4 text-center">{{ $familiar['dni'] }}</td>
-                    <td class="px-6 py-4 text-center">{{ $familiar['nombres'] }}</td>
-                    <td class="px-6 py-4 text-center">{{ $familiar['ap_paterno'] }} {{ $familiar['ap_materno'] }}</td>
-                    <td class="px-6 py-4 text-center">{{ $familiar['categoria'] }}</td>
+                    <td class="px-6 py-4 text-center">
+                        @if ($familiarIndex !== $index)
+                        {{ $familiar['dni'] }}
+                        @else
+                        <input wire:model="nuevodni" type="text">
+                        @endif
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        @if ($familiarIndex !== $index)
+                        {{ $familiar['nombres'] }}
+                        @else
+                        <input wire:model="nuevoNombre" type="text">
+                        @endif
+                    </td>
+
+                    <td class="px-6 py-4 text-center"> @if ($familiarIndex !== $index)
+                        {{ $familiar['ap_paterno'] }} {{ $familiar['ap_materno'] }}
+                        @else
+                        <input wire:model="nuevoApellidos" type="text">
+                        @endif
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        @if ($familiarIndex !== $index)
+                        {{ $familiar['categoria'] }}
+                        @else
+                        <select wire:model="nuevaCategoria">
+                            @foreach ($categoria_parentescos as $categoria)
+                            <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                            @endforeach
+                        </select>
+                        @endif
+                    </td>
                     <td class="px-6 py-4 text-center">{{ $familiar['parentesco'] }}</td>
-                    <td class="px-6 py-4 text-center">editar</td>
-                
+                    <td class="px-6 py-4 text-center">
+                        @if ($familiarIndex !== $index)
+                        <button wire:click="editarFamiliar({{ $index }})">Editar</button>
+                        @else
+                        <button wire:click="guardarFamiliar({{ $index }})">Guardar</button>
+                        @endif
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
