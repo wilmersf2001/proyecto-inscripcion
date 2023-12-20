@@ -89,7 +89,12 @@ class Consanguinidad extends Component
         $this->nuevodni = $this->familiares[$index]['dni'];
         $this->nuevoApellidos = $this->familiares[$index]['ap_paterno'] . ' ' . $this->familiares[$index]['ap_materno'];
         $this->nuevaCategoria = $this->familiares[$index]['categoria'];
+        $this->parentescosCategoria = Consanguinidad1::where('categoria_parentesco_id', $this->nuevaCategoria)->get();
+        $this->nuevoParentesco = $this->familiares[$index]['parentesco'];
     }
+    
+
+
 
     public function guardarFamiliar($index)
     {
@@ -100,6 +105,8 @@ class Consanguinidad extends Component
         $this->familiares[$index]['ap_paterno'] = $apellidosSeparados[0];
         $this->familiares[$index]['ap_materno'] = $apellidosSeparados[1] ?? '';
         $this->familiares[$index]['categoria'] = $this->nuevaCategoria;
+      
+        $this->familiares[$index]['parentesco'] = $this->nuevoParentesco;
 
 
         $familiar = DatosFamiliares::find($this->familiares[$index]['id']);
@@ -107,10 +114,8 @@ class Consanguinidad extends Component
         $familiar->dni_familiar = $this->nuevodni;
         $familiar->apellidos = $this->nuevoApellidos;
         $familiar->datos_categoria_id = $this->nuevaCategoria;
-       
+     
         $familiar->save();
-
-
         $this->resetForm();
 
         $this->familiarIndex = null;

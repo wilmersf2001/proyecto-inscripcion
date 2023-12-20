@@ -13,6 +13,7 @@
         ¿tienes familiares en el proceso de admision?
     </p>
     @livewire('consanguinidad')
+    
     @endif
     @if ($currentStep < 3) <div
         class="mx-auto mb-8 max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none bg-gray-50 md:mb-10">

@@ -155,7 +155,18 @@
                         </select>
                         @endif
                     </td>
-                    <td class="px-6 py-4 text-center">{{ $familiar['parentesco'] }}</td>
+                    <td class="px-6 py-4 text-center">
+    @if ($familiarIndex !== $index)
+        {{ $familiar['parentesco'] }}
+    @else
+        <select wire:model="nuevoParentesco">
+            @foreach ($parentescosCategoria as $parentesco)
+                <option value="{{ $parentesco->id }}">{{ $parentesco->parentesco }}</option>
+            @endforeach
+        </select>
+    @endif
+</td>
+
                     <td class="px-6 py-4 text-center">
                         @if ($familiarIndex !== $index)
                         <button wire:click="editarFamiliar({{ $index }})">Editar</button>
