@@ -46,16 +46,16 @@
                     <x-input.error for="subcategoria" />
                 </label>
 
-                <label class="block mb-2">
+                <label class="block mb-2" @if (in_array($this->categoria, [2, 3, 4])) style="display:none" @endif>
                     <span
                         class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                         DNI
                     </span>
+
                     <input wire:model="dniFamiliar" type="text" name="dni_familiar" maxlength="8"
                         class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                     <x-input.error for="dniFamiliar" />
                 </label>
-
 
                 <div class="flex justify-center mt-6">
                     <div class="w-full grid md:grid-cols-3 md:gap-6 animate-fade-in">
@@ -97,87 +97,35 @@
                 </div>
             </div>
         </div>
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 animate-fade-in">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+
+        <table class="min-w-full bg-white border border-gray-300">
+            <thead>
                 <tr>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        DNI
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Nombre
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Apellidos
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Categoría
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Parentesco
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Acción
-                    </th>
+                    <th class="px-6 py-3 bg-gray-100">DNI</th>
+                    <th class="px-6 py-3 bg-gray-100">Nombres</th>
+                    <th class="px-6 py-3 bg-gray-100">Apellidos</th>
+                    <th class="px-6 py-3 bg-gray-100">Categoría</th>
+                    <th class="px-6 py-3 bg-gray-100">Parentesco</th>
+                    <th class="px-6 py-3 bg-gray-100">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($familiares as $index => $familiar)
                 <tr>
-                    <td class="px-6 py-4 text-center">
-                        @if ($familiarIndex !== $index)
-                        {{ $familiar['dni'] }}
-                        @else
-                        <input wire:model="nuevodni" type="text">
-                        @endif
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        @if ($familiarIndex !== $index)
-                        {{ $familiar['nombres'] }}
-                        @else
-                        <input wire:model="nuevoNombre" type="text">
-                        @endif
+                    <td class="px-6 py-3 text-center">{{ $familiar['dni'] }}</td>
+                    <td class="px-6 py-3 text-center">{{ $familiar['nombres'] }}</td>
+                    <td class="px-6 py-3 text-center">{{ $familiar['ap_paterno'] }} {{ $familiar['ap_materno'] }}</td>
+                    <td class="px-6 py-3 text-center">{{ $familiar['categoria'] }}</td>
+                    <td class="px-6 py-3 text-center">{{ $familiar['subcategoria'] }}</td>
+                    <td class="px-6 py-3 text-center">
+                        <button wire:click.prevent="editarFamiliar({{ $index }})"
+                            class="text-blue-600 hover:underline">Editar</button>
                     </td>
 
-                    <td class="px-6 py-4 text-center"> @if ($familiarIndex !== $index)
-                        {{ $familiar['ap_paterno'] }} {{ $familiar['ap_materno'] }}
-                        @else
-                        <input wire:model="nuevoApellidos" type="text">
-                        @endif
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        @if ($familiarIndex !== $index)
-                        {{ $familiar['categoria'] }}
-                        @else
-                        <select wire:model="nuevaCategoria">
-                            @foreach ($categoria_parentescos as $categoria)
-                            <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
-                            @endforeach
-                        </select>
-                        @endif
-                    </td>
-                    <td class="px-6 py-4 text-center">
-    @if ($familiarIndex !== $index)
-        {{ $familiar['parentesco'] }}
-    @else
-        <select wire:model="nuevoParentesco">
-            @foreach ($parentescosCategoria as $parentesco)
-                <option value="{{ $parentesco->id }}">{{ $parentesco->parentesco }}</option>
-            @endforeach
-        </select>
-    @endif
-</td>
-
-                    <td class="px-6 py-4 text-center">
-                        @if ($familiarIndex !== $index)
-                        <button wire:click="editarFamiliar({{ $index }})">Editar</button>
-                        @else
-                        <button wire:click="guardarFamiliar({{ $index }})">Guardar</button>
-                        @endif
-                    </td>
+                   <!--  <button wire:click.prevent="finalizar">Finalizar</button> -->
                 </tr>
                 @endforeach
             </tbody>
         </table>
+        @endif
     </div>
-    @endif
-</div>

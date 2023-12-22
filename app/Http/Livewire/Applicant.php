@@ -22,6 +22,7 @@ use App\Models\Banco;
 use App\Models\Colegio;
 use App\Models\Proceso;
 use App\Utils\Constants;
+use App\Models\DatosFamiliares; // Add this line for DatosFamiliares model
 
 class Applicant extends Component
 {
@@ -140,6 +141,7 @@ class Applicant extends Component
     $this->applicant->ap_paterno_apoderado = null;
     $this->applicant->ap_materno_apoderado = null;
   }
+
 
   private function searchSchools()
   {
@@ -267,3 +269,6 @@ class Applicant extends Component
     $this->currentStep--;
   }
 }
+
+
+

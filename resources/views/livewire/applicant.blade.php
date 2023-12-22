@@ -1,6 +1,6 @@
 <div class="p-4 xl:p-6">
     <x-step-by-step :currentStep="$currentStep" />
-    <div class="flex h-6 items-center">
+    <!-- <div class="flex h-6 items-center">
         <input id="accordance" name="accordance" type="checkbox" wire:model="accordance"
             class="h-4 w-4 rounded text-indigo-600 focus:ring-indigo-600">
     </div>
@@ -14,7 +14,7 @@
     </p>
     @livewire('consanguinidad')
     
-    @endif
+    @endif -->
     @if ($currentStep < 3) <div
         class="mx-auto mb-8 max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none bg-gray-50 md:mb-10">
         <div class="p-4 lg:flex-auto">
@@ -43,6 +43,7 @@
     <input type="hidden" name="tipo_documento" value="{{ $bank->tipo_doc_depo }}">
     <input type="hidden" name="num_voucher" value="{{ $bank->num_documento }}">
     <input type="hidden" name="modalidad_id" value="{{ $applicant->modalidad_id }}">
+    
     <div class="{{ $currentStep == 1 ? 'animate-slide-in-left' : 'hidden' }}">
         <div class="my-8 flex items-center gap-x-4">
             <h4 class="flex-none text-lg font-medium leading-none  text-indigo-600">Datos Personales Postulante</h4>
@@ -625,7 +626,7 @@
             Atrás
         </button>
         @if ($accordance)
-        <button type="submit"
+        <button type="button" wire:click="finalizar"
             class="cursor-pointer mt-4 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center animate-slide-in-down">
             Finalizar y Enviar
         </button>

@@ -11,10 +11,6 @@ use App\Http\Requests\View\Message\ValidateApplicant;
 class Consanguinidad extends Component
 {
     public $showModal = false;
-
-    public $familiarIndex;
-    public $nuevoNombre;
-
     public $dniFamiliar;
     public $nombresFamiliar;
     public $apPaternoFamiliar;
@@ -24,12 +20,12 @@ class Consanguinidad extends Component
     public $categoria;
     public $subcategoria;
     public $subcategorias = [];
+    public $editIndex = null; 
 
     protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
     public function mount()
     {
-
         $this->categoria_parentescos = CategoriaParentescos::all();
         $this->subcategorias = Consanguinidad1::all();
     }
@@ -42,6 +38,7 @@ class Consanguinidad extends Component
             $this->subcategorias = [];
         }
     }
+
     public function agregarFamiliar()
     {
         $rules = [
@@ -59,82 +56,82 @@ class Consanguinidad extends Component
         $this->validate($rules);
 
         $nombreCategoria = CategoriaParentescos::find($this->categoria)->nombre;
-        $this->familiar = DatosFamiliares::create([
-            'dni_familiar' => $this->dniFamiliar,
-            'nombres' => $this->nombresFamiliar,
-            'apellidos' => $this->apPaternoFamiliar . ' ' . $this->apMaternoFamiliar,
-            'datos_categoria_id' => $this->categoria,
-            'parentesco' => Consanguinidad1::find($this->subcategoria)->parentesco,
+        $nombreParentesco = Consanguinidad1::find($this->subcategoria)->parentesco;
 
-        ]);
-        $this->familiares[] = [
-
-            'id' => $this->familiar->id,
+        $nuevoFamiliar = [
             'dni' => $this->dniFamiliar,
             'nombres' => $this->nombresFamiliar,
             'ap_paterno' => $this->apPaternoFamiliar,
             'ap_materno' => $this->apMaternoFamiliar,
-            'categoria' => $nombreCategoria,
-            'parentesco' => Consanguinidad1::find($this->subcategoria)->parentesco,
+            'categoria' => $nombreCategoria, 
+            'subcategoria' => $nombreParentesco, 
         ];
+
+        if ($this->editIndex !== null) {
+          
+            $this->familiares[$this->editIndex] = $nuevoFamiliar;
+            $this->editIndex = null; 
+        } else {
+            $this->familiares[] = $nuevoFamiliar;
+        }
 
         $this->resetForm();
     }
-
 
     public function editarFamiliar($index)
     {
-        $this->familiarIndex = $index;
-        $this->nuevoNombre = $this->familiares[$index]['nombres'];
-        $this->nuevodni = $this->familiares[$index]['dni'];
-        $this->nuevoApellidos = $this->familiares[$index]['ap_paterno'] . ' ' . $this->familiares[$index]['ap_materno'];
-        $this->nuevaCategoria = $this->familiares[$index]['categoria'];
-        $this->parentescosCategoria = Consanguinidad1::where('categoria_parentesco_id', $this->nuevaCategoria)->get();
-        $this->nuevoParentesco = $this->familiares[$index]['parentesco'];
-    }
-    
-
-
-
-    public function guardarFamiliar($index)
-    {
-
-        $this->familiares[$index]['nombres'] = $this->nuevoNombre;
-        $this->familiares[$index]['dni'] = $this->nuevodni;
-        $apellidosSeparados = explode(' ', $this->nuevoApellidos);
-        $this->familiares[$index]['ap_paterno'] = $apellidosSeparados[0];
-        $this->familiares[$index]['ap_materno'] = $apellidosSeparados[1] ?? '';
-        $this->familiares[$index]['categoria'] = $this->nuevaCategoria;
       
-        $this->familiares[$index]['parentesco'] = $this->nuevoParentesco;
+        $familiar = $this->familiares[$index];
+        $this->editIndex = $index;
+
+        $this->dniFamiliar = $familiar['dni'];
+        $this->nombresFamiliar = $familiar['nombres'];
+        $this->apPaternoFamiliar = $familiar['ap_paterno'];
+        $this->apMaternoFamiliar = $familiar['ap_materno'];
+        $this->categoria = $familiar['categoria'];
+        $this->subcategoria = $familiar['subcategoria'];
 
 
-        $familiar = DatosFamiliares::find($this->familiares[$index]['id']);
-        $familiar->nombres = $this->nuevoNombre;
-        $familiar->dni_familiar = $this->nuevodni;
-        $familiar->apellidos = $this->nuevoApellidos;
-        $familiar->datos_categoria_id = $this->nuevaCategoria;
-     
-        $familiar->save();
-        $this->resetForm();
-
-        $this->familiarIndex = null;
+        $categoriaModel = CategoriaParentescos::where('nombre', $this->categoria)->first();
+        $this->categoria = $categoriaModel ? $categoriaModel->id : null;
+        $subcategoriaModel = Consanguinidad1::where('parentesco', $this->subcategoria)->first();
+        $this->subcategoria = $subcategoriaModel ? $subcategoriaModel->id : null;
     }
 
-    public function toggleModal()
+
+    public function finalizar()
     {
-        $this->showModal = !$this->showModal;
-        $this->resetForm();
+        try {
+            foreach ($this->familiares as $familiar) {
+                DatosFamiliares::create([
+                    'dni_familiar' => $familiar['dni'],
+                    'nombres' => $familiar['nombres'],
+                    'apellidos' => $familiar['ap_paterno'] . ' ' . $familiar['ap_materno'],
+                    'datos_categoria_id' => $this->getCategoriaId($familiar['categoria']),
+                ]);
+            }
+            $this->familiares = [];
+            $this->resetForm();
+            $this->showModal = false;
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+        }
     }
+
+    private function getCategoriaId($nombreCategoria)
+    {
+        $categoriaModel = CategoriaParentescos::where('nombre', $nombreCategoria)->first();
+        return $categoriaModel ? $categoriaModel->id : null;
+    }
+
     public function resetForm()
     {
-        $this->categoria = null;
-        $this->subcategoria = null;
-        $this->dniFamiliar = null;
-        $this->nombresFamiliar = null;
-        $this->apPaternoFamiliar = null;
-        $this->apMaternoFamiliar = null;
-        $this->resetValidation();
+        $this->dniFamiliar = '';
+        $this->nombresFamiliar = '';
+        $this->apPaternoFamiliar = '';
+        $this->apMaternoFamiliar = '';
+        $this->categoria = '';
+        $this->subcategoria = '';
     }
 
     public function render()
@@ -142,13 +139,5 @@ class Consanguinidad extends Component
         return view('livewire.consanguinidad');
     }
 }
-
-
-
-
-
-
-
-
 
 

@@ -17,6 +17,7 @@ class DatosFamiliares extends Model
         'nombres',
         'apellidos',
         'datos_categoria_id',
+       
 
 
      
