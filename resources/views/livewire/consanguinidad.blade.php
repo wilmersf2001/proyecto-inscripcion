@@ -1,5 +1,5 @@
 <div>
-    <a wire:click="$set('showModal', true)"
+    <a  id="accordance" wire:click="$set('showModal', true)"
         class="cursor-pointer inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto mb-7">SI</a>
     <a wire:click="$set('showModal', false)"
         class="cursor-pointer inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto mb-7">NO</a>
@@ -88,11 +88,19 @@
                             <x-input.error for="apMaternoFamiliar" />
                         </label>
                         <div class="flex justify-center md:col-span-3">
+                            @if ($modoEdicion)
+                            <button type="button" wire:click="agregarFamiliar"
+                            class="cursor-pointer mt-0 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                Modificar
+                            </button>
+                            @else
                             <button type="button" wire:click="agregarFamiliar"
                                 class="cursor-pointer mt-0 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                 Agregar
                             </button>
+                            @endif
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -118,11 +126,12 @@
                     <td class="px-6 py-3 text-center">{{ $familiar['categoria'] }}</td>
                     <td class="px-6 py-3 text-center">{{ $familiar['subcategoria'] }}</td>
                     <td class="px-6 py-3 text-center">
-                        <button wire:click.prevent="editarFamiliar({{ $index }})"
-                            class="text-blue-600 hover:underline">Editar</button>
+                        <button wire:click.prevent="editarFamiliar({{ $index }})" class="text-blue-600 hover:underline">
+                            <x-icons.pencil flag='0' size='5' />
+                        </button>
                     </td>
 
-                   <!--  <button wire:click.prevent="finalizar">Finalizar</button> -->
+                    <!--  <button wire:click.prevent="finalizar">Finalizar</button> -->
                 </tr>
                 @endforeach
             </tbody>

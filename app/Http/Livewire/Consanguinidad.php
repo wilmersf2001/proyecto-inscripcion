@@ -20,7 +20,8 @@ class Consanguinidad extends Component
     public $categoria;
     public $subcategoria;
     public $subcategorias = [];
-    public $editIndex = null; 
+    public $editIndex = null;
+    public $modoEdicion = false;
 
     protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
@@ -63,14 +64,14 @@ class Consanguinidad extends Component
             'nombres' => $this->nombresFamiliar,
             'ap_paterno' => $this->apPaternoFamiliar,
             'ap_materno' => $this->apMaternoFamiliar,
-            'categoria' => $nombreCategoria, 
-            'subcategoria' => $nombreParentesco, 
+            'categoria' => $nombreCategoria,
+            'subcategoria' => $nombreParentesco,
         ];
 
         if ($this->editIndex !== null) {
-          
+
             $this->familiares[$this->editIndex] = $nuevoFamiliar;
-            $this->editIndex = null; 
+            $this->editIndex = null;
         } else {
             $this->familiares[] = $nuevoFamiliar;
         }
@@ -80,7 +81,7 @@ class Consanguinidad extends Component
 
     public function editarFamiliar($index)
     {
-      
+
         $familiar = $this->familiares[$index];
         $this->editIndex = $index;
 
@@ -96,6 +97,8 @@ class Consanguinidad extends Component
         $this->categoria = $categoriaModel ? $categoriaModel->id : null;
         $subcategoriaModel = Consanguinidad1::where('parentesco', $this->subcategoria)->first();
         $this->subcategoria = $subcategoriaModel ? $subcategoriaModel->id : null;
+
+        $this->modoEdicion = true;
     }
 
 
@@ -132,6 +135,8 @@ class Consanguinidad extends Component
         $this->apMaternoFamiliar = '';
         $this->categoria = '';
         $this->subcategoria = '';
+
+        $this->modoEdicion = false;
     }
 
     public function render()
