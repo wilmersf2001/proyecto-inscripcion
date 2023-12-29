@@ -17,14 +17,12 @@ class DatosFamiliares extends Model
         'nombres',
         'apellidos',
         'datos_categoria_id',
-       
+        'datos_postulante_id',
 
-
-     
     ];
-   /*  public function CategoriaParentescos(){
-        return $this->belongsTo(CategoriaParentescos::class, 'datos_Categoria_id');
-    } */
+    public function IdPostulante(){
+        return $this->belongsTo(Postulante::class, 'datos_postulante_id');
+    }
 }
 
 

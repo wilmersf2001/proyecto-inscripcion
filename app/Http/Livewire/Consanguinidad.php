@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\CategoriaParentescos;
 use App\Models\Consanguinidad1;
 use App\Models\DatosFamiliares;
+use App\Models\Postulante;
 use Livewire\Component;
 use App\Http\Requests\View\Message\ValidateApplicant;
 
@@ -138,7 +139,6 @@ class Consanguinidad extends Component
 
         $this->modoEdicion = false;
     }
-
     public function render()
     {
         return view('livewire.consanguinidad');

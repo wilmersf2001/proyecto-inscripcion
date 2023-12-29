@@ -22,6 +22,7 @@ use App\Models\Banco;
 use App\Models\Colegio;
 use App\Models\Proceso;
 use App\Utils\Constants;
+use App\Models\Consanguinidad1;
 use App\Models\DatosFamiliares; // Add this line for DatosFamiliares model
 
 class Applicant extends Component
@@ -63,9 +64,6 @@ class Applicant extends Component
   public $showSchools = false;
   public $numberProcess = 0;
   public $isAgeMinor = false;
-
-  public $acceptance = false;
-
   public $finalizarinscripcion=false;
   protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
@@ -143,8 +141,6 @@ class Applicant extends Component
     $this->applicant->ap_paterno_apoderado = null;
     $this->applicant->ap_materno_apoderado = null;
   }
-
-
   private function searchSchools()
   {
     if ($this->selectedDistrictOriginSchoolId) {
@@ -163,7 +159,6 @@ class Applicant extends Component
       $this->setFlashIfDistrictNotSelected();
     }
   }
-
   private function isModalidadTituladoTraslado()
   {
     return in_array($this->applicant->modalidad_id, Constants::ESTADO_TITULADO_TRASLADO);
@@ -175,14 +170,12 @@ class Applicant extends Component
       session()->flash('null', 'Colegio no encontrado.');
     }
   }
-
   private function setFlashIfDistrictNotSelected()
   {
     if (!$this->selectedDistrictOriginSchoolId && $this->searchSchoolName != null) {
       session()->flash('null', 'Seleccione el distrito de procedencia.');
     }
   }
-
   public function changePlaceBirth(string $action, int $idlocation)
   {
     if ($action == 'DEPARTMENT') {
@@ -195,7 +188,6 @@ class Applicant extends Component
     }
     $this->applicant->distrito_nac_id = null;
   }
-
   public function changePlaceReside(string $action, int $idlocation)
   {
     if ($action == 'DEPARTMENT') {
@@ -208,7 +200,6 @@ class Applicant extends Component
     }
     $this->applicant->distrito_res_id = null;
   }
-
   public function changePlaceOriginSchool(string $action, int $idlocation)
   {
     if ($action == 'DEPARTMENT') {
@@ -230,7 +221,6 @@ class Applicant extends Component
     $this->selectedProvinceOriginSchoolId = $this->provincesOriginSchool->first()->id;
     $this->selectedDistrictOriginSchoolId = $this->districtsOriginSchool->first()->id;
   }
-
   public function updateSchool(int $idSchool)
   {
     $school = Colegio::find($idSchool);
@@ -238,7 +228,6 @@ class Applicant extends Component
     $this->applicant->colegio_id = $school->id;
     $this->showSchools = false;
   }
-
   public function nextStep()
   {
     if ($this->currentStep == 1) {
@@ -261,10 +250,17 @@ class Applicant extends Component
       $this->validate($rules);
     } elseif ($this->currentStep == 3) {
       $this->validate(StepThreeApplicantRequest::SETEP_TWO_VALIDATE);
+      if($this->accordance){
+        $rules['consanguinidad1.dni'] = 'required|numeric|regex:/^\d{8,9}$/';
+        $rules['consanguinidad1.nombres'] = 'required';
+        $rules['consanguinidad1.ap_paterno'] = 'required';
+        $rules['consanguinidad1.ap_materno'] = 'required';
+        $rules['consanguinidad1.categoria'] = 'required';
+        $rules['consanguinidad1.subcategoria'] = 'required';
+      }
     }
     $this->currentStep++;
   }
-
   public function previousStep()
   {
     $this->reset(['profilePhoto', 'reverseDniPhoto', 'frontDniPhoto']);

@@ -1,6 +1,6 @@
 <div class="p-4 xl:p-6">
     <x-step-by-step :currentStep="$currentStep" />
-    <div class="flex h-6 items-center">
+    <!-- <div class="flex h-6 items-center">
         <input id="accordance" name="accordance" type="checkbox" wire:model="accordance"
             class="h-4 w-4 rounded text-indigo-600 focus:ring-indigo-600">
     </div>
@@ -10,11 +10,11 @@
     </div>
     @if($accordance)
     <p>
-        ¿tienes familiares en el proceso de admision?
+    ¿Tienes algún familiar que esté actualmente participando en el proceso de admisión de esta institución?
     </p>
     @livewire('consanguinidad')
 
-    @endif
+    @endif -->
     @if ($currentStep < 3) <div
         class="mx-auto mb-8 max-w-2xl rounded-3xl ring-1 ring-gray-200 lg:mx-0 lg:flex lg:max-w-none bg-gray-50 md:mb-10">
         <div class="p-4 lg:flex-auto">
@@ -626,7 +626,7 @@
             Atrás
         </button>
         @if ($accordance)
-        <button type="button" wire:click="finalizar"
+        <button type="submit"
             class="cursor-pointer mt-4 text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center animate-slide-in-down">
             Finalizar y Enviar
         </button>
