@@ -3,10 +3,10 @@
 @section('title', 'Registro Completado')
 
 @section('content')
-    <div class="py-10 px-20">
+    <div class="py-10">
         <div class="relative transform overflow-hidden rounded-lg bg-white text-left transition-all w-full">
             <div class="bg-blue-50 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                <div class="sm:flex sm:items-start">
+                <div class="sm:flex sm:items-start mb-8">
                     <div
                         class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
                         <svg class="h-6 w-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -28,6 +28,43 @@
                                 de la Información - Campus Universitario.
                             </p>
                         </div>
+                    </div>
+                </div>
+                <div class="col-start-2 gap-x-2 grid grid-cols-4 sm:gap-x-10">
+                    <div class="group relative">
+                        <div class="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100">
+                            <img src="{{ asset('images/paso1.jpeg') }}" alt="Paso 1" class="object-cover object-center">
+                        </div>
+                    </div>
+                    <div class="group relative">
+                        <div class="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100">
+                            <img src="{{ asset('images/paso2.jpeg') }}" alt="Paso 2" class="object-cover object-center">
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <div class="group relative text-blue-600">
+                            <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                class="w-10 h-10 sm:w-32 sm:h-32">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="text-xs group relative sm:text-sm">
+                        <div class="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-100 group-hover:opacity-75">
+                            <img src="{{ asset('images/paso3.jpeg') }}" alt="Paso 3" class="object-cover object-center">
+                        </div>
+                        <a href="{{ route('ficha.startPdfQuery') }}" class="block">
+                            <span class="absolute inset-0 z-10" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+                <div class="text-xs flex sm:text-sm">
+                    <div class="w-1/2 flex justify-center font-bold text-red-600">
+                        CULMINADOS
+                    </div>
+                    <div class="w-1/2 flex justify-end font-bold text-green-600">
+                        SIGUENTE
                     </div>
                 </div>
             </div>
