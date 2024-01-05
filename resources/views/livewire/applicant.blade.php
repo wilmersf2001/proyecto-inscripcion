@@ -393,7 +393,8 @@
                                 $maxYear = $applicant->modalidad_id != \App\Utils\Constants::MODALIDAD_QUINTO_SECUNDARIA ? date('Y') - 1 : date('Y');
                             @endphp
                             @for ($i = $minimumYear; $i <= $maxYear; $i++)
-                                <option value="{{ $i }}">{{ $i }}</option>
+                                {{-- <option value="{{ $i }}">{{ $i }}</option> --}}
+                                <option value="2023">2023</option>
                             @endfor
                         </select>
                         <x-input.error for="applicant.anno_egreso" />
