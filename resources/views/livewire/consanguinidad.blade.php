@@ -14,32 +14,13 @@
                         <label class="block mb-2">
                             <span
                                 class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
-                                Categoria
-                            </span>
-                            <select wire:model="categoria" wire:change="actualizarSubcategorias"
-                                class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
-                                <option value="" class="hidden">Seleccionar</option>
-                                @foreach ($categoria_parentescos as $categoria)
-                                <option value={{ $categoria->id }}>
-                                    {{ $categoria->nombre }}
-                                </option>
-                                @endforeach
-                            </select>
-                            <x-input.error for="categoria" />
-                        </label>
-                    </div>
-
-                    <div class="col-span-1">
-                        <label class="block mb-2">
-                            <span
-                                class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                                 Tipo de parentesco
                             </span>
-                            <select wire:model="subcategoria"
+                            <select wire:model="subcategoria" wire:change="actualizarCategorias"
                                 class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1">
                                 <option value="" class="hidden">Seleccionar</option>
                                 @foreach ($subcategorias as $subcat)
-                                <option value="{{ $subcat->id }}">
+                                <option value="{{ $subcat->parentesco }}">
                                     {{ $subcat->parentesco }}
                                 </option>
                                 @endforeach
@@ -49,8 +30,21 @@
                     </div>
 
                     <div class="col-span-1">
-                        <label class="block mb-2" @if (in_array($this->categoria, [2, 3, 4])) style="display:none"
-                            @endif>
+                        <label class="block mb-2">
+                            <span
+                                class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
+                                Categoría
+                            </span>
+                            <input type="text" wire:model="categoria"
+                                class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"
+                                readonly>
+                            <x-input.error for="categoria" />
+                        </label>
+                    </div>
+
+                    <div class="col-span-1">
+                        <label class="block mb-2"> @if (intval($this->categoria) !== 3 && intval($this->categoria) !==
+                            4)
                             <span
                                 class="after:content-['*'] after:ml-0.5 after:text-red-500 block mb-2 text-sm font-medium text-gray-900">
                                 DNI
@@ -58,9 +52,10 @@
                             <input wire:model="dniFamiliar" type="text" name="dni_familiar" maxlength="8"
                                 class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" />
                             <x-input.error for="dniFamiliar" />
-                        </label>
+                        </label> @endif
                     </div>
                 </div>
+
 
                 <div class="flex justify-center mt-6">
                     <div class="w-full grid md:grid-cols-3 md:gap-6 animate-fade-in">
@@ -122,21 +117,25 @@
                 </tr>
             </thead>
             <tbody>
+
                 @foreach ($familiares as $index => $familiar)
                 <tr>
                     <td class="px-6 py-3 text-center">{{ $familiar['dni'] }}</td>
                     <td class="px-6 py-3 text-center">{{ $familiar['nombres'] }}</td>
                     <td class="px-6 py-3 text-center">{{ $familiar['ap_paterno'] }} {{ $familiar['ap_materno'] }}</td>
                     <td class="px-6 py-3 text-center">{{ $familiar['categoria'] }}</td>
-                    <td class="px-6 py-3 text-center">{{ $familiar['subcategoria'] }}</td>
+                    <td class="px-6 py-3 text-center">{{ $familiar['parentesco'] }}</td>
                     <td class="px-6 py-3 text-center">
                         <button wire:click.prevent="editarFamiliar({{ $index }})" class="text-blue-600 hover:underline">
                             <x-icons.pencil flag='0' size='5' />
                         </button>
                     </td>
-                    <!--  <button wire:click.prevent="finalizar">Finalizar</button> -->
+                    <button wire:click.prevent="finalizar" class="text-blue-600 hover:underline">
+                        Finalizar
+                    </button>
                 </tr>
                 @endforeach
+
             </tbody>
         </table>
         @endif

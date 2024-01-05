@@ -15,7 +15,7 @@ class Consanguinidad1 extends Model
 
     protected $fillable = [
         'parentesco',
-        'categoria_parentesco_id'
+        'categoria_nombre'
     ];
 
     /* public function subcategorias()
