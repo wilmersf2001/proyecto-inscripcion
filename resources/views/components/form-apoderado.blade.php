@@ -1,6 +1,8 @@
-<h2 class="text-base font-semibold leading-7 text-gray-900">Información del Apoderado
+<h2 class="text-base font-semibold leading-7 text-gray-900">Búsqueda del Apoderado por DNI o CE <span
+        class="ml-2 inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">Clic
+        en la lupa para acelerar el llenado registro</span>
 </h2>
-<p class="mt-1 text-sm leading-6 text-gray-600 mb-4">Usted es menor de edad, por favor
+<p class="mt-3 text-sm leading-6 text-gray-600 mb-6">Usted es menor de edad, por favor
     ingrese los datos de su apoderado.</p>
 <div class="relative">
     <input type="search" name="num_documento_apoderado" wire:model="applicant.num_documento_apoderado"

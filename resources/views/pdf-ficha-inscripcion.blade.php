@@ -238,7 +238,7 @@
                             Reglamento del presente Concurso de Admisión).
                         </li>
                         <li>
-                            He culminado el 5to año de Educación Secundaria antes del Concurso de Admisión. </li>
+                            He culminado el 5to año de Educación Secundaria en el año 2023. </li>
                     </ul>
                 </div>
             </td>

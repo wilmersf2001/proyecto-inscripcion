@@ -69,17 +69,15 @@
                                 </div>
                                 <div class="w-full grid md:grid-cols-3 md:gap-6 animate-fade-in" wire:loading.remove
                                     wire:target="getApoderadoDataByDni">
-                                    @if (isset($disableInputApoderado) || !$disableInputApoderado === null)
-                                        <x-input.form span="Nombres" name="nombres_apoderado"
-                                            model="applicant.nombres_apoderado" disable="{{ $disableInputApoderado }}"
-                                            margin="mb-4" />
-                                        <x-input.form span="Apellido Paterno" name="ap_paterno_apoderado"
-                                            model="applicant.ap_paterno_apoderado"
-                                            disable="{{ $disableInputApoderado }}" margin="mb-4" />
-                                        <x-input.form span="Apellido Materno" name="ap_materno_apoderado"
-                                            model="applicant.ap_materno_apoderado"
-                                            disable="{{ $disableInputApoderado }}" margin="mb-4" />
-                                    @endif
+                                    <x-input.form span="Nombres" name="nombres_apoderado"
+                                        model="applicant.nombres_apoderado" disable="{{ $disableInputApoderado }}"
+                                        margin="mb-4" />
+                                    <x-input.form span="Apellido Paterno" name="ap_paterno_apoderado"
+                                        model="applicant.ap_paterno_apoderado" disable="{{ $disableInputApoderado }}"
+                                        margin="mb-4" />
+                                    <x-input.form span="Apellido Materno" name="ap_materno_apoderado"
+                                        model="applicant.ap_materno_apoderado" disable="{{ $disableInputApoderado }}"
+                                        margin="mb-4" />
                                 </div>
                             </div>
                         </div>
