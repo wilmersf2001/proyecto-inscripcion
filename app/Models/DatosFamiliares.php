@@ -24,6 +24,11 @@ class DatosFamiliares extends Model
 {
     return $this->belongsTo(Consanguinidad1::class, 'datos_categoria_id');
 }
+
+public function banco()
+    {
+        return $this->belongsTo(Banco::class, 'dni_postulante', 'num_doc_depo');
+    }
 }
 
 

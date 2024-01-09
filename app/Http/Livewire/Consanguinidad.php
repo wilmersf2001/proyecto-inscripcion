@@ -12,6 +12,8 @@ use App\Http\Requests\View\Message\ValidateApplicant;
 
 class Consanguinidad extends Component
 {
+    public Postulante $applicant;
+    public Banco $bank;
     public $showModal = false;
     public $dniFamiliar;
     public $nombresFamiliar;
@@ -24,20 +26,22 @@ class Consanguinidad extends Component
     public $subcategorias = [];
     public $editIndex = null;
     public $modoEdicion = false;
+    public $errorMensaje = '';
+    public $mostrarSeccion = true;
 
     protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
     public function mount()
     {
         $this->subcategorias = Consanguinidad1::all();
+
     }
     public function actualizarCategorias()
     {
         if ($this->subcategoria) {
             $categoria = Consanguinidad1::where('parentesco', $this->subcategoria)->first();
             $this->categoria = $categoria ? $categoria->categoria_nombre : null;
-        }
-        else{
+        } else {
             $this->categoria = [];
         }
     }
@@ -49,8 +53,18 @@ class Consanguinidad extends Component
             $this->subcategorias = [];
         }
     }
+    private function dniExistsInTable($dni)
+    {
+        foreach ($this->familiares as $familiar) {
+            if ($familiar['dni'] == $dni) {
+                return true;
+            }
+        }
+        return false;
+    }
     public function agregarFamiliar()
     {
+        $dni = $this->dniFamiliar;
         $rules = [
             'nombresFamiliar' => 'required',
             'apPaternoFamiliar' => 'required',
@@ -59,7 +73,10 @@ class Consanguinidad extends Component
             'subcategoria' => 'required',
             'dniFamiliar' => $this->categoria == 3 || $this->categoria == 4 ? 'nullable|numeric|digits:8' : 'required|numeric|digits:8',
         ];
-
+        if ($this->dniExistsInTable($dni)) {
+            $this->addError('dniFamiliar', 'El DNI ya existe en la tabla.'); // Add error message
+            return;
+        }
         if (intval($this->categoria) === 3 || intval($this->categoria) === 4) {
             $rules['dniFamiliar'] = 'nullable|numeric|digits:8';
         } else {
@@ -85,13 +102,12 @@ class Consanguinidad extends Component
         }
         $this->resetForm();
 
+        $this->errorMensaje = 'dni duplicado';
     }
     public function editarFamiliar($index)
     {
-
         $familiar = $this->familiares[$index];
         $this->editIndex = $index;
-
         $this->dniFamiliar = $familiar['dni'];
         $this->nombresFamiliar = $familiar['nombres'];
         $this->apPaternoFamiliar = $familiar['ap_paterno'];
@@ -99,46 +115,34 @@ class Consanguinidad extends Component
         $this->categoria = $familiar['categoria'];
         $this->subcategoria = $familiar['parentesco'];
 
-
         $this->modoEdicion = true;
     }
-
-        public function finalizar()
+    public function finalizar()
     {
-        try {
+        /* $dniPostulante = Banco::where()->value('dni'); */
 
-
-
-                foreach ($this->familiares as $familiar) {
-                    $banco = Banco::first();
-                    if ($banco && $banco->num_doc_depo) {
-                    $categoria = Consanguinidad1::where('categoria_nombre', $familiar['categoria'])->first();
-
-                if ($categoria) {
-                    DatosFamiliares::create([
-                        'dni_familiar' => $familiar['dni'],
-                        'nombres' => $familiar['nombres'],
-                        'apellidos' => $familiar['ap_paterno'] . ' ' . $familiar['ap_materno'],
-                        'datos_categoria_id' => $categoria->id,
-                        'dni_postulante' => $banco->num_doc_depo,
-                    ]);
-                }
-                }
+            foreach ($this->familiares as $familiar) {
+                    $categoria = Consanguinidad1::where('parentesco', $familiar['parentesco'])->first();
+                    if ($categoria) {
+                        DatosFamiliares::create([
+                            'dni_familiar' => $familiar['dni'],
+                            'nombres' => $familiar['nombres'],
+                            'apellidos' => $familiar['ap_paterno'] . ' ' . $familiar['ap_materno'],
+                            'datos_categoria_id' => $categoria->id,
+                           /*  'dni_postulante' => $dniPostulante, */
+                        ]);
+                    }
             }
             $this->familiares = [];
             $this->resetForm();
             $this->showModal = false;
-        } catch (\Exception $e) {
-            dd($e->getMessage());
-        }
+            $this->mostrarSeccion = false;
+            $this->mostrarBotonFinalizar = true;
     }
 
-
-   /*  private function getCategoriaId($nombreCategoria)
-    {
-        $categoriaModel = Consanguinidad1::where('categoria_nombre', $nombreCategoria)->first();
-        return $categoriaModel ? $categoriaModel->id : null;
-    } */
+    public function OcultarSeccion(){
+        $this->mostrarSeccion = false;
+    }
     public function resetForm()
     {
         $this->dniFamiliar = '';
@@ -152,8 +156,6 @@ class Consanguinidad extends Component
     }
     public function render()
     {
-        return view('livewire.consanguinidad');
+         return view('livewire.consanguinidad');
     }
 }
-
-

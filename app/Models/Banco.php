@@ -30,4 +30,9 @@ class Banco extends Model
         'monto_depo',
         'descripcion_depo',
     ];
+
+    public function datosFamiliares()
+    {
+        return $this->hasMany(DatosFamiliares::class, 'dni_postulante', 'num_doc_depo');
+    }
 }
