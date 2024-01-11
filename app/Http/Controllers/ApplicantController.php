@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreApplicantRequest;
 use App\Models\Banco;
-use App\Models\DatosFamiliares;
 use App\Models\Postulante;
 use App\Utils\Constants;
 use App\Utils\UtilFunction;
 use Illuminate\Support\Facades\Storage;
-use App\Models\Consanguinidad1;
-use Illuminate\Http\Request;
+
 
 class ApplicantController extends Controller
 {
@@ -32,9 +30,6 @@ class ApplicantController extends Controller
       'estado' => 1,
     ]);
 
-    DatosFamiliares::create([
-        'dni_postulante' => $request->num_documento,
-      ]);
     Postulante::create([
       'num_documento' => $request->num_documento,
       'tipo_documento' => $request->tipo_documento,

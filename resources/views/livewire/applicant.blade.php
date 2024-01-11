@@ -10,7 +10,7 @@
             que:</label>
     </div>
     @if($accordance)
-    @livewire('consanguinidad')
+    @livewire('consanguinidad', ['applicant' => $applicant, 'postulante_dni' => $bank->num_doc_depo])
     @endif
 
     @if ($currentStep < 3) <div
@@ -585,7 +585,7 @@
                 </div>
             </div>
             @if($accordance)
-            @livewire('consanguinidad')
+            @livewire('consanguinidad', ['applicant' => $applicant, 'postulante_dni' => $bank->num_doc_depo])
             @endif
             <div class="mt-4">
                 <ul role="list" class="list-disc space-y-2 pl-4 text-sm">

@@ -8,7 +8,6 @@
     <a wire:click="OcultarSeccion"
         class="cursor-pointer inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto mb-7">NO</a>
     @if ($showModal)
-    <form action="{{route('applicant.store')}}" method="POST" enctype="multipart/form-data">
         <div class="rounded-5xl ring-1 ring-gray-200 mb-10 animate-fade-in">
             <div class="-mt-2 p-2 lg:mt-0 lg:w-full">
                 <div class="rounded-2xl bg-gray-50 py-6 lg:py-8 px-8">
@@ -149,8 +148,6 @@
             </div>
             @endif
         </div>
-    </form>
-
     @endif
     @endif
 </div>

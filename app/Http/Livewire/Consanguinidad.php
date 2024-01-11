@@ -2,18 +2,18 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\CategoriaParentescos;
 use App\Models\Consanguinidad1;
 use App\Models\DatosFamiliares;
-use App\Models\Banco;
 use App\Models\Postulante;
 use Livewire\Component;
 use App\Http\Requests\View\Message\ValidateApplicant;
 
+
+
 class Consanguinidad extends Component
 {
     public Postulante $applicant;
-    public Banco $bank;
+    public $postulante_dni;
     public $showModal = false;
     public $dniFamiliar;
     public $nombresFamiliar;
@@ -29,13 +29,19 @@ class Consanguinidad extends Component
     public $errorMensaje = '';
     public $mostrarSeccion = true;
 
+
     protected $messages = ValidateApplicant::MESSAGES_ERROR;
 
-    public function mount()
+    public function mount(Postulante $applicant, int $postulante_dni)
     {
+
+        $this->applicant = $applicant;
+        $this->postulante_dni = $postulante_dni;
+
         $this->subcategorias = Consanguinidad1::all();
 
     }
+
     public function actualizarCategorias()
     {
         if ($this->subcategoria) {
@@ -119,28 +125,31 @@ class Consanguinidad extends Component
     }
     public function finalizar()
     {
-        /* $dniPostulante = Banco::where()->value('dni'); */
-
+       
+      
             foreach ($this->familiares as $familiar) {
-                    $categoria = Consanguinidad1::where('parentesco', $familiar['parentesco'])->first();
-                    if ($categoria) {
-                        DatosFamiliares::create([
-                            'dni_familiar' => $familiar['dni'],
-                            'nombres' => $familiar['nombres'],
-                            'apellidos' => $familiar['ap_paterno'] . ' ' . $familiar['ap_materno'],
-                            'datos_categoria_id' => $categoria->id,
-                           /*  'dni_postulante' => $dniPostulante, */
-                        ]);
-                    }
-            }
-            $this->familiares = [];
-            $this->resetForm();
-            $this->showModal = false;
-            $this->mostrarSeccion = false;
-            $this->mostrarBotonFinalizar = true;
+                $categoria = Consanguinidad1::where('parentesco', $familiar['parentesco'])->first();
+                if ($categoria) {
+                    DatosFamiliares::create([
+                        'dni_familiar' => $familiar['dni'],
+                        'nombres' => $familiar['nombres'],
+                        'apellidos' => $familiar['ap_paterno'] . ' ' . $familiar['ap_materno'],
+                        'datos_categoria_id' => $categoria->id,
+                        'dni_postulante' => $this->postulante_dni,
+                    ]);
+                }
+        }
+        $this->familiares = [];
+        $this->resetForm();
+        $this->showModal = false;
+        $this->mostrarSeccion = false;
+        $this->mostrarBotonFinalizar = true;
     }
 
-    public function OcultarSeccion(){
+
+
+    public function OcultarSeccion()
+    {
         $this->mostrarSeccion = false;
     }
     public function resetForm()
@@ -156,6 +165,6 @@ class Consanguinidad extends Component
     }
     public function render()
     {
-         return view('livewire.consanguinidad');
+        return view('livewire.consanguinidad');
     }
 }

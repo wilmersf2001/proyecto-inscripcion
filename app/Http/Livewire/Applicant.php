@@ -22,8 +22,7 @@ use App\Models\Banco;
 use App\Models\Colegio;
 use App\Models\Proceso;
 use App\Utils\Constants;
-use App\Models\Consanguinidad1;
-use App\Models\DatosFamiliares; // Add this line for DatosFamiliares model
+
 
 class Applicant extends Component
 {
